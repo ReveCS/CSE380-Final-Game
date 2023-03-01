@@ -3,6 +3,8 @@ import ParticleSystem from "../../Wolfie2D/Rendering/Animations/ParticleSystem";
 import Color from "../../Wolfie2D/Utils/Color";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import RandUtils from "../../Wolfie2D/Utils/RandUtils";
+import Input from "../../Wolfie2D/Input/Input";
+import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 
  
 
@@ -46,5 +48,8 @@ export default class PlayerWeapon extends ParticleSystem {
             ]
         });
     }
+
+    public get faceDir(): Vec2 { return Input.getGlobalMousePosition(); }
+
 
 }

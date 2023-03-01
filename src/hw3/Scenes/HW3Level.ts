@@ -17,7 +17,7 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import Timer from "../../Wolfie2D/Timing/Timer";
 import Color from "../../Wolfie2D/Utils/Color";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
-import PlayerController, { PlayerTweens } from "../Player/PlayerController";
+import PlayerController, { PlayerAnimations, PlayerTweens } from "../Player/PlayerController";
 import PlayerWeapon from "../Player/PlayerWeapon";
 
 import { HW3Events } from "../HW3Events";
@@ -410,6 +410,19 @@ export default abstract class HW3Level extends Scene {
         this.player.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
 
         // TODO - give the player their flip tween
+        this.player.tweens.add(PlayerTweens.FLIP, {
+            startDelay: 10,
+            duration: 300,
+            effects: [
+                {
+                    property: "rotation",
+                    start: 0,
+                    end: Math.PI,
+                    ease: EaseFunctionType.IN_OUT_QUINT
+                }
+            ],
+            onEnd: PlayerAnimations.IDLE
+        });
 
         // Give the player a death animation
         this.player.tweens.add(PlayerTweens.DEATH, {

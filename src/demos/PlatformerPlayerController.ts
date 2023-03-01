@@ -50,6 +50,8 @@ export default class PlayerController extends ControllerAI {
                     this.owner.animation.playIfNotAlready("IDLE", true);
             } else {
                 this.owner.animation.playIfNotAlready("RUNNING_LEFT", true);
+                this.owner.invertX = velocity.x < 0;
+                this.owner.move(velocity);
             }
         }
 
@@ -59,6 +61,7 @@ export default class PlayerController extends ControllerAI {
                     this.owner.animation.playIfNotAlready("IDLE", true);
             } else {
                 this.owner.animation.playIfNotAlready("RUNNING_RIGHT", true);
+                this.owner.move(velocity);
             }
         }
 
@@ -76,7 +79,6 @@ export default class PlayerController extends ControllerAI {
             this.owner.animation.playIfNotAlready("ATTACKING_LEFT", true);
         }
         
-
         // If we're walking left, flip the sprite
         this.owner.invertX = velocity.x < 0;
         

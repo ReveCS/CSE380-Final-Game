@@ -13,6 +13,8 @@ export default class Jump extends PlayerState {
         this.parent.velocity.y = -200;
         // Play the jump sound for the player
 		this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: jumpAudio, loop: false, holdReference: false});
+        //Trigger the player's flip animation when we enter the jump state
+        this.owner.tweens.play(PlayerTweens.FLIP);
 	}
 
 	public update(deltaT: number): void {

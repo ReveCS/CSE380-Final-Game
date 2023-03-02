@@ -403,7 +403,7 @@ export default abstract class HW3Level extends Scene {
 
         // Add the player to the scene
         this.player = this.add.animatedSprite(key, HW3Layers.PRIMARY);
-        this.player.scale.set(1, 1);
+        this.player.scale.set(0.125, 0.125);
         this.player.position.copy(this.playerSpawn);
         
         // Give the player physics
@@ -417,7 +417,7 @@ export default abstract class HW3Level extends Scene {
                 {
                     property: "rotation",
                     start: 0,
-                    end: Math.PI,
+                    end: 2*Math.PI,
                     ease: EaseFunctionType.IN_OUT_QUINT
                 }
             ],

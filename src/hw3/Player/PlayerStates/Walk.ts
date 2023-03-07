@@ -7,7 +7,6 @@ export default class Walk extends PlayerState {
 
 	onEnter(options: Record<string, any>): void {
 		this.parent.speed = this.parent.MIN_SPEED;
-        this.owner.animation.playIfNotAlready(PlayerAnimations.RUNNING_RIGHT);
 	}
 
 	update(deltaT: number): void {
@@ -16,6 +15,8 @@ export default class Walk extends PlayerState {
 
         // Get the input direction from the player controller
 		let dir = this.parent.inputDir;
+
+        console.log(dir);
 
         // If the player is not moving - transition to the Idle state
 		if(dir.isZero()){

@@ -11,7 +11,7 @@ import HW4Level2 from "./HW3Level2";
  */
 export default class Level1 extends HW3Level {
 
-    public static readonly PLAYER_SPAWN = new Vec2(50, 200);
+    public static readonly PLAYER_SPAWN = new Vec2(50, 300);
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "hw4_assets/spritesheets/duckbud.json";
 
@@ -26,6 +26,9 @@ export default class Level1 extends HW3Level {
 
     public static readonly JUMP_AUDIO_KEY = "PLAYER_JUMP";
     public static readonly JUMP_AUDIO_PATH = "hw4_assets/sounds/jump.wav";
+
+    public static readonly DEATH_AUDIO_KEY = "PLAYER_DEATH";
+    public static readonly DEATH_AUDIO_PATH = "hw4_assets/sounds/death.wav";
 
     public static readonly TILE_DESTROYED_KEY = "TILE_DESTROYED";
     public static readonly TILE_DESTROYED_PATH = "hw4_assets/sounds/switch.wav";
@@ -67,6 +70,7 @@ export default class Level1 extends HW3Level {
         // Audio and music
         this.load.audio(this.levelMusicKey, Level1.LEVEL_MUSIC_PATH);
         this.load.audio(this.jumpAudioKey, Level1.JUMP_AUDIO_PATH);
+        //this.load.audio(this.deathAudioKey, Level1.DEATH_AUDIO_PATH);
         this.load.audio(this.tileDestroyedAudioKey, Level1.TILE_DESTROYED_PATH);
     }
 

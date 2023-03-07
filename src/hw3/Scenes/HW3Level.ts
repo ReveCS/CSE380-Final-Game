@@ -90,10 +90,13 @@ export default abstract class HW3Level extends Scene {
     /** Sound and music */
     protected levelMusicKey: string;
     protected jumpAudioKey: string;
+    protected deathAudioKey: string;
     protected tileDestroyedAudioKey: string;
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
         super(viewport, sceneManager, renderingManager, {...options, physics: {
+            groups: [HW3PhysicsGroups.GROUND, HW3PhysicsGroups.PLAYER, HW3PhysicsGroups.PLAYER_WEAPON, HW3PhysicsGroups.DESTRUCTABLE],
+            collisions: [[0, 1, 1, 0], [1, 0, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0]]
             // TODO configure the collision groups and collision map
          }});
         this.add = new HW3FactoryManager(this, this.tilemaps);
@@ -165,6 +168,7 @@ export default abstract class HW3Level extends Scene {
             // When the level ends, change the scene to the next level
             case HW3Events.LEVEL_END: {
                 this.sceneManager.changeToScene(this.nextLevel);
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
                 break;
             }
             case HW3Events.HEALTH_CHANGE: {
@@ -173,6 +177,14 @@ export default abstract class HW3Level extends Scene {
             }
             case HW3Events.PLAYER_DEAD: {
                 this.sceneManager.changeToScene(MainMenu);
+                break;
+            }
+            case HW3Events.PARTICLE_HIT: {
+                //this.handleParticleHit(this.particlePool[i]);
+                break;
+            }
+            case HW3Events.DESTROY_TILE: {
+                //this.handleDestroyedTile();
                 break;
             }
             // Default: Throw an error! No unhandled events allowed.
@@ -209,12 +221,15 @@ export default abstract class HW3Level extends Scene {
                     // If the tile is collideable -> check if this particle is colliding with the tile
                     if(tilemap.isTileCollidable(col, row) && this.particleHitTile(tilemap, particle, col, row)){
                         this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: this.tileDestroyedAudioKey, loop: false, holdReference: false });
-                        // TODO Destroy the tile
+                        //tilemap.setTrigger(HW3PhysicsGroups.PLAYER_WEAPON, HW3Events.DESTROY_TILE, null);
+                        // Destroy tile
+                        tilemap.setTile(tilemap.getTileAtRowCol(new Vec2(col, row)), 0);
                     }
                 }
             }
         }
     }
+
 
     /**
      * Checks if a particle hit the tile at the (col, row) coordinates in the tilemap.
@@ -226,8 +241,14 @@ export default abstract class HW3Level extends Scene {
      * @returns true of the particle hit the tile; false otherwise
      */
     protected particleHitTile(tilemap: OrthogonalTilemap, particle: Particle, col: number, row: number): boolean {
-        // TODO detect whether a particle hit a tile
-        return;
+        let tile = tilemap.getTileAtRowCol(new Vec2(col, row));
+        let tilePosition = tilemap.getTileWorldPosition(tile);
+
+        if (particle.position === tilePosition) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -291,6 +312,7 @@ export default abstract class HW3Level extends Scene {
         this.walls.addPhysics();
         // Add physics to the destructible layer of the tilemap
         this.destructable.addPhysics();
+        this.destructable.setGroup(HW3PhysicsGroups.DESTRUCTABLE);
     }
     /**
      * Handles all subscriptions to events
@@ -301,6 +323,8 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.LEVEL_END);
         this.receiver.subscribe(HW3Events.HEALTH_CHANGE);
         this.receiver.subscribe(HW3Events.PLAYER_DEAD);
+        this.receiver.subscribe(HW3Events.PARTICLE_HIT);
+        this.receiver.subscribe(HW3Events.DESTROY_TILE);
     }
     /**
      * Adds in any necessary UI to the game
@@ -408,6 +432,8 @@ export default abstract class HW3Level extends Scene {
         
         // Give the player physics
         this.player.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
+        this.player.setGroup(HW3PhysicsGroups.PLAYER);
+        this.player.addAI(PlayerController, {jumpAudioKey: "jump"});
 
         // TODO - give the player their flip tween
         this.player.tweens.add(PlayerTweens.FLIP, {
@@ -482,5 +508,9 @@ export default abstract class HW3Level extends Scene {
     // Get the key of the player's jump audio file
     public getJumpAudioKey(): string {
         return this.jumpAudioKey
+    }
+
+    public getDeathAudioKey(): string {
+        return this.deathAudioKey
     }
 }

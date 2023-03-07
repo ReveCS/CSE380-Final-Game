@@ -61,21 +61,11 @@ export default class PlayerController extends ControllerAI {
                     this.owner.animation.playIfNotAlready("IDLE", true);
             } else {
                 this.owner.animation.playIfNotAlready("RUNNING_RIGHT", true);
-                this.owner.move(velocity);
             }
         }
 
-        if(this.owner.onGround && Input.isPressed("right")){
-            // If we're on the ground, but aren't jumping, show walk animation
-            if(velocity.x === 0){
-                    this.owner.animation.playIfNotAlready("IDLE", true);
-            } else {
-                this.owner.animation.playIfNotAlready("RUNNING_RIGHT", true);
-            }
-        }
-
-        if(this.owner.onGround && Input.isPressed("attack")){
-            // If we're on the ground, but aren't jumping, show walk animation
+        if(Input.isPressed("attack")){
+            // If we're on the ground, but aren't jumping, show attack animation
             this.owner.animation.playIfNotAlready("ATTACKING_LEFT", true);
         }
         

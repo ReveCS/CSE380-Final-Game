@@ -11,6 +11,8 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import { HW3PhysicsGroups } from "../HW3PhysicsGroups";
 import { HW3Events } from "../HW3Events";
+import Stack from "../../Wolfie2D/DataTypes/Stack";
+import NavigationPath from "../../Wolfie2D/Pathfinding/NavigationPath";
 
 /**
  * // TODO get the particles to move towards the mouse when the player attacks
@@ -35,7 +37,6 @@ export default class PlayerWeapon extends ParticleSystem {
                 { position: this.sourcePoint.clone(), size: this.particleSize.clone(), mass: this.particleMass });
             this.particlePool[i].addPhysics();
             this.particlePool[i].setGroup(HW3PhysicsGroups.PLAYER_WEAPON);
-            this.particlePool[i].setTrigger(HW3PhysicsGroups.DESTRUCTABLE, HW3Events.PARTICLE_HIT, null);
             this.particlePool[i].isCollidable = false;
             this.particlePool[i].visible = false;
         }
@@ -48,13 +49,9 @@ export default class PlayerWeapon extends ParticleSystem {
     public setParticleAnimation(particle: Particle) {
         // Give the particle a random velocity.
         
-        particle.vel = Input.getGlobalMousePosition();
-        console.log("mouse x is" + Input.getGlobalMousePosition().x);
-        console.log("mouse y is" + Input.getGlobalMousePosition().y);
-        //particle.vel = RandUtils.randVec(50, 200, -42, 42);
+        particle.vel = RandUtils.randVec(50, 200, -42, 42);
         particle.color = Color.RED;
-
-        particle.moveOnPath
+        particle.
 
         // Give the particle tweens
         particle.tweens.add("active", {

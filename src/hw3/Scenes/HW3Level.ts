@@ -95,7 +95,7 @@ export default abstract class HW3Level extends Scene {
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
         super(viewport, sceneManager, renderingManager, {...options, physics: {
-            groups: [HW3PhysicsGroups.GROUND, HW3PhysicsGroups.PLAYER, HW3PhysicsGroups.PLAYER_WEAPON, HW3PhysicsGroups.DESTRUCTABLE],
+            groupNames: [HW3PhysicsGroups.GROUND, HW3PhysicsGroups.PLAYER, HW3PhysicsGroups.PLAYER_WEAPON, HW3PhysicsGroups.DESTRUCTABLE],
             collisions: [[0, 1, 1, 0], [1, 0, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0]]
             // TODO configure the collision groups and collision map
          }});
@@ -177,6 +177,7 @@ export default abstract class HW3Level extends Scene {
             }
             case HW3Events.PLAYER_DEAD: {
                 this.sceneManager.changeToScene(MainMenu);
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
                 break;
             }
             case HW3Events.PARTICLE_HIT: {
@@ -221,7 +222,6 @@ export default abstract class HW3Level extends Scene {
                     // If the tile is collideable -> check if this particle is colliding with the tile
                     if(tilemap.isTileCollidable(col, row) && this.particleHitTile(tilemap, particle, col, row)){
                         this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: this.tileDestroyedAudioKey, loop: false, holdReference: false });
-                        //tilemap.setTrigger(HW3PhysicsGroups.PLAYER_WEAPON, HW3Events.DESTROY_TILE, null);
                         // Destroy tile
                         tilemap.setTile(tilemap.getTileAtRowCol(new Vec2(col, row)), 0);
                     }
@@ -310,9 +310,14 @@ export default abstract class HW3Level extends Scene {
 
         // Add physicss to the wall layer
         this.walls.addPhysics();
+        this.walls.setGroup(HW3PhysicsGroups.GROUND);
+        //this.walls.setTrigger(HW3PhysicsGroups.PLAYER, HW3Events.PLAYER_GROUND_COLLISION, null);
+        //this.walls.setTrigger(HW3PhysicsGroups.PLAYER_WEAPON, HW3Events.WEAPON_GROUND_COLLISION, null);
         // Add physics to the destructible layer of the tilemap
         this.destructable.addPhysics();
         this.destructable.setGroup(HW3PhysicsGroups.DESTRUCTABLE);
+        //this.walls.setTrigger(HW3PhysicsGroups.PLAYER, HW3Events.PLAYER_GROUND_COLLISION, null);
+        //this.walls.setTrigger(HW3PhysicsGroups.PLAYER_WEAPON, HW3Events.PARTICLE_HIT, null);
     }
     /**
      * Handles all subscriptions to events

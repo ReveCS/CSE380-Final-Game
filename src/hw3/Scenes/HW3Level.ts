@@ -148,6 +148,7 @@ export default abstract class HW3Level extends Scene {
         while (this.receiver.hasNextEvent()) {
             this.handleEvent(this.receiver.getNextEvent());
         }
+
     }
 
     /**
@@ -181,7 +182,9 @@ export default abstract class HW3Level extends Scene {
                 break;
             }
             case HW3Events.PARTICLE_HIT: {
-                //this.handleParticleHit(this.particlePool[i]);
+                let particleId = event.data.get('node');
+                this.handleParticleHit(particleId);
+                console.log("this is particle id:" + particleId);
                 break;
             }
             case HW3Events.DESTROY_TILE: {
@@ -216,6 +219,9 @@ export default abstract class HW3Level extends Scene {
             let minIndex = tilemap.getColRowAt(min);
             let maxIndex = tilemap.getColRowAt(max);
 
+            console.log("at col" + minIndex);
+            console.log("at row" + maxIndex);
+
             // Loop over all possible tiles the particle could be colliding with 
             for(let col = minIndex.x; col <= maxIndex.x; col++){
                 for(let row = minIndex.y; row <= maxIndex.y; row++){
@@ -223,7 +229,9 @@ export default abstract class HW3Level extends Scene {
                     if(tilemap.isTileCollidable(col, row) && this.particleHitTile(tilemap, particle, col, row)){
                         this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: this.tileDestroyedAudioKey, loop: false, holdReference: false });
                         // Destroy tile
-                        tilemap.setTile(tilemap.getTileAtRowCol(new Vec2(col, row)), 0);
+                        console.log("at col" + col);
+                        console.log("at row" + row);
+                        tilemap.setTile(tilemap.getTileAtWorldPosition(new Vec2(col, row)), 0);    
                     }
                 }
             }
@@ -241,14 +249,10 @@ export default abstract class HW3Level extends Scene {
      * @returns true of the particle hit the tile; false otherwise
      */
     protected particleHitTile(tilemap: OrthogonalTilemap, particle: Particle, col: number, row: number): boolean {
-        let tile = tilemap.getTileAtRowCol(new Vec2(col, row));
-        let tilePosition = tilemap.getTileWorldPosition(tile);
+        //let tile = tilemap.getTileAtRowCol(new Vec2(col, row));
+        //let tilePosition = tilemap.getTileWorldPosition(tile);
 
-        if (particle.position === tilePosition) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -317,7 +321,7 @@ export default abstract class HW3Level extends Scene {
         this.destructable.addPhysics();
         this.destructable.setGroup(HW3PhysicsGroups.DESTRUCTABLE);
         //this.walls.setTrigger(HW3PhysicsGroups.PLAYER, HW3Events.PLAYER_GROUND_COLLISION, null);
-        //this.walls.setTrigger(HW3PhysicsGroups.PLAYER_WEAPON, HW3Events.PARTICLE_HIT, null);
+        this.destructable.setTrigger(HW3PhysicsGroups.PLAYER_WEAPON, HW3Events.PARTICLE_HIT, null);
     }
     /**
      * Handles all subscriptions to events
@@ -417,6 +421,7 @@ export default abstract class HW3Level extends Scene {
     protected initializeWeaponSystem(): void {
         this.playerWeaponSystem = new PlayerWeapon(50, Vec2.ZERO, 1000, 3, 0, 50);
         this.playerWeaponSystem.initializePool(this, HW3Layers.PRIMARY);
+        
     }
     /**
      * Initializes the player, setting the player's initial position to the given position.

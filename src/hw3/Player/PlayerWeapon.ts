@@ -37,6 +37,7 @@ export default class PlayerWeapon extends ParticleSystem {
                 { position: this.sourcePoint.clone(), size: this.particleSize.clone(), mass: this.particleMass });
             this.particlePool[i].addPhysics();
             this.particlePool[i].setGroup(HW3PhysicsGroups.PLAYER_WEAPON);
+            //this.particlePool[i].setTrigger(HW3PhysicsGroups.DESTRUCTABLE, HW3Events.PARTICLE_HIT, null);
             this.particlePool[i].isCollidable = false;
             this.particlePool[i].visible = false;
         }
@@ -50,8 +51,8 @@ export default class PlayerWeapon extends ParticleSystem {
         // Give the particle a random velocity.
         
         particle.vel = RandUtils.randVec(50, 200, -42, 42);
+        //particle.vel = Input.getMousePosition();
         particle.color = Color.RED;
-        particle.
 
         // Give the particle tweens
         particle.tweens.add("active", {

@@ -125,7 +125,6 @@ export default class PlayerController extends StateMachineAI {
         }
 
         if (this.owner.onGround && Input.isPressed(HW3Controls.MOVE_LEFT)){
-            console.log("moving left");
             this.owner.invertX = true;
             if(velocity.x === 0) {
                 this.owner.animation.playIfNotAlready("IDLE", true);

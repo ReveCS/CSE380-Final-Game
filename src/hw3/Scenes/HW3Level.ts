@@ -231,7 +231,8 @@ export default abstract class HW3Level extends Scene {
                         // Destroy tile
                         console.log("at col" + col);
                         console.log("at row" + row);
-                        tilemap.setTile(tilemap.getTileAtWorldPosition(new Vec2(col, row)), 0);    
+                        console.log("tile is " + tilemap.getTileAtRowCol(new Vec2(col, row)));
+                        tilemap.setTile(tilemap.getTileAtRowCol(new Vec2(col, row)), 0);    
                     }
                 }
             }

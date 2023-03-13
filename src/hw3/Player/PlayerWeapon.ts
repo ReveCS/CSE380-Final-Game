@@ -50,8 +50,9 @@ export default class PlayerWeapon extends ParticleSystem {
     public setParticleAnimation(particle: Particle) {
         // Give the particle a random velocity.
         
-        particle.vel = RandUtils.randVec(50, 200, -42, 42);
-        //particle.vel = Input.getMousePosition();
+        //particle.move(Input.getMousePosition());
+        //particle.vel = RandUtils.randVec(50, 200, -42, 42);
+        particle.vel = Input.getMousePosition();
         particle.color = Color.RED;
 
         // Give the particle tweens

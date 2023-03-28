@@ -15,6 +15,7 @@ import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import MathUtils from "../../Wolfie2D/Utils/MathUtils";
 import { HW3Events } from "../HW3Events";
 import Dead from "./PlayerStates/Dead";
+import SortingUtils from "../../Wolfie2D/Utils/SortingUtils";
 
 // TODO play your heros animations
 
@@ -23,13 +24,13 @@ import Dead from "./PlayerStates/Dead";
  */
 export const PlayerAnimations = {
     IDLE: "IDLE",
-    RUNNING_LEFT: "RUNNING_LEFT",
-    RUNNING_RIGHT: "RUNNING_RIGHT",
-    ATTACKING_LEFT: "ATTACKING_LEFT",
-    ATTACKING_RIGHT: "ATTACKING_RIGHT",
-    TAKING_DAMAGE: "TAKING_DAMAGE",
+    WALK_LEFT: "WALK_LEFT",
+    WALK_RIGHT: "WALK_RIGHT",
+    ATTACK_RIGHT: "ATTACK_RIGHT",
+    ATTACK_LEFT: "ATTACK_LEFT",
+    TAKE_DAMAGE_RIGHT: "TAKE_DAMAGE_RIGHT",
     DYING: "DYING",
-    DEAD: "DEAD",
+    DEATH: "DEATH",
     JUMP: "JUMP",
 } as const
 
@@ -113,35 +114,12 @@ export default class PlayerController extends StateMachineAI {
 
     public update(deltaT: number): void {
 		super.update(deltaT);
-
-        const velocity = this._velocity;
-
-        if (this.owner.onGround && Input.isPressed(HW3Controls.MOVE_RIGHT)){
-            if(velocity.x === 0) {
-                this.owner.animation.playIfNotAlready("IDLE", true);
-            } else {
-                this.owner.animation.playIfNotAlready("RUNNING_RIGHT", true);
-            }
-        }
-
-        if (this.owner.onGround && Input.isPressed(HW3Controls.MOVE_LEFT)){
-            this.owner.invertX = true;
-            if(velocity.x === 0) {
-                this.owner.animation.playIfNotAlready("IDLE", true);
-            } else {
-                this.owner.animation.playIfNotAlready("RUNNING_RIGHT", true);
-            }
-        }
-
-        if (Input.isPressed(HW3Controls.ATTACK)) {
-            this.owner.animation.playIfNotAlready("ATTACKING_LEFT", false);
-        }
-
         // If the player hits the attack button and the weapon system isn't running, restart the system and fire!
         if (Input.isPressed(HW3Controls.ATTACK) && !this.weapon.isSystemRunning()) {
+            this.owner.animation.play(PlayerAnimations.ATTACK_RIGHT);
             // Start the particle system at the player's current position
             this.weapon.startSystem(500, 0, this.owner.position);
-        }        
+        }
 
 	}
 
@@ -164,6 +142,8 @@ export default class PlayerController extends StateMachineAI {
         // When the health changes, fire an event up to the scene.
         this.emitter.fireEvent(HW3Events.HEALTH_CHANGE, {curhp: this.health, maxhp: this.maxHealth});
         // If the health hit 0, change the state of the player
-        if (this.health === 0) { this.changeState(PlayerStates.DEAD); }
+        if (this.health === 0) { 
+            this.changeState(PlayerStates.DEAD);
+         }
     }
 }

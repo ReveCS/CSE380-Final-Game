@@ -7,6 +7,9 @@ export default class Walk extends PlayerState {
 
 	onEnter(options: Record<string, any>): void {
 		this.parent.speed = this.parent.MIN_SPEED;
+        if(this.parent.health > 0 && !this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE_RIGHT)){
+            this.owner.animation.play(PlayerAnimations.WALK_RIGHT);
+        }
 	}
 
 	update(deltaT: number): void {
@@ -17,6 +20,7 @@ export default class Walk extends PlayerState {
 		let dir = this.parent.inputDir;
 
         // If the player is not moving - transition to the Idle state
+        
 		if(dir.isZero()){
 			this.finished(PlayerStates.IDLE);
 		} 
@@ -28,9 +32,13 @@ export default class Walk extends PlayerState {
         else if (!this.owner.onGround && this.parent.velocity.y !== 0) {
             this.finished(PlayerStates.FALL);
         }
+        else if(this.parent.health <= 0){
+            this.finished(PlayerStates.DEAD)
+        }
         // Otherwise, move the player
         else {
             // Update the vertical velocity of the player
+            
             this.parent.velocity.y += this.gravity*deltaT; 
             this.parent.velocity.x = dir.x * this.parent.speed
             this.owner.move(this.parent.velocity.scaled(deltaT));

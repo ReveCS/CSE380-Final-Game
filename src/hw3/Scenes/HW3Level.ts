@@ -17,7 +17,7 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import Timer from "../../Wolfie2D/Timing/Timer";
 import Color from "../../Wolfie2D/Utils/Color";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
-import PlayerController, { PlayerAnimations, PlayerTweens } from "../Player/PlayerController";
+import PlayerController, { PlayerTweens } from "../Player/PlayerController";
 import PlayerWeapon from "../Player/PlayerWeapon";
 
 import { HW3Events } from "../HW3Events";
@@ -90,14 +90,17 @@ export default abstract class HW3Level extends Scene {
     /** Sound and music */
     protected levelMusicKey: string;
     protected jumpAudioKey: string;
-    protected deathAudioKey: string;
     protected tileDestroyedAudioKey: string;
+    protected deathSoundKey:string;
+    protected hitKey:string;
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
         super(viewport, sceneManager, renderingManager, {...options, physics: {
-            groupNames: [HW3PhysicsGroups.GROUND, HW3PhysicsGroups.PLAYER, HW3PhysicsGroups.PLAYER_WEAPON, HW3PhysicsGroups.DESTRUCTABLE],
-            collisions: [[0, 1, 1, 0], [1, 0, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0]]
+            
             // TODO configure the collision groups and collision map
+           groupNames:["GROUND","PLAYER","WEAPON","DESTRUCTABLE"],
+           collisions: [[0,1,1,0],[1,0,0,1],[1,0,0,1],[0,1,1,0]]
+
          }});
         this.add = new HW3FactoryManager(this, this.tilemaps);
     }
@@ -145,10 +148,14 @@ export default abstract class HW3Level extends Scene {
 
     public updateScene(deltaT: number) {
         // Handle all game events
+        for(let i = 0; i < this.playerWeaponSystem.getPool().length;i++){
+            this.playerWeaponSystem.getPool()[i].setGroup("WEAPON");
+            this.handleParticleHit(i);
+        }
+
         while (this.receiver.hasNextEvent()) {
             this.handleEvent(this.receiver.getNextEvent());
         }
-
     }
 
     /**
@@ -169,7 +176,6 @@ export default abstract class HW3Level extends Scene {
             // When the level ends, change the scene to the next level
             case HW3Events.LEVEL_END: {
                 this.sceneManager.changeToScene(this.nextLevel);
-                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
                 break;
             }
             case HW3Events.HEALTH_CHANGE: {
@@ -177,18 +183,8 @@ export default abstract class HW3Level extends Scene {
                 break;
             }
             case HW3Events.PLAYER_DEAD: {
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey, loop: true, holdReference: true});
                 this.sceneManager.changeToScene(MainMenu);
-                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
-                break;
-            }
-            case HW3Events.PARTICLE_HIT: {
-                let particleId = event.data.get('node');
-                this.handleParticleHit(particleId);
-                console.log("this is particle id:" + particleId);
-                break;
-            }
-            case HW3Events.DESTROY_TILE: {
-                //this.handleDestroyedTile();
                 break;
             }
             // Default: Throw an error! No unhandled events allowed.
@@ -206,8 +202,8 @@ export default abstract class HW3Level extends Scene {
      */
     protected handleParticleHit(particleId: number): void {
         let particles = this.playerWeaponSystem.getPool();
-
         let particle = particles.find(particle => particle.id === particleId);
+        
         if (particle !== undefined) {
             // Get the destructable tilemap
             let tilemap = this.destructable;
@@ -219,26 +215,20 @@ export default abstract class HW3Level extends Scene {
             let minIndex = tilemap.getColRowAt(min);
             let maxIndex = tilemap.getColRowAt(max);
 
-            console.log("at col" + minIndex);
-            console.log("at row" + maxIndex);
-
             // Loop over all possible tiles the particle could be colliding with 
             for(let col = minIndex.x; col <= maxIndex.x; col++){
                 for(let row = minIndex.y; row <= maxIndex.y; row++){
                     // If the tile is collideable -> check if this particle is colliding with the tile
                     if(tilemap.isTileCollidable(col, row) && this.particleHitTile(tilemap, particle, col, row)){
                         this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: this.tileDestroyedAudioKey, loop: false, holdReference: false });
-                        // Destroy tile
-                        console.log("at col" + col);
-                        console.log("at row" + row);
-                        console.log("tile is " + tilemap.getTileAtRowCol(new Vec2(col, row)));
-                        tilemap.setTile(tilemap.getTileAtRowCol(new Vec2(col, row)), 0);    
+                        tilemap.setTileAtRowCol(new Vec2(col,row),0);
+
+                        // TODO Destroy the tile
                     }
                 }
             }
         }
     }
-
 
     /**
      * Checks if a particle hit the tile at the (col, row) coordinates in the tilemap.
@@ -250,10 +240,11 @@ export default abstract class HW3Level extends Scene {
      * @returns true of the particle hit the tile; false otherwise
      */
     protected particleHitTile(tilemap: OrthogonalTilemap, particle: Particle, col: number, row: number): boolean {
-        //let tile = tilemap.getTileAtRowCol(new Vec2(col, row));
-        //let tilePosition = tilemap.getTileWorldPosition(tile);
-
-        return true;
+        // TODO detect whether a particle hit a tile
+        if(tilemap.getTileAtRowCol(new Vec2(col,row)) && particle.collidedWithTilemap){
+            return true
+        }
+        return false
     }
 
     /**
@@ -315,14 +306,9 @@ export default abstract class HW3Level extends Scene {
 
         // Add physicss to the wall layer
         this.walls.addPhysics();
-        this.walls.setGroup(HW3PhysicsGroups.GROUND);
-        //this.walls.setTrigger(HW3PhysicsGroups.PLAYER, HW3Events.PLAYER_GROUND_COLLISION, null);
-        //this.walls.setTrigger(HW3PhysicsGroups.PLAYER_WEAPON, HW3Events.WEAPON_GROUND_COLLISION, null);
         // Add physics to the destructible layer of the tilemap
         this.destructable.addPhysics();
-        this.destructable.setGroup(HW3PhysicsGroups.DESTRUCTABLE);
-        //this.walls.setTrigger(HW3PhysicsGroups.PLAYER, HW3Events.PLAYER_GROUND_COLLISION, null);
-        this.destructable.setTrigger(HW3PhysicsGroups.PLAYER_WEAPON, HW3Events.PARTICLE_HIT, null);
+        this.destructable.setGroup("DESTRUCTABLE");
     }
     /**
      * Handles all subscriptions to events
@@ -333,8 +319,6 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.LEVEL_END);
         this.receiver.subscribe(HW3Events.HEALTH_CHANGE);
         this.receiver.subscribe(HW3Events.PLAYER_DEAD);
-        this.receiver.subscribe(HW3Events.PARTICLE_HIT);
-        this.receiver.subscribe(HW3Events.DESTROY_TILE);
     }
     /**
      * Adds in any necessary UI to the game
@@ -374,12 +358,12 @@ export default abstract class HW3Level extends Scene {
                 {
                     property: TweenableProperties.posX,
                     start: -300,
-                    end: 300,
+                    end: 150,
                     ease: EaseFunctionType.OUT_SINE
                 }
             ]
         });
-
+        
         this.levelTransitionScreen = <Rect>this.add.graphic(GraphicType.RECT, HW3Layers.UI, { position: new Vec2(300, 200), size: new Vec2(600, 400) });
         this.levelTransitionScreen.color = new Color(34, 32, 52);
         this.levelTransitionScreen.alpha = 1;
@@ -422,7 +406,6 @@ export default abstract class HW3Level extends Scene {
     protected initializeWeaponSystem(): void {
         this.playerWeaponSystem = new PlayerWeapon(50, Vec2.ZERO, 1000, 3, 0, 50);
         this.playerWeaponSystem.initializePool(this, HW3Layers.PRIMARY);
-        
     }
     /**
      * Initializes the player, setting the player's initial position to the given position.
@@ -438,49 +421,35 @@ export default abstract class HW3Level extends Scene {
 
         // Add the player to the scene
         this.player = this.add.animatedSprite(key, HW3Layers.PRIMARY);
-        this.player.scale.set(0.125, 0.125);
+        this.player.scale.set(1/4, 1/4);
         this.player.position.copy(this.playerSpawn);
+        
         
         // Give the player physics
         this.player.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
-        this.player.setGroup(HW3PhysicsGroups.PLAYER);
-        this.player.addAI(PlayerController, {jumpAudioKey: "jump"});
-
+        this.player.setGroup("PLAYER");
+        
         // TODO - give the player their flip tween
-        this.player.tweens.add(PlayerTweens.FLIP, {
-            startDelay: 10,
-            duration: 300,
-            effects: [
-                {
-                    property: "rotation",
-                    start: 0,
-                    end: 2*Math.PI,
-                    ease: EaseFunctionType.IN_OUT_QUINT
-                }
-            ],
-            onEnd: PlayerAnimations.IDLE
+        this.player.tweens.add(PlayerTweens.FLIP,{
+            startDelay:0,
+            duration: 500,
+            effects:[{
+                property: "rotation",
+                start:0,
+                end:2*Math.PI,
+                ease:EaseFunctionType.IN_OUT_QUAD
+            }]
+        
         });
-
         // Give the player a death animation
         this.player.tweens.add(PlayerTweens.DEATH, {
             startDelay: 0,
-            duration: 500,
-            effects: [
-                {
-                    property: "rotation",
-                    start: 0,
-                    end: Math.PI,
-                    ease: EaseFunctionType.IN_OUT_QUAD
-                },
-                {
-                    property: "alpha",
-                    start: 1,
-                    end: 0,
-                    ease: EaseFunctionType.IN_OUT_QUAD
-                }
-            ],
+            duration: 1900,
+            effects: [],
             onEnd: HW3Events.PLAYER_DEAD
         });
+
+       
 
         // Give the player it's AI
         this.player.addAI(PlayerController, { 
@@ -508,9 +477,11 @@ export default abstract class HW3Level extends Scene {
         }
         
         this.levelEndArea = <Rect>this.add.graphic(GraphicType.RECT, HW3Layers.PRIMARY, { position: this.levelEndPosition, size: this.levelEndHalfSize });
-        this.levelEndArea.addPhysics(undefined, undefined, false, true);
+        this.levelEndArea.addPhysics(this.levelEndArea.collisionShape,undefined, false,true);
         this.levelEndArea.setTrigger(HW3PhysicsGroups.PLAYER, HW3Events.PLAYER_ENTERED_LEVEL_END, null);
         this.levelEndArea.color = new Color(255, 0, 255, .20);
+
+        
         
     }
 
@@ -520,8 +491,10 @@ export default abstract class HW3Level extends Scene {
     public getJumpAudioKey(): string {
         return this.jumpAudioKey
     }
-
-    public getDeathAudioKey(): string {
-        return this.deathAudioKey
+    public getDeathSoundKey():string{
+        return this.deathSoundKey
+    }
+    public getHitSoundKey():string{
+        return this.hitKey
     }
 }

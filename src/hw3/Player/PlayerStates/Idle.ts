@@ -6,13 +6,19 @@ import { HW3Controls } from "../../HW3Controls";
 export default class Idle extends PlayerState {
 
 	public onEnter(options: Record<string, any>): void {
-        this.owner.animation.play(PlayerAnimations.IDLE);
+        this.owner.animation.queue(PlayerAnimations.IDLE,true);
+        
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
         this.parent.velocity.y = 0;
 	}
 
 	public update(deltaT: number): void {
+        if(!this.owner.animation.isPlaying(PlayerAnimations.IDLE)){
+           if(this.parent.health> 0 && !this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE_RIGHT) && !this.owner.animation.isPlaying(PlayerAnimations.ATTACK_RIGHT)){
+                this.owner.animation.play(PlayerAnimations.IDLE)
+           }
+        }
         // Adjust the direction the player is facing
 		super.update(deltaT);
 

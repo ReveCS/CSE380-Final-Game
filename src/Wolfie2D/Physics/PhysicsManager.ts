@@ -16,7 +16,7 @@ export default abstract class PhysicsManager implements Updateable {
 	protected emitter: Emitter;
 
 	/** Maps layer names to numbers */
-	protected groupMap: Map<number>;
+	public groupMap: Map<number>;
 
 	/** Maps layer numbers to names */
 	protected groupNames: Array<string>;

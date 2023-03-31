@@ -8,10 +8,12 @@ import Color from "../../Wolfie2D/Utils/Color";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import Level1 from "./HW3Level1";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
+import Level2 from "./HW3Level2";
 
 // Layers for the main menu scene
 export const MenuLayers = {
     MAIN: "MAIN", 
+    SELECTION: "SELECTION",
     CONTROLS: "CONTROLS",
     ABOUT: "ABOUT",
     CREDIT: "CREDIT"
@@ -19,6 +21,7 @@ export const MenuLayers = {
 
 // Events triggered in the main menu
 const MainMenuEvent = {
+    SELECTION: "SELECTION",
 	CONTROLS: "CONTROLS",
 	ABOUT: "ABOUT",
     CREDIT: "CREDIT",
@@ -28,6 +31,7 @@ const MainMenuEvent = {
 export default class MainMenu extends Scene {
     // Layers, for multiple main menu screens
     private mainMenu: Layer;
+    private selection: Layer;
     private controls: Layer;
     private about: Layer;
     private credit: Layer;
@@ -50,7 +54,10 @@ export default class MainMenu extends Scene {
 
         // Main menu screen
         this.mainMenu = this.addUILayer(MenuLayers.MAIN);
-        this.mainMenu.setDepth
+
+        // Selection screen
+        this.selection = this.addUILayer(MenuLayers.SELECTION);
+        this.selection.setHidden(true);
 
         // Controls screen
         this.controls = this.addUILayer(MenuLayers.CONTROLS);
@@ -71,9 +78,10 @@ export default class MainMenu extends Scene {
         levels.borderColor = Color.WHITE;
         levels.backgroundColor = Color.TRANSPARENT;
         levels.font = "Hjet-Regular";
-        levels.onClick = () => {
-            this.sceneManager.changeToScene(Level1);
-        }
+        levels.onClickEventId = MainMenuEvent.SELECTION;
+        //levels.onClick = () => {
+        //    this.sceneManager.changeToScene(Level1);
+        //}
 
         // Add controls button
         const controls = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y), text: "Controls"});
@@ -101,6 +109,69 @@ export default class MainMenu extends Scene {
         credit.backgroundColor = Color.TRANSPARENT;
         credit.onClickEventId = MainMenuEvent.CREDIT;
         credit.font = "Hjet-Regular";
+
+        // Selection screen
+        const hub = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y), text: "Hub"});
+        hub.size.set(200, 50);
+        hub.borderWidth = 2;
+        hub.borderColor = Color.WHITE;
+        hub.backgroundColor = Color.TRANSPARENT;
+        hub.font = "Hjet-Regular";
+        //hub.onClick = () => {
+        //    this.sceneManager.changeToScene(Level1);
+        //}
+        const level1 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 200, center.y - 200), text: "Level 1"});
+        level1.size.set(200, 50);
+        level1.borderWidth = 2;
+        level1.borderColor = Color.WHITE;
+        level1.backgroundColor = Color.TRANSPARENT;
+        level1.font = "Hjet-Regular";
+        //level1.onClick = () => {
+        //    this.sceneManager.changeToScene(Level1);
+        //}
+        const level2 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 200, center.y - 200), text: "Level 2"});
+        level2.size.set(200, 50);
+        level2.borderWidth = 2;
+        level2.borderColor = Color.WHITE;
+        level2.backgroundColor = Color.TRANSPARENT;
+        level2.font = "Hjet-Regular";
+        //level2.onClick = () => {
+        //    this.sceneManager.changeToScene(Level1);
+        //}
+        const level3 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 300, center.y + 200), text: "Level 3"});
+        level3.size.set(200, 50);
+        level3.borderWidth = 2;
+        level3.borderColor = Color.WHITE;
+        level3.backgroundColor = Color.TRANSPARENT;
+        level3.font = "Hjet-Regular";
+        //level3.onClick = () => {
+        //    this.sceneManager.changeToScene(Level1);
+        //}
+        const level4 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 200), text: "Level 4"});
+        level4.size.set(200, 50);
+        level4.borderWidth = 2;
+        level4.borderColor = Color.WHITE;
+        level4.backgroundColor = Color.TRANSPARENT;
+        level4.font = "Hjet-Regular";
+        //level4.onClick = () => {
+        //    this.sceneManager.changeToScene(Level1);
+        //}
+        const boss = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 300, center.y + 200), text: "Level 5"});
+        boss.size.set(200, 50);
+        boss.borderWidth = 2;
+        boss.borderColor = Color.WHITE;
+        boss.backgroundColor = Color.TRANSPARENT;
+        boss.font = "Hjet-Regular";
+        //boss.onClick = () => {
+        //    this.sceneManager.changeToScene(Level1);
+        //}
+        const selectionBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 475, center.y + 300), text: "Back"});
+        selectionBack.size.set(200, 50);
+        selectionBack.borderWidth = 2;
+        selectionBack.borderColor = Color.WHITE;
+        selectionBack.backgroundColor = Color.TRANSPARENT;
+        selectionBack.font = "Hjet-Regular";
+        selectionBack.onClickEventId = MainMenuEvent.MENU;
 
         // Controls screen
         const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 250), text: "Controls"});
@@ -134,6 +205,7 @@ export default class MainMenu extends Scene {
         back.font = "Hjet-Regular";
         back.onClickEventId = MainMenuEvent.MENU;
 
+        // About screen
         const aboutHeader = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y - 250), text: "About"});
         aboutHeader.font = "Hjet-Regular";
         aboutHeader.textColor = Color.WHITE;
@@ -159,6 +231,7 @@ export default class MainMenu extends Scene {
         aboutBack.font = "Hjet-Regular";
         aboutBack.onClickEventId = MainMenuEvent.MENU;
 
+        // Credit screen
         const creditHeader = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CREDIT, {position: new Vec2(center.x, center.y - 250), text: "Credit"});
         creditHeader.font = "Hjet-Regular";
         creditHeader.textColor = Color.WHITE;
@@ -186,6 +259,7 @@ export default class MainMenu extends Scene {
         creditBack.onClickEventId = MainMenuEvent.MENU;
 
         // Subscribe to the button events
+        this.receiver.subscribe(MainMenuEvent.SELECTION);
         this.receiver.subscribe(MainMenuEvent.CONTROLS);
         this.receiver.subscribe(MainMenuEvent.ABOUT);
         this.receiver.subscribe(MainMenuEvent.CREDIT);
@@ -208,6 +282,11 @@ export default class MainMenu extends Scene {
 
     protected handleEvent(event: GameEvent): void {
         switch(event.type) {
+            case MainMenuEvent.SELECTION: {
+                this.selection.setHidden(false);
+                this.mainMenu.setHidden(true);
+                break;
+            }
             case MainMenuEvent.CONTROLS: {
                 this.controls.setHidden(false);
                 this.mainMenu.setHidden(true);
@@ -225,6 +304,7 @@ export default class MainMenu extends Scene {
             }
             case MainMenuEvent.MENU: {
                 this.mainMenu.setHidden(false);
+                this.selection.setHidden(true);
                 this.controls.setHidden(true);
                 this.about.setHidden(true);
                 this.credit.setHidden(true);

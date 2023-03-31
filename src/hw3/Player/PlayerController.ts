@@ -121,6 +121,10 @@ export default class PlayerController extends StateMachineAI {
             this.weapon.startSystem(500, 0, this.owner.position);
         }
 
+        if (Input.isPressed(HW3Controls.ESC)) {
+            this.emitter.fireEvent(HW3Events.GAME_PAUSE);
+        }
+
 	}
 
     public get velocity(): Vec2 { return this._velocity; }

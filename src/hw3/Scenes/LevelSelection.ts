@@ -25,7 +25,7 @@ const MainMenuEvent = {
 	MENU: "MENU",
 } as const;
 
-export default class MainMenu extends Scene {
+export default class LevelSelection extends Scene {
     // Layers, for multiple main menu screens
     private mainMenu: Layer;
     private controls: Layer;

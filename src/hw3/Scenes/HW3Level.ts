@@ -187,6 +187,18 @@ export default abstract class HW3Level extends Scene {
                 this.sceneManager.changeToScene(MainMenu);
                 break;
             }
+            // When player presses escape button, pause game layer and display pause screen
+            case HW3Events.GAME_PAUSE: {
+                console.log(this.isRunning());
+                if (this.isRunning() == true) {
+                    this.setRunning(false);
+                }
+                else {
+                    this.setRunning(true);
+                }
+                console.log(this.isRunning());
+                break;
+            }
             // Default: Throw an error! No unhandled events allowed.
             default: {
                 throw new Error(`Unhandled event caught in scene with type ${event.type}`)
@@ -319,6 +331,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.LEVEL_END);
         this.receiver.subscribe(HW3Events.HEALTH_CHANGE);
         this.receiver.subscribe(HW3Events.PLAYER_DEAD);
+        this.receiver.subscribe(HW3Events.GAME_PAUSE);
     }
     /**
      * Adds in any necessary UI to the game
@@ -466,7 +479,7 @@ export default abstract class HW3Level extends Scene {
         }
         this.viewport.follow(this.player);
         this.viewport.setZoomLevel(4);
-        this.viewport.setBounds(0, 0, 512, 512);
+        this.viewport.setBounds(0, 0, 450, 300);
     }
     /**
      * Initializes the level end area

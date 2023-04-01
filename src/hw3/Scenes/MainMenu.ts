@@ -44,7 +44,7 @@ export default class MainMenu extends Scene {
         // Load the menu song
         this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
 
-        //Load background
+        // Load background
         //this.load.image("background", "demo_assets/images/platformer_background.png");
 
     }
@@ -118,7 +118,7 @@ export default class MainMenu extends Scene {
         hub.backgroundColor = Color.TRANSPARENT;
         hub.font = "Hjet-Regular";
         //hub.onClick = () => {
-        //    this.sceneManager.changeToScene(Level1);
+        //    this.sceneManager.changeToScene(Hub);
         //}
         const level1 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 200, center.y - 200), text: "Level 1"});
         level1.size.set(200, 50);
@@ -136,7 +136,7 @@ export default class MainMenu extends Scene {
         level2.backgroundColor = Color.TRANSPARENT;
         level2.font = "Hjet-Regular";
         //level2.onClick = () => {
-        //    this.sceneManager.changeToScene(Level1);
+        //    this.sceneManager.changeToScene(Level2);
         //}
         const level3 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 300, center.y + 200), text: "Level 3"});
         level3.size.set(200, 50);
@@ -145,7 +145,7 @@ export default class MainMenu extends Scene {
         level3.backgroundColor = Color.TRANSPARENT;
         level3.font = "Hjet-Regular";
         //level3.onClick = () => {
-        //    this.sceneManager.changeToScene(Level1);
+        //    this.sceneManager.changeToScene(Level3);
         //}
         const level4 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 200), text: "Level 4"});
         level4.size.set(200, 50);
@@ -154,7 +154,7 @@ export default class MainMenu extends Scene {
         level4.backgroundColor = Color.TRANSPARENT;
         level4.font = "Hjet-Regular";
         //level4.onClick = () => {
-        //    this.sceneManager.changeToScene(Level1);
+        //    this.sceneManager.changeToScene(Level4);
         //}
         const boss = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 300, center.y + 200), text: "Level 5"});
         boss.size.set(200, 50);
@@ -163,7 +163,7 @@ export default class MainMenu extends Scene {
         boss.backgroundColor = Color.TRANSPARENT;
         boss.font = "Hjet-Regular";
         //boss.onClick = () => {
-        //    this.sceneManager.changeToScene(Level1);
+        //    this.sceneManager.changeToScene(Boss);
         //}
         const selectionBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 475, center.y + 300), text: "Back"});
         selectionBack.size.set(200, 50);

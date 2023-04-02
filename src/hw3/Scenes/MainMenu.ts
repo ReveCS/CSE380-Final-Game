@@ -16,6 +16,7 @@ import Level2 from "./HW3Level2";
 
 // Layers for the main menu scene
 export const MenuLayers = {
+    BACKGROUND: "BACKGROUND",
     MAIN: "MAIN", 
     SELECTION: "SELECTION",
     CONTROLS: "CONTROLS",
@@ -34,6 +35,7 @@ const MainMenuEvent = {
 
 export default class MainMenu extends Scene {
     // Layers, for multiple main menu screens
+    private background: Layer;
     private mainMenu: Layer;
     private selection: Layer;
     private controls: Layer;
@@ -43,6 +45,7 @@ export default class MainMenu extends Scene {
     // Sprites for background and buttons
     // Sprites for the background images
 	private bg: AnimatedSprite;
+    private backgroundSprite: Sprite;
     private levelsSprite: Sprite;
     private controlsSprite: Sprite;
     private aboutSprite: Sprite;
@@ -58,9 +61,11 @@ export default class MainMenu extends Scene {
     public static readonly MUSIC_KEY = "MAIN_MENU_MUSIC";
     public static readonly MUSIC_PATH = "game_assets/music/menu.mp3";
 
+    // Background
+    public static BACKGROUND_KEY = "BACKGROUND";
+    public static BACKGROUND_PATH = "game_assets/backgrounds/WavyBlueLines.png";
+
     // The key and path to the sprites
-	public static BACKGROUND_KEY = "BACKGROUND";
-    public static BACKGROUND_PATH = "game_assets/sprites/WavyBlueLines.png";
     public static LEVELS_KEY = "LEVELS";
     public static LEVELS_PATH = "game_assets/sprites/Button_cropped.png"
     public static CONTROLS_KEY = "LEVELS";
@@ -77,15 +82,9 @@ export default class MainMenu extends Scene {
         // Load the menu song
         //this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
 
-        // Load in the background image
-		//this.load.image(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
-
+        // Load sprites
+		this.load.image(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
         this.load.image(MainMenu.LEVELS_KEY, MainMenu.LEVELS_PATH);
-
-
-        // Load background
-        //this.load.image("background", "demo_assets/images/platformer_background.png");
-
     }
 
     public startScene(): void {
@@ -111,8 +110,9 @@ export default class MainMenu extends Scene {
         this.credit.setHidden(true);
 
         // Background layer
-
-
+        this.background = this.addUILayer(MenuLayers.BACKGROUND);
+        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.MAIN);
+        this.backgroundSprite.position.copy(new Vec2(0, 0));
 
         // Add levels button, and give it an event to emit on press
         const levels = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y - 100), text: "Levels"});
@@ -129,7 +129,6 @@ export default class MainMenu extends Scene {
         //    this.sceneManager.changeToScene(Level1);
         //}
 
-
         // Add controls button
         const controls = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y), text: "Controls"});
         controls.size.set(200, 50);
@@ -139,7 +138,6 @@ export default class MainMenu extends Scene {
         controls.onClickEventId = MainMenuEvent.CONTROLS;
         controls.font = "Hjet-Regular"
         
-
         // Add about button
         const about = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y + 100), text: "About"});
         about.size.set(200, 50);
@@ -178,6 +176,7 @@ export default class MainMenu extends Scene {
         //level1.onClick = () => {
         //    this.sceneManager.changeToScene(Level1);
         //}
+
         const level2 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 200, center.y - 200), text: "Level 2"});
         level2.size.set(200, 50);
         level2.borderWidth = 2;
@@ -187,6 +186,7 @@ export default class MainMenu extends Scene {
         //level2.onClick = () => {
         //    this.sceneManager.changeToScene(Level2);
         //}
+        
         const level3 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 300, center.y + 200), text: "Level 3"});
         level3.size.set(200, 50);
         level3.borderWidth = 2;
@@ -196,6 +196,7 @@ export default class MainMenu extends Scene {
         //level3.onClick = () => {
         //    this.sceneManager.changeToScene(Level3);
         //}
+
         const level4 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 200), text: "Level 4"});
         level4.size.set(200, 50);
         level4.borderWidth = 2;
@@ -205,6 +206,7 @@ export default class MainMenu extends Scene {
         //level4.onClick = () => {
         //    this.sceneManager.changeToScene(Level4);
         //}
+
         const boss = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 300, center.y + 200), text: "Level 5"});
         boss.size.set(200, 50);
         boss.borderWidth = 2;
@@ -214,6 +216,7 @@ export default class MainMenu extends Scene {
         //boss.onClick = () => {
         //    this.sceneManager.changeToScene(Boss);
         //}
+
         const selectionBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 475, center.y + 300), text: "Back"});
         selectionBack.size.set(200, 50);
         selectionBack.borderWidth = 2;

@@ -109,10 +109,18 @@ export default class MainMenu extends Scene {
         this.credit = this.addUILayer(MenuLayers.CREDIT);
         this.credit.setHidden(true);
 
-        // Background layer
+        // Background layer for all screens
         this.background = this.addUILayer(MenuLayers.BACKGROUND);
         this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.MAIN);
-        this.backgroundSprite.position.copy(new Vec2(0, 0));
+        this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
+        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.SELECTION);
+        this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
+        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.CONTROLS);
+        this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
+        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.ABOUT);
+        this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
+        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.CREDIT);
+        this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
 
         // Add levels button, and give it an event to emit on press
         const levels = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y - 100), text: "Levels"});

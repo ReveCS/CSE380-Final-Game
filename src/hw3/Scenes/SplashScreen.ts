@@ -13,7 +13,7 @@ import MainMenu from "./MainMenu";
 
 
 // Layers for the slpash screen
-export const MenuLayers = {
+export const SplashLayers = {
     SPLASH: "SPLASH"
 } as const;
 
@@ -29,15 +29,8 @@ export default class SplashScreen extends Scene {
     // Sprites for background and buttons
     // Sprites for the background images
 	private bg: AnimatedSprite;
-    private levelsSprite: Sprite;
-    private controlsSprite: Sprite;
-    private aboutSprite: Sprite;
-    private creditSprite: Sprite;
-    private hubSprite: Sprite;
-    private level1Sprite: Sprite;
-    private level2Sprite: Sprite;
-    private level3Sprite: Sprite;
-    private level4Sprite: Sprite;
+    private logoSprite: Sprite;
+
 
     
     // Music
@@ -64,12 +57,17 @@ export default class SplashScreen extends Scene {
     public startScene(): void {
         const center = this.viewport.getCenter();
 
-        // Main menu screen
-        this.splash = this.addUILayer(MenuLayers.SPLASH);
+        // Splash screen
+        this.splash = this.addUILayer(SplashLayers.SPLASH);
+
+        // Add logo sprite
+        this.logoSprite = this.add.sprite(SplashScreen.LOGO_KEY, SplashLayers.SPLASH);
+        this.logoSprite.position.copy(new Vec2(center.x, center.y - 100));
+        this.logoSprite.scale.scale(3, 3);
 
         // Add levels button, and give it an event to emit on press
-        const splash = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SPLASH, {position: new Vec2(center.x, center.y), text: "Click to continue"});
-        splash.size.set(200, 200);
+        const splash = <Button> this.add.uiElement(UIElementType.BUTTON, SplashLayers.SPLASH, {position: new Vec2(center.x, center.y + 200), text: "Click to continue"});
+        splash.size.set(1000, 1000);
         //levels.borderColor = Color.WHITE;
         splash.borderColor = Color.TRANSPARENT;
         splash.backgroundColor = Color.TRANSPARENT;

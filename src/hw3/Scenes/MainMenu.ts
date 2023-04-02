@@ -6,9 +6,13 @@ import Layer from "../../Wolfie2D/Scene/Layer";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
-import Level1 from "./HW3Level1";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
+import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import Hub from "./Hub";
+import Level1 from "./HW3Level1";
 import Level2 from "./HW3Level2";
+
 
 // Layers for the main menu scene
 export const MenuLayers = {
@@ -36,13 +40,48 @@ export default class MainMenu extends Scene {
     private about: Layer;
     private credit: Layer;
 
+    // Sprites for background and buttons
+    // Sprites for the background images
+	private bg: AnimatedSprite;
+    private levelsSprite: Sprite;
+    private controlsSprite: Sprite;
+    private aboutSprite: Sprite;
+    private creditSprite: Sprite;
+    private hubSprite: Sprite;
+    private level1Sprite: Sprite;
+    private level2Sprite: Sprite;
+    private level3Sprite: Sprite;
+    private level4Sprite: Sprite;
+
+    
     // Music
     public static readonly MUSIC_KEY = "MAIN_MENU_MUSIC";
-    public static readonly MUSIC_PATH = "hw4_assets/music/menu.mp3";
+    public static readonly MUSIC_PATH = "game_assets/music/menu.mp3";
+
+    // The key and path to the sprites
+	public static BACKGROUND_KEY = "BACKGROUND";
+    public static BACKGROUND_PATH = "game_assets/sprites/WavyBlueLines.png";
+    public static LEVELS_KEY = "LEVELS";
+    public static LEVELS_PATH = "game_assets/sprites/Button_cropped.png"
+    public static CONTROLS_KEY = "LEVELS";
+    public static CONTROLS_PATH = "game_assets/sprites/Button_cropped.png"
+    public static ABOUT_KEY = "LEVELS";
+    public static ABOUT_PATH = "game_assets/sprites/Button_cropped.png"
+    public static CREDIT_KEY = "LEVELS";
+    public static CREDIT_PATH = "game_assets/sprites/Button_cropped.png"
+    public static HUB_KEY = "LEVELS";
+    public static HUB_PATH = "game_assets/sprites/Button_cropped.png"
+
 
     public loadScene(): void {
         // Load the menu song
-        this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
+        //this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
+
+        // Load in the background image
+		//this.load.image(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
+
+        this.load.image(MainMenu.LEVELS_KEY, MainMenu.LEVELS_PATH);
+
 
         // Load background
         //this.load.image("background", "demo_assets/images/platformer_background.png");
@@ -71,17 +110,25 @@ export default class MainMenu extends Scene {
         this.credit = this.addUILayer(MenuLayers.CREDIT);
         this.credit.setHidden(true);
 
+        // Background layer
+
+
+
         // Add levels button, and give it an event to emit on press
         const levels = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y - 100), text: "Levels"});
-        levels.size.set(200, 50);
-        levels.borderWidth = 2;
-        levels.borderColor = Color.WHITE;
+        this.levelsSprite = this.add.sprite(MainMenu.LEVELS_KEY, MenuLayers.MAIN);
+        this.levelsSprite.position.copy(levels.position);
+
+        levels.size.set(this.levelsSprite.size.x, this.levelsSprite.size.y);
+        //levels.borderColor = Color.WHITE;
+        levels.borderColor = Color.TRANSPARENT;
         levels.backgroundColor = Color.TRANSPARENT;
         levels.font = "Hjet-Regular";
         levels.onClickEventId = MainMenuEvent.SELECTION;
         //levels.onClick = () => {
         //    this.sceneManager.changeToScene(Level1);
         //}
+
 
         // Add controls button
         const controls = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y), text: "Controls"});
@@ -91,6 +138,7 @@ export default class MainMenu extends Scene {
         controls.backgroundColor = Color.TRANSPARENT;
         controls.onClickEventId = MainMenuEvent.CONTROLS;
         controls.font = "Hjet-Regular"
+        
 
         // Add about button
         const about = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y + 100), text: "About"});
@@ -117,9 +165,10 @@ export default class MainMenu extends Scene {
         hub.borderColor = Color.WHITE;
         hub.backgroundColor = Color.TRANSPARENT;
         hub.font = "Hjet-Regular";
-        //hub.onClick = () => {
-        //    this.sceneManager.changeToScene(Hub);
-        //}
+        hub.onClick = () => {
+            this.sceneManager.changeToScene(Hub);
+        }
+
         const level1 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 200, center.y - 200), text: "Level 1"});
         level1.size.set(200, 50);
         level1.borderWidth = 2;

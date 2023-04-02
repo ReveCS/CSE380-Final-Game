@@ -14,13 +14,13 @@ export default class Hub extends HW3Level {
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/eye_of_cthulhu.json";
 
     public static readonly TILEMAP_KEY = "HUB";
-    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Hub.json";
+    public static readonly TILEMAP_PATH = "game_assets/tilemaps/HW4Level1.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
     public static readonly DESTRUCTIBLE_LAYER_KEY = "Destructable";
     public static readonly WALLS_LAYER_KEY = "Main";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
-    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/levelmusic.mp3";
+    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/levelmusic.wav";
 
     public static readonly JUMP_AUDIO_KEY = "PLAYER_JUMP";
     public static readonly JUMP_AUDIO_PATH = "game_assets/sounds/jump.wav";
@@ -68,8 +68,14 @@ export default class Hub extends HW3Level {
     public loadScene(): void {
         // Load in the tilemap
         this.load.tilemap(this.tilemapKey, Hub.TILEMAP_PATH);
+        // Load in the player's sprite
+        this.load.spritesheet(this.playerSpriteKey, Hub.PLAYER_SPRITE_PATH);
+        // Audio and music
         this.load.audio(this.levelMusicKey, Hub.LEVEL_MUSIC_PATH);
-    
+        this.load.audio(this.jumpAudioKey, Hub.JUMP_AUDIO_PATH);
+        this.load.audio(this.tileDestroyedAudioKey, Hub.TILE_DESTROYED_PATH);
+        this.load.audio(this.deathSoundKey,Hub.DEATH_PATH);
+        this.load.audio(this.hitKey,Hub.HIT_PATH);
     }
 
     public unloadScene(): void {

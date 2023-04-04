@@ -25,6 +25,7 @@ import { HW3PhysicsGroups } from "../HW3PhysicsGroups";
 import HW3FactoryManager from "../Factory/HW3FactoryManager";
 import MainMenu from "./MainMenu";
 import Particle from "../../Wolfie2D/Nodes/Graphics/Particle";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 
 /**
  * A const object for the layer names
@@ -60,6 +61,13 @@ export default abstract class HW3Level extends Scene {
     private healthLabel: Label;
 	private healthBar: Label;
 	private healthBarBg: Label;
+
+    // Spites for UI
+    private HPSprite: Sprite;
+
+    // The key and path to the sprites
+    protected HP_KEY: string;
+    protected HP_PATH: string;
 
 
     /** The end of level stuff */
@@ -282,7 +290,7 @@ export default abstract class HW3Level extends Scene {
 		this.healthBar.size.set(this.healthBarBg.size.x - unit * (maxHealth - currentHealth), this.healthBarBg.size.y);
 		this.healthBar.position.set(this.healthBarBg.position.x - (unit / 2 / this.getViewScale()) * (maxHealth - currentHealth), this.healthBarBg.position.y);
 
-		this.healthBar.backgroundColor = currentHealth < maxHealth * 1/4 ? Color.RED: currentHealth < maxHealth * 3/4 ? Color.YELLOW : Color.GREEN;
+		this.healthBar.backgroundColor = currentHealth < maxHealth * 1/4 ? Color.RED: currentHealth < maxHealth * 3/4 ? Color.RED : Color.RED;
 	}
 
     /* Initialization methods for everything in the scene */
@@ -338,23 +346,21 @@ export default abstract class HW3Level extends Scene {
      */
     protected initializeUI(): void {
 
-        // HP Label
-		this.healthLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(205, 20), text: "HP "});
-		this.healthLabel.size.set(300, 30);
-		this.healthLabel.fontSize = 24;
-		this.healthLabel.font = "Courier";
+        // HealthBar Sprite
+        this.HPSprite = this.add.sprite(this.HP_KEY, HW3Layers.UI);
+        this.HPSprite.position.copy(new Vec2(50, 20));
 
         // HealthBar
-		this.healthBar = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(250, 20), text: ""});
-		this.healthBar.size = new Vec2(300, 25);
-		this.healthBar.backgroundColor = Color.GREEN;
+		this.healthBar = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(55, 20), text: ""});
+        this.healthBar.size.set(250, 25);
+		this.healthBar.backgroundColor = Color.RED;
 
         // HealthBar Border
-		this.healthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(250, 20), text: ""});
-		this.healthBarBg.size = new Vec2(300, 25);
-		this.healthBarBg.borderColor = Color.BLACK;
+		this.healthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(55, 20), text: ""});
+        this.healthBarBg.size.set(250, 25);
+		this.healthBarBg.borderColor = Color.TRANSPARENT;
 
-        // End of level label (start off screen)
+         // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, { position: new Vec2(-300, 100), text: "Level Complete" });
         this.levelEndLabel.size.set(1200, 60);
         this.levelEndLabel.borderRadius = 0;
@@ -375,7 +381,7 @@ export default abstract class HW3Level extends Scene {
                     ease: EaseFunctionType.OUT_SINE
                 }
             ]
-        });
+        }); 
         
         this.levelTransitionScreen = <Rect>this.add.graphic(GraphicType.RECT, HW3Layers.UI, { position: new Vec2(300, 200), size: new Vec2(600, 400) });
         this.levelTransitionScreen.color = new Color(34, 32, 52);

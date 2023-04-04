@@ -19,6 +19,7 @@ export default class Hub extends HW3Level {
     public static readonly DESTRUCTIBLE_LAYER_KEY = "Destructable";
     public static readonly WALLS_LAYER_KEY = "Main";
 
+    // Audio and music
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
     public static readonly LEVEL_MUSIC_PATH = "game_assets/music/levelmusic.wav";
 
@@ -33,6 +34,10 @@ export default class Hub extends HW3Level {
 
     public static readonly HIT_KEY = "HIT";
     public static readonly HIT_PATH = "game_assets/sounds/gettinghit.wav";
+
+    // Game UI Sprites
+    public static readonly HP_KEY = "HEALTH";
+    public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
@@ -57,6 +62,9 @@ export default class Hub extends HW3Level {
         this.deathSoundKey = Hub.DEATH_KEY;
         this.hitKey = Hub.HIT_KEY;
 
+        // Sprites
+        this.HP_KEY = Hub.HP_KEY;
+
         // Level end size and position
         this.levelEndPosition = new Vec2(32, 216).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
@@ -76,6 +84,8 @@ export default class Hub extends HW3Level {
         this.load.audio(this.tileDestroyedAudioKey, Hub.TILE_DESTROYED_PATH);
         this.load.audio(this.deathSoundKey,Hub.DEATH_PATH);
         this.load.audio(this.hitKey,Hub.HIT_PATH);
+        // Game UI sprites
+        this.load.image(this.HP_KEY, Hub.HP_PATH);
     }
 
     public unloadScene(): void {

@@ -11,13 +11,13 @@ export default class Hub extends HW3Level {
 
     public static readonly PLAYER_SPAWN = new Vec2(32, 32);
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
-    public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/eye_of_cthulhu.json";
+    public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
 
     public static readonly TILEMAP_KEY = "HUB";
-    public static readonly TILEMAP_PATH = "game_assets/tilemaps/HW4Level1.json";
+    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Hub.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
     public static readonly DESTRUCTIBLE_LAYER_KEY = "Destructable";
-    public static readonly WALLS_LAYER_KEY = "Main";
+    public static readonly WALLS_LAYER_KEY = "Ground";
 
     // Audio and music
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";

@@ -24,14 +24,15 @@ import SortingUtils from "../../Wolfie2D/Utils/SortingUtils";
  */
 export const PlayerAnimations = {
     IDLE: "IDLE",
-    WALK_LEFT: "WALK_LEFT",
-    WALK_RIGHT: "WALK_RIGHT",
-    ATTACK_RIGHT: "ATTACK_RIGHT",
-    ATTACK_LEFT: "ATTACK_LEFT",
-    TAKE_DAMAGE_RIGHT: "TAKE_DAMAGE_RIGHT",
+    WALK: "WALK",
+    ATTACK_1: "ATTACK_1",
+    ATTACK_2: "ATTACK_2",
+    TAKE_DAMAGE: "TAKE_DAMAGE",
     DYING: "DYING",
     DEATH: "DEATH",
     JUMP: "JUMP",
+    FALL: "FALL",
+    LAND: "LAND"
 } as const
 
 /**
@@ -57,8 +58,8 @@ export const PlayerStates = {
  * The controller that controls the player.
  */
 export default class PlayerController extends StateMachineAI {
-    public readonly MAX_SPEED: number = 200;
-    public readonly MIN_SPEED: number = 100;
+    public readonly MAX_SPEED: number = 600;
+    public readonly MIN_SPEED: number = 500;
 
     /** Health and max health for the player */
     protected _health: number;
@@ -113,12 +114,12 @@ export default class PlayerController extends StateMachineAI {
     public get faceDir(): Vec2 { return this.owner.position.dirTo(Input.getGlobalMousePosition()); }
 
     public update(deltaT: number): void {
+        console.log(this.owner.animation.currentAnimation);
 		super.update(deltaT);
         // If the player hits the attack button and the weapon system isn't running, restart the system and fire!
-        if (Input.isPressed(HW3Controls.ATTACK) && !this.weapon.isSystemRunning()) {
-            this.owner.animation.play(PlayerAnimations.ATTACK_RIGHT);
-            // Start the particle system at the player's current position
-            this.weapon.startSystem(500, 0, this.owner.position);
+        if (Input.isPressed(HW3Controls.ATTACK)) {
+
+            this.owner.animation.play(PlayerAnimations.ATTACK_1);
         }
 
         if (Input.isPressed(HW3Controls.ESC)) {

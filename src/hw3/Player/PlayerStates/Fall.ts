@@ -15,20 +15,21 @@ export default class Fall extends PlayerState {
         this.parent.velocity.y = 0;
         this.fallTimer = new Timer(200)
         this.curHealth = this.parent.health;
+        this.owner.animation.play(PlayerAnimations.FALL)
         
     }
 
     update(deltaT: number): void {
-        
+        super.update(deltaT);
         // If the player hits the ground, start idling and check if we should take damage
         if (this.owner.onGround) {
-            this.parent.health -= Math.floor(this.parent.velocity.y / 250);
-            
+            // this.parent.health -= Math.floor(this.parent.velocity.y / 250);
+            this.owner.animation.play(PlayerAnimations.LAND);
             if(this.curHealth > this.parent.health){
                 this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: this.hitSound, loop: false, holdReference: false});
                 this.curHealth = this.parent.health;
                 if(this.curHealth > 0){
-                    this.owner.animation.play(PlayerAnimations.TAKE_DAMAGE_RIGHT);
+                    this.owner.animation.play(PlayerAnimations.TAKE_DAMAGE);
                 }
                 
             }

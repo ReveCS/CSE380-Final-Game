@@ -15,7 +15,7 @@ export default class Idle extends PlayerState {
 
 	public update(deltaT: number): void {
         if(!this.owner.animation.isPlaying(PlayerAnimations.IDLE)){
-           if(this.parent.health> 0 && !this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE_RIGHT) && !this.owner.animation.isPlaying(PlayerAnimations.ATTACK_RIGHT)){
+           if(this.parent.health> 0 && !this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE) && (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) || (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_2))){
                 this.owner.animation.play(PlayerAnimations.IDLE)
            }
         }

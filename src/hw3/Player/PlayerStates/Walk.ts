@@ -7,8 +7,8 @@ export default class Walk extends PlayerState {
 
 	onEnter(options: Record<string, any>): void {
 		this.parent.speed = this.parent.MIN_SPEED;
-        if(this.parent.health > 0 && !this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE_RIGHT)){
-            this.owner.animation.play(PlayerAnimations.WALK_RIGHT);
+        if(this.parent.health > 0 && !this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE)){
+            this.owner.animation.play(PlayerAnimations.WALK);
         }
 	}
 

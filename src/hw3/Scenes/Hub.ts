@@ -87,4 +87,9 @@ export default class Hub extends HW3Level {
         this.nextLevel = MainMenu;
     }
 
+    protected initializeViewport(): void {
+        super.initializeViewport();
+        this.viewport.setBounds(16, 16, 496, 512);
+    }
+
 }

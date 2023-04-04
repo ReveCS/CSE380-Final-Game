@@ -63,11 +63,11 @@ export default class MainMenu extends Scene {
 
     // Background
     public static BACKGROUND_KEY = "BACKGROUND";
-    public static BACKGROUND_PATH = "game_assets/backgrounds/WavyBlueLines.png";
+    public static BACKGROUND_PATH = "game_assets/backgrounds/background2.png";
 
     // The key and path to the sprites
-    public static LEVELS_KEY = "LEVELS";
-    public static LEVELS_PATH = "game_assets/sprites/Button_cropped.png"
+    public static BUTTON_KEY = "LEVELS";
+    public static BUTTON_PATH = "game_assets/sprites/Button_cropped.png"
     public static CONTROLS_KEY = "LEVELS";
     public static CONTROLS_PATH = "game_assets/sprites/Button_cropped.png"
     public static ABOUT_KEY = "LEVELS";
@@ -84,7 +84,7 @@ export default class MainMenu extends Scene {
 
         // Load sprites
 		this.load.image(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
-        this.load.image(MainMenu.LEVELS_KEY, MainMenu.LEVELS_PATH);
+        this.load.image(MainMenu.BUTTON_KEY, MainMenu.BUTTON_PATH);
     }
 
     public startScene(): void {
@@ -124,21 +124,23 @@ export default class MainMenu extends Scene {
 
         // Add levels button, and give it an event to emit on press
         const levels = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y - 100), text: "Levels"});
-        this.levelsSprite = this.add.sprite(MainMenu.LEVELS_KEY, MenuLayers.MAIN);
+        this.levelsSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
         this.levelsSprite.position.copy(levels.position);
 
         levels.size.set(this.levelsSprite.size.x, this.levelsSprite.size.y);
+        //levels.size.set(200, 50);
+        //levels.borderWidth = 2;
         //levels.borderColor = Color.WHITE;
         levels.borderColor = Color.TRANSPARENT;
         levels.backgroundColor = Color.TRANSPARENT;
-        levels.font = "Hjet-Regular";
         levels.onClickEventId = MainMenuEvent.SELECTION;
-        //levels.onClick = () => {
-        //    this.sceneManager.changeToScene(Level1);
-        //}
+        levels.font = "Hjet-Regular";
 
         // Add controls button
         const controls = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y), text: "Controls"});
+        this.controlsSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
+        this.controlsSprite.position.copy(controls.position);
+        
         controls.size.set(200, 50);
         controls.borderWidth = 2;
         controls.borderColor = Color.WHITE;
@@ -148,6 +150,9 @@ export default class MainMenu extends Scene {
         
         // Add about button
         const about = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y + 100), text: "About"});
+        this.aboutSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
+        this.aboutSprite.position.copy(about.position);
+        
         about.size.set(200, 50);
         about.borderWidth = 2;
         about.borderColor = Color.WHITE;
@@ -157,6 +162,9 @@ export default class MainMenu extends Scene {
 
         // Add credit button
         const credit = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y + 200), text: "Credit"});
+        this.creditSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
+        this.creditSprite.position.copy(credit.position);
+        
         credit.size.set(200, 50);
         credit.borderWidth = 2;
         credit.borderColor = Color.WHITE;

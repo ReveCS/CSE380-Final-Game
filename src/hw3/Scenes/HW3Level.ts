@@ -478,7 +478,7 @@ export default abstract class HW3Level extends Scene {
         }
         this.viewport.follow(this.player);
         this.viewport.setZoomLevel(4);
-        this.viewport.setBounds(32, 0, 2368, 1600);
+        this.viewport.setBounds(48, 0, 2368, 1600);
     }
     /**
      * Initializes the level end area

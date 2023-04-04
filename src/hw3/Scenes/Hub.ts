@@ -9,7 +9,7 @@ import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 
 export default class Hub extends HW3Level {
 
-    public static readonly PLAYER_SPAWN = new Vec2(32, 32);
+    public static readonly PLAYER_SPAWN = new Vec2(64, 250);
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
 
@@ -68,7 +68,7 @@ export default class Hub extends HW3Level {
         // Level end size and position
         this.levelEndPosition = new Vec2(32, 216).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
-
+        
     }
     /**
      * Load in resources for level 4.
@@ -99,7 +99,7 @@ export default class Hub extends HW3Level {
 
     protected initializeViewport(): void {
         super.initializeViewport();
-        this.viewport.setBounds(16, 16, 496, 512);
+        this.viewport.setBounds(32, 16, 2368, 512);
     }
 
 }

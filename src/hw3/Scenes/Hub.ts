@@ -99,7 +99,7 @@ export default class Hub extends HW3Level {
 
     protected initializeViewport(): void {
         super.initializeViewport();
-        this.viewport.setBounds(32, 16, 2368, 512);
+        this.viewport.setBounds(32, 16, 2368, 1200);
     }
 
 }

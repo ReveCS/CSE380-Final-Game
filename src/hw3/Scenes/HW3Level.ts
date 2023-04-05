@@ -477,7 +477,7 @@ export default abstract class HW3Level extends Scene {
             throw new Error("Player must be initialized before setting the viewport to folow the player");
         }
         this.viewport.follow(this.player);
-        this.viewport.setZoomLevel(4);
+        this.viewport.setZoomLevel(3);
         this.viewport.setBounds(48, 0, 2368, 1600);
     }
     /**

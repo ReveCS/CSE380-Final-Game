@@ -63,7 +63,7 @@ export default class MainMenu extends Scene {
 
     // Background
     public static BACKGROUND_KEY = "BACKGROUND";
-    public static BACKGROUND_PATH = "game_assets/backgrounds/background2.png";
+    public static BACKGROUND_PATH = "game_assets/backgrounds/background.png";
 
     // The key and path to the sprites
     public static BUTTON_KEY = "LEVELS";

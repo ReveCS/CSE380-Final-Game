@@ -61,6 +61,10 @@ export default class MainMenu extends Scene {
     public static readonly MUSIC_KEY = "MAIN_MENU_MUSIC";
     public static readonly MUSIC_PATH = "game_assets/music/menu.mp3";
 
+    // Live background
+    public static LIVEBACKGROUND_KEY = "LIVE_BACKGROUND";
+    public static LIVEBACKGROUND_PATH = "game_assets/backgrounds/Last Delivery Background.json";
+
     // Background
     public static BACKGROUND_KEY = "BACKGROUND";
     public static BACKGROUND_PATH = "game_assets/backgrounds/background.png";
@@ -83,6 +87,7 @@ export default class MainMenu extends Scene {
         //this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
 
         // Load sprites
+        //this.load.image(MainMenu.LIVEBACKGROUND_KEY, MainMenu.LIVEBACKGROUND_PATH);
 		this.load.image(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
         this.load.image(MainMenu.BUTTON_KEY, MainMenu.BUTTON_PATH);
     }
@@ -111,6 +116,8 @@ export default class MainMenu extends Scene {
 
         // Background layer for all screens
         this.background = this.addUILayer(MenuLayers.BACKGROUND);
+        //this.bg = this.add.animatedSprite(MainMenu.LIVEBACKGROUND_KEY, MenuLayers.MAIN);
+        //this.bg.position.copy(new Vec2(center.x, center.y));
         this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.MAIN);
         this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
         this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.SELECTION);
@@ -246,26 +253,29 @@ export default class MainMenu extends Scene {
         controlsHeader.textColor = Color.WHITE;
         controlsHeader.font = "Hjet-Regular";
 
-        const a = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 100), text: "A - Move Left"});
+        const a = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 125), text: "A - Move Left"});
         a.textColor = Color.WHITE;
         a.font = "Hjet-Regular";
-        const d = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 50), text: "D - Move Right"});
+        const d = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 75), text: "D - Move Right"});
         d.textColor = Color.WHITE;
         d.font = "Hjet-Regular";
-        const w = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y), text: "W - Jump"});
+        const w = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 25), text: "W - Jump"});
         w.textColor = Color.WHITE;
         w.font = "Hjet-Regular";
-        const j = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 50), text: "J - Attack"});
+        const j = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 25), text: "J - Attack"});
         j.textColor = Color.WHITE
         j.font = "Hjet-Regular";
-        const k = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 100), text: "K - Special Attack"});
+        const k = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 75), text: "K - Special Attack"});
         k.textColor = Color.WHITE;
         k.font = "Hjet-Regular";  
-        const esc = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 150), text: "ESC - Pause the Game"});
+        const i = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 125), text: "I - Inventory"});
+        i.textColor = Color.WHITE;
+        i.font = "Hjet-Regular";  
+        const esc = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 175), text: "ESC - Pause the Game"});
         esc.textColor = Color.WHITE;
         esc.font = "Hjet-Regular";  
 
-        const back = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 250), text: "Back"});
+        const back = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 300), text: "Back"});
         back.size.set(200, 50);
         back.borderWidth = 2;
         back.borderColor = Color.WHITE;
@@ -278,20 +288,42 @@ export default class MainMenu extends Scene {
         aboutHeader.font = "Hjet-Regular";
         aboutHeader.textColor = Color.WHITE;
 
-        const aboutText1 = "Pyke Kallus used to be an ordinary mailman, delivering letters and packages across the country. But when delivering his 1000th package, he accidentally opens it, and is suddenly transported into the fantasy world of Atnis. And now, in order to make a living, he works for UBS (United Bounty Service) and delivers heads instead of mail every day. As the top Bounty Hunter, Pyke, with his trusty Mailhammer, travels around the plagued lands of Atnis to rid them of invading monsters that threaten the common people. ";
-        //const aboutText2 = "using the Wolfie2D game engine, a TypeScript game engine created by";
-        //const aboutText3 = "Joe Weaver and Richard McKenna.";
+        const aboutText1 = "Pyke Kallus used to be an ordinary mailman, delivering letters and";
+        const aboutText2 = "packages across the country. But when delivering his 1000th package,";
+        const aboutText3 = "he accidentally opens it, and is suddenly transported into the fantasy";
+        const aboutText4 = "world of Atnis. And now, in order to make a living, he works for UBS";
+        const aboutText5 = "(United Bounty Service) and delivers heads instead of mail every day."; 
+        const aboutText6 = "As the top Bounty Hunter, Pyke, with his trusty Mailhammer, travels";
+        const aboutText7 = "around the plagued lands of Atnis to rid them of invading monsters";
+        const aboutText8 = "that threaten the common people.";
 
-        const aboutLine1 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y - 50), text: aboutText1});
+        const aboutLine1 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y - 150), text: aboutText1});
         aboutLine1.font = "Hjet-Regular"
-        //const aboutLine2 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y), text: aboutText2});
-        //const aboutLine3 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y + 50), text: aboutText3});
+        const aboutLine2 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y - 100), text: aboutText2});
+        aboutLine2.font = "Hjet-Regular"
+        const aboutLine3 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y - 50), text: aboutText3});
+        aboutLine3.font = "Hjet-Regular"
+        const aboutLine4 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y), text: aboutText4});
+        aboutLine4.font = "Hjet-Regular"
+        const aboutLine5 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y + 50), text: aboutText5});
+        aboutLine5.font = "Hjet-Regular"
+        const aboutLine6 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y + 100), text: aboutText6});
+        aboutLine6.font = "Hjet-Regular"
+        const aboutLine7 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y + 150), text: aboutText7});
+        aboutLine7.font = "Hjet-Regular"
+        const aboutLine8 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y + 200), text: aboutText8});
+        aboutLine8.font = "Hjet-Regular"
 
         aboutLine1.textColor = Color.WHITE;
-        //aboutLine2.textColor = Color.WHITE;
-        //aboutLine3.textColor = Color.WHITE;
+        aboutLine2.textColor = Color.WHITE;
+        aboutLine3.textColor = Color.WHITE;
+        aboutLine4.textColor = Color.WHITE;
+        aboutLine5.textColor = Color.WHITE;
+        aboutLine6.textColor = Color.WHITE;
+        aboutLine7.textColor = Color.WHITE;
+        aboutLine8.textColor = Color.WHITE;
 
-        const aboutBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y + 250), text: "Back"});
+        const aboutBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.ABOUT, {position: new Vec2(center.x, center.y + 300), text: "Back"});
         aboutBack.size.set(200, 50);
         aboutBack.borderWidth = 2;
         aboutBack.borderColor = Color.WHITE;
@@ -318,7 +350,7 @@ export default class MainMenu extends Scene {
         creditLine2.textColor = Color.WHITE;
         //creditLine3.textColor = Color.WHITE;
 
-        const creditBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.CREDIT, {position: new Vec2(center.x, center.y + 250), text: "Back"});
+        const creditBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.CREDIT, {position: new Vec2(center.x, center.y + 300), text: "Back"});
         creditBack.size.set(200, 50);
         creditBack.borderWidth = 2;
         creditBack.borderColor = Color.WHITE;

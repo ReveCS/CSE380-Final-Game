@@ -55,6 +55,7 @@ export default class MainMenu extends Scene {
     private level2Sprite: Sprite;
     private level3Sprite: Sprite;
     private level4Sprite: Sprite;
+    private bossSprite: Sprite;
 
     
     // Music
@@ -87,7 +88,7 @@ export default class MainMenu extends Scene {
         //this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
 
         // Load sprites
-        //this.load.image(MainMenu.LIVEBACKGROUND_KEY, MainMenu.LIVEBACKGROUND_PATH);
+        //this.load.spritesheet(MainMenu.LIVEBACKGROUND_KEY, MainMenu.LIVEBACKGROUND_PATH);
 		this.load.image(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
         this.load.image(MainMenu.BUTTON_KEY, MainMenu.BUTTON_PATH);
     }
@@ -181,9 +182,11 @@ export default class MainMenu extends Scene {
 
         // Selection screen
         const hub = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y), text: "Hub"});
+        this.hubSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
+        this.hubSprite.position.copy(hub.position);
+
         hub.size.set(200, 50);
-        hub.borderWidth = 2;
-        hub.borderColor = Color.WHITE;
+        hub.borderColor = Color.TRANSPARENT;
         hub.backgroundColor = Color.TRANSPARENT;
         hub.font = "Hjet-Regular";
         hub.onClick = () => {
@@ -191,9 +194,11 @@ export default class MainMenu extends Scene {
         }
 
         const level1 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 200, center.y - 200), text: "Level 1"});
+        this.level1Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
+        this.level1Sprite.position.copy(level1.position);
+        
         level1.size.set(200, 50);
-        level1.borderWidth = 2;
-        level1.borderColor = Color.WHITE;
+        level1.borderColor = Color.TRANSPARENT;
         level1.backgroundColor = Color.TRANSPARENT;
         level1.font = "Hjet-Regular";
         //level1.onClick = () => {
@@ -201,9 +206,11 @@ export default class MainMenu extends Scene {
         //}
 
         const level2 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 200, center.y - 200), text: "Level 2"});
+        this.level2Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
+        this.level2Sprite.position.copy(level2.position);
+        
         level2.size.set(200, 50);
-        level2.borderWidth = 2;
-        level2.borderColor = Color.WHITE;
+        level2.borderColor = Color.TRANSPARENT;
         level2.backgroundColor = Color.TRANSPARENT;
         level2.font = "Hjet-Regular";
         //level2.onClick = () => {
@@ -211,9 +218,11 @@ export default class MainMenu extends Scene {
         //}
         
         const level3 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 300, center.y + 200), text: "Level 3"});
+        this.level3Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
+        this.level3Sprite.position.copy(level3.position);
+        
         level3.size.set(200, 50);
-        level3.borderWidth = 2;
-        level3.borderColor = Color.WHITE;
+        level3.borderColor = Color.TRANSPARENT;
         level3.backgroundColor = Color.TRANSPARENT;
         level3.font = "Hjet-Regular";
         //level3.onClick = () => {
@@ -221,9 +230,11 @@ export default class MainMenu extends Scene {
         //}
 
         const level4 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 200), text: "Level 4"});
+        this.level4Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
+        this.level4Sprite.position.copy(level4.position);
+        
         level4.size.set(200, 50);
-        level4.borderWidth = 2;
-        level4.borderColor = Color.WHITE;
+        level4.borderColor = Color.TRANSPARENT;
         level4.backgroundColor = Color.TRANSPARENT;
         level4.font = "Hjet-Regular";
         //level4.onClick = () => {
@@ -231,6 +242,9 @@ export default class MainMenu extends Scene {
         //}
 
         const boss = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 300, center.y + 200), text: "Level 5"});
+        this.bossSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
+        this.bossSprite.position.copy(boss.position);
+        
         boss.size.set(200, 50);
         boss.borderWidth = 2;
         boss.borderColor = Color.WHITE;

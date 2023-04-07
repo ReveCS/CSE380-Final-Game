@@ -52,6 +52,7 @@ export const PlayerStates = {
 	JUMP: "JUMP",
     FALL: "FALL",
     DEAD: "DEAD",
+    TALKING: "TALKING"
 } as const
 
 /**

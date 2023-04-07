@@ -2,8 +2,13 @@ import { PlayerStates, PlayerAnimations } from "../PlayerController";
 import PlayerState from "./PlayerState";
 import Input from "../../../Wolfie2D/Input/Input";
 import { HW3Controls } from "../../HW3Controls";
+import GameEvent from "../../../Wolfie2D/Events/GameEvent";
+import { HW3Events } from "../../HW3Events";
+import Receiver from "../../../Wolfie2D/Events/Receiver";
 
 export default class Idle extends PlayerState {
+
+    protected receiver: Receiver;
 
 	public onEnter(options: Record<string, any>): void {
         this.owner.animation.queue(PlayerAnimations.IDLE,true);
@@ -11,6 +16,21 @@ export default class Idle extends PlayerState {
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
         this.parent.velocity.y = 0;
+
+        this.receiver.subscribe(HW3Events.TALKING_TO_NPC);
+	}
+
+    public handleInput(event: GameEvent): void {
+        switch(event.type) {
+            case HW3Events.TALKING_TO_NPC: {
+                this.finished(PlayerStates.TALKING);
+                break;
+            }
+            // Default - throw an error
+            default: {
+                throw new Error(`Unhandled event in PlayerState of type ${event.type}`);
+            }
+        }
 	}
 
 	public update(deltaT: number): void {

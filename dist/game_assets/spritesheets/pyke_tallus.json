@@ -1,0 +1,211 @@
+{
+	"name": "pyke_tallus",
+	"spriteSheetImage": "pyke_tallus.png",
+	"spriteWidth": 125,
+	"spriteHeight": 105,
+	"leftBuffer": 0,
+	"rightBuffer": 0,
+	"topBuffer": 0,
+	"bottomBuffer": 0,
+	"columns": 5,
+	"rows": 7,
+	"animations": [
+		{
+			"name": "IDLE",
+			"repeat": true,
+			"frames": [
+				{
+					"index": 0,
+					"duration": 15
+				},
+				{
+					"index": 1,
+					"duration": 15
+				},
+				{
+					"index": 2,
+					"duration": 15
+				}
+				
+			]
+		},		
+		{
+			"name": "WALK",
+			"repeat": true,
+			"frames": [
+				{
+					"index": 3,
+					"duration": 10
+				},
+				{
+					"index": 4,
+					"duration": 10
+				},
+				{
+					"index": 5,
+					"duration": 10
+				},
+				{
+					"index": 6,
+					"duration": 10
+				},
+				{
+					"index": 7,
+					"duration": 10
+				},
+				{
+					"index": 8,
+					"duration": 10
+				}
+			]
+		},
+		{
+			"name": "JUMP",
+			"repeat": false,
+			"frames": [
+				{
+					"index": 9,
+					"duration": 5
+				}
+			]
+		},
+		{
+			"name": "FALL",
+			"repeat": false,
+			"frames": [
+				{
+					"index": 10,
+					"duration": 5
+				}
+			]
+		},
+		{
+			"name": "LAND",
+			"repeat": false,
+			"frames": [
+				{
+					"index": 11,
+					"duration": 5
+				}
+			]
+		},
+		{
+			"name": "ATTACK",
+			"repeat": true,
+			"frames": [
+				{
+					"index": 12,
+					"duration": 5
+				},
+				{
+					"index": 13,
+					"duration": 5
+				},
+				{
+					"index": 14,
+					"duration": 5
+				},
+				{
+					"index": 15,
+					"duration": 5
+				},
+				{
+					"index": 16,
+					"duration": 5
+				},
+				{
+					"index": 17,
+					"duration": 5
+				}
+			]
+		},
+		{
+			"name": "ATTACK_2",
+			"repeat": false,
+			"frames": [
+				{
+					"index": 18,
+					"duration": 10
+				},
+				{
+					"index": 19,
+					"duration": 10
+				},
+				{
+					"index": 20,
+					"duration": 10
+				},
+				{
+					"index": 21,
+					"duration": 10
+				},
+				{
+					"index": 22,
+					"duration": 10
+				}
+			]
+		},
+		{
+			"name": "TAKE_DAMAGE",
+			"repeat": true,
+			"frames": [
+				{
+					"index": 23,
+					"duration": 8
+				},
+				{
+					"index": 24,
+					"duration": 8
+				}
+				
+			]
+		},
+		{
+			"name": "DYING",
+			"repeat": false,
+			"frames": [
+				{
+					"index": 25,
+					"duration": 15
+				},
+				{
+					"index": 26,
+					"duration": 10
+				},
+				{
+					"index": 27,
+					"duration": 15
+				},
+				{
+					"index": 28,
+					"duration": 10
+				},
+				{
+					"index": 29,
+					"duration": 15
+				},
+				{
+					"index": 30,
+					"duration": 10
+				},
+				{
+					"index": 31,
+					"duration": 15
+				}
+			]
+		},
+		{
+			"name": "DEATH",
+			"repeat": true,
+			"frames": [
+				{
+					"index": 32,
+					"duration": 10
+				}
+			]
+		}
+		
+
+
+	]
+}

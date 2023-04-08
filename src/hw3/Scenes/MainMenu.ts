@@ -201,9 +201,9 @@ export default class MainMenu extends Scene {
         level1.borderColor = Color.TRANSPARENT;
         level1.backgroundColor = Color.TRANSPARENT;
         level1.font = "Hjet-Regular";
-        //level1.onClick = () => {
-        //    this.sceneManager.changeToScene(Level1);
-        //}
+        level1.onClick = () => {
+           this.sceneManager.changeToScene(Level1);
+        }
 
         const level2 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 200, center.y - 200), text: "Level 2"});
         this.level2Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);

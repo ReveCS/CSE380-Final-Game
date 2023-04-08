@@ -15,7 +15,7 @@ export default class Level1 extends HW3Level {
 
     public static readonly PLAYER_SPAWN = new Vec2(32, 32);
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
-    public static readonly PLAYER_SPRITE_PATH = "hw4_assets/spritesheets/eye_of_cthulhu.json";
+    public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
 
     public static readonly TILEMAP_KEY = "LEVEL1";
     public static readonly TILEMAP_PATH = "hw4_assets/tilemaps/HW4Level1.json";
@@ -37,6 +37,10 @@ export default class Level1 extends HW3Level {
 
     public static readonly HIT_KEY = "HIT";
     public static readonly HIT_PATH = "hw4_assets/sounds/gettinghit.wav";
+
+    // Game UI Sprites
+    public static readonly HP_KEY = "HEALTH";
+    public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
@@ -61,6 +65,9 @@ export default class Level1 extends HW3Level {
         this.deathSoundKey = Level1.DEATH_KEY;
         this.hitKey = Level1.HIT_KEY;
 
+        // Sprites
+        this.HP_KEY = Level1.HP_KEY;
+
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
@@ -80,20 +87,21 @@ export default class Level1 extends HW3Level {
         this.load.audio(this.tileDestroyedAudioKey, Level1.TILE_DESTROYED_PATH);
         this.load.audio(this.deathSoundKey,Level1.DEATH_PATH);
         this.load.audio(this.hitKey,Level1.HIT_PATH);
-        
+        // Game UI sprites
+        this.load.image(this.HP_KEY, Level1.HP_PATH);
     }
 
     /**
      * Unload resources for level 1
      */
     public unloadScene(): void {
-        // TODO decide which resources to keep/cull 
-        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
-        this.load.spritesheet(this.playerSpriteKey, Level1.PLAYER_SPRITE_PATH);
-        this.load.audio(this.jumpAudioKey, Level1.JUMP_AUDIO_PATH);
-        this.load.audio(this.tileDestroyedAudioKey, Level1.TILE_DESTROYED_PATH);
-        this.load.audio(this.deathSoundKey,Level1.DEATH_PATH);
-        this.load.audio(this.hitKey,Level1.HIT_PATH);
+        // // TODO decide which resources to keep/cull 
+        // this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
+        // this.load.spritesheet(this.playerSpriteKey, Level1.PLAYER_SPRITE_PATH);
+        // this.load.audio(this.jumpAudioKey, Level1.JUMP_AUDIO_PATH);
+        // this.load.audio(this.tileDestroyedAudioKey, Level1.TILE_DESTROYED_PATH);
+        // this.load.audio(this.deathSoundKey,Level1.DEATH_PATH);
+        // this.load.audio(this.hitKey,Level1.HIT_PATH);
 
     }
 

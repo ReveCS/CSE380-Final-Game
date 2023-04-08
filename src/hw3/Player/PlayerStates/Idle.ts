@@ -24,8 +24,6 @@ export default class Idle extends PlayerState {
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
         this.parent.velocity.y = 0;
-
-        console.log("Idle.")
 	}
 
     public handleInput(event: GameEvent): void {

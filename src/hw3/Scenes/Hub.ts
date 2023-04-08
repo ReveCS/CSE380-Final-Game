@@ -11,6 +11,13 @@ import NPCController from "../NPC/NPCController";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import {HW3Layers} from "./HW3Level"
 
+// imports for quest displaying
+import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import UIElement from "../../Wolfie2D/Nodes/UIElement";
+import Timer from "../../Wolfie2D/Timing/Timer";
+import { Quests } from "../Text/Quests"
+
 export default class Hub extends HW3Level {
 
     public static readonly PLAYER_SPAWN = new Vec2(64, 250);
@@ -53,6 +60,11 @@ export default class Hub extends HW3Level {
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
+    // Variables
+    private isDisplayingText: Boolean;
+    private displayTimer: Timer;
+    private textBuffer: Array<string>;
+    private prevText: UIElement
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
         super(viewport, sceneManager, renderingManager, options);
@@ -85,7 +97,10 @@ export default class Hub extends HW3Level {
         // Level end size and position
         this.levelEndPosition = new Vec2(32, 216).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
-        
+
+        // Set variables for displaying text
+        this.isDisplayingText = false;
+        this.displayTimer = new Timer(2000);
     }
     /**
      * Load in resources for level 4.
@@ -115,10 +130,54 @@ export default class Hub extends HW3Level {
         super.startScene();
         this.nextLevel = MainMenu;
 
-        this.initializeNPC(this.placeholderSpriteKey, this.placeholderSpawn);
+        this.initializeNPCs();
     }
 
-    protected initializeNPC(key:string, spawn:Vec2): void {
+    public updateScene(deltaT: number) {
+        super.updateScene(deltaT);
+
+        if (this.isDisplayingText) {
+            // display each sentence of the quest in a regular interval
+            if (this.displayTimer.isStopped()) {
+                this.prevText.destroy();
+                this.prevText = this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {
+                    position: new Vec2(150, 100),
+                    text: this.textBuffer.pop()
+                })
+
+                if (this.textBuffer.length > 0) {
+                    this.displayTimer.reset();
+                    this.displayTimer.start();
+                }
+                else {
+                    this.isDisplayingText = false;
+                }
+            }
+        }
+    }
+
+    // handle HW3Events.TALKING_TO_NPC
+    protected handleTalkingNPC(id: string): void {
+        // split the string into individual sentences.
+        let re = /.*?[\.?!]/g;
+        // replace newlines with space, then spaces that are more than 1 with a single space
+        // then split and remove trailing whitespace, then reverse so we can pop easily
+        this.textBuffer = Quests[id].replace(/\n/g, " ").replace(/ +/g, " ").match(re).map(x => x.trim()).reverse();
+
+        this.prevText = this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(1, 1),text: ""})
+        this.isDisplayingText = true;
+        this.displayTimer.start();
+    }
+
+    // Quests should be in order from last -> first
+    // ex: ["A", "B", "C"] will give out quests in order C -> B -> A
+    protected initializeNPCs() {
+        // initialize placeholder
+        let placeholderQuests = ["A"]
+        this.initializeNPC(this.placeholderSpriteKey, this.placeholderSpawn, placeholderQuests);
+    }
+
+    protected initializeNPC(key:string, spawn:Vec2, quests:Array<string>): void {
         if (spawn === undefined) {
             throw new Error("NPC spawn must be set before initializing!");
         }
@@ -130,7 +189,7 @@ export default class Hub extends HW3Level {
         this.placeholder.disablePhysics();
 
         // Give the NPC it's AI
-        this.placeholder.addAI(NPCController, {player: this.player});
+        this.placeholder.addAI(NPCController, {player: this.player, quests: quests});
     }
 
     protected initializeViewport(): void {

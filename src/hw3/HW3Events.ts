@@ -27,7 +27,7 @@ export const HW3Events = {
      *
      * Has data: { id: number } id is that of the specific NPC's
     */
-    TALKING_TO_NPC: "TAKING_TO_NPC",
+    TALKING_TO_NPC: "TALKING_TO_NPC",
 
     /*
      * The events sent when the player accepts/declines a quest

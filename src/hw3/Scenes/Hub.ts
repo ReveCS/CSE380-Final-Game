@@ -130,7 +130,7 @@ export default class Hub extends HW3Level {
         this.placeholder.disablePhysics();
 
         // Give the NPC it's AI
-        this.placeholder.addAI(NPCController);
+        this.placeholder.addAI(NPCController, {player: this.player});
     }
 
     protected initializeViewport(): void {

@@ -5,10 +5,19 @@ import { HW3Controls } from "../../HW3Controls";
 import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 import { HW3Events } from "../../HW3Events";
 import Receiver from "../../../Wolfie2D/Events/Receiver";
+import HW3AnimatedSprite from "../../Nodes/HW3AnimatedSprite";
+import PlayerController from "../PlayerController";
 
 export default class Talking extends PlayerState {
 
     protected receiver: Receiver;
+
+    public constructor(parent: PlayerController, owner: HW3AnimatedSprite){
+		super(parent, owner);
+        this.receiver = new Receiver();
+        this.receiver.subscribe(HW3Events.ACCEPT_QUEST);
+        this.receiver.subscribe(HW3Events.DECLINE_QUEST);
+	}
 
 	public onEnter(options: Record<string, any>): void {
         this.owner.animation.queue(PlayerAnimations.IDLE,true);
@@ -17,8 +26,7 @@ export default class Talking extends PlayerState {
         this.parent.velocity.x = 0;
         this.parent.velocity.y = 0;
 
-        this.receiver.subscribe(HW3Events.ACCEPT_QUEST);
-        this.receiver.subscribe(HW3Events.DECLINE_QUEST);
+        console.log("Talking.")
 	}
 
     public handleInput(event: GameEvent): void {
@@ -38,8 +46,11 @@ export default class Talking extends PlayerState {
         }
 	}
 
-    // Player shouldn't be able to move even if they press keys
 	public update(deltaT: number): void {
+        while (this.receiver.hasNextEvent()) {
+            this.handleInput(this.receiver.getNextEvent());
+        }
+
         // Adjust the direction the player is facing
 		super.update(deltaT);
 

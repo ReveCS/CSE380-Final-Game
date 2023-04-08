@@ -1,9 +1,11 @@
-import Receiver from "../../Wolfie2D/Events/Receiver";
+import Emitter from "../../Wolfie2D/Events/Emitter";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import ControllerAI from "../../Wolfie2D/AI/ControllerAI";
+import Input from "../../Wolfie2D/Input/Input";
 
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import { HW3Events } from "../HW3Events";
+import { HW3Controls } from "../HW3Controls";
 
 /**
  * Animation keys for the NPC spritesheet
@@ -14,15 +16,14 @@ export const NPCAnimations = {
 
 export default class NPCController extends ControllerAI {
     protected owner: HW3AnimatedSprite;
-    protected receiver: Receiver;
+    protected player: HW3AnimatedSprite;
+    protected emitter: Emitter;
 
     initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
-
-        // Add code to play anim
+        this.player = options.player;
+        this.emitter = new Emitter();
         this.owner.animation.playIfNotAlready(NPCAnimations.IDLE);
-        // this.receiver.subscribe(HW3Events.ACCEPT_QUEST);
-        // this.receiver.subscribe(HW3Events.DECLINE_QUEST);
     }
 
     activate(options: Record<string, any>): void {
@@ -45,6 +46,11 @@ export default class NPCController extends ControllerAI {
     }
 
     update(deltaT: number): void {
-
+        let playerPressedE = Input.isJustPressed(HW3Controls.INTERACT)
+        let playerNear = this.owner.boundary.overlaps(this.player.boundary)
+        if (playerPressedE && playerNear) {
+            console.log("Talking to NPC.")
+            this.emitter.fireEvent(HW3Events.TALKING_TO_NPC);
+        }
     }
 }

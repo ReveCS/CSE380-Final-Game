@@ -1,4 +1,5 @@
 import Emitter from "../../Wolfie2D/Events/Emitter";
+import Receiver from "../../Wolfie2D/Events/Receiver";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import ControllerAI from "../../Wolfie2D/AI/ControllerAI";
 import Input from "../../Wolfie2D/Input/Input";
@@ -18,15 +19,21 @@ export default class NPCController extends ControllerAI {
     protected owner: HW3AnimatedSprite;
     protected player: HW3AnimatedSprite;
     protected emitter: Emitter;
+    protected receiver: Receiver;
     private isWaiting: Boolean;
+    private doneTalking: Boolean;
     private quests: Array<string>;
 
     initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
         this.player = options.player;
         this.emitter = new Emitter();
+        this.receiver = new Receiver();
         this.isWaiting = true;
+        this.doneTalking = false;
         this.quests = options.quests;
+
+        this.receiver.subscribe(HW3Events.DONE_TALKING_TO_NPC);
         this.owner.animation.playIfNotAlready(NPCAnimations.IDLE);
     }
 
@@ -36,6 +43,10 @@ export default class NPCController extends ControllerAI {
 
     handleEvent(event: GameEvent): void {
         switch(event.type) {
+            case (HW3Events.DONE_TALKING_TO_NPC): {
+                this.doneTalking = true;
+                break;
+            }
             // Default - throw an error
             default: {
                 throw new Error(`Unhandled event in NPCController of type ${event.type}`);
@@ -44,6 +55,10 @@ export default class NPCController extends ControllerAI {
     }
 
     update(deltaT: number): void {
+        while (this.receiver.hasNextEvent()) {
+            this.handleEvent(this.receiver.getNextEvent());
+        }
+
         // if we're waiting to give a quest
         if (this.isWaiting) {
             let playerWantsToTalk = Input.isJustPressed(HW3Controls.INTERACT)
@@ -53,19 +68,21 @@ export default class NPCController extends ControllerAI {
                 console.log("Talking to NPC.")
                 this.isWaiting = false;
                 if (this.quests.length === 0) throw new Error("NPC ran out of quests!");
-                let currentQuest = this.quests.pop();
+                let currentQuest = this.quests[this.quests.length - 1];
                 this.emitter.fireEvent(HW3Events.TALKING_TO_NPC, {id: currentQuest});
             }
         }
         // wait for player to accept/decline the quest
-        else {
+        else if (this.doneTalking) {
             if (Input.isJustPressed(HW3Controls.ACCEPT_QUEST)) {
                 this.emitter.fireEvent(HW3Events.ACCEPT_QUEST);
                 this.isWaiting = true;
+                this.doneTalking = false;
             }
             else if (Input.isJustPressed(HW3Controls.DECLINE_QUEST)) {
                 this.emitter.fireEvent(HW3Events.DECLINE_QUEST);
                 this.isWaiting = true;
+                this.doneTalking = false;
             }
         }
     }

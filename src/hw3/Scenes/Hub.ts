@@ -9,7 +9,8 @@ import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 
 import NPCController from "../NPC/NPCController";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
-import {HW3Layers} from "./HW3Level"
+import {HW3Layers} from "./HW3Level";
+import { HW3Events } from "../HW3Events";
 
 // imports for quest displaying
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
@@ -100,7 +101,7 @@ export default class Hub extends HW3Level {
 
         // Set variables for displaying text
         this.isDisplayingText = false;
-        this.displayTimer = new Timer(2000);
+        this.displayTimer = new Timer(500);
     }
     /**
      * Load in resources for level 4.
@@ -140,17 +141,18 @@ export default class Hub extends HW3Level {
             // display each sentence of the quest in a regular interval
             if (this.displayTimer.isStopped()) {
                 this.prevText.destroy();
-                this.prevText = this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {
-                    position: new Vec2(150, 100),
-                    text: this.textBuffer.pop()
-                })
 
                 if (this.textBuffer.length > 0) {
+                    this.prevText = this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {
+                        position: new Vec2(150, 100),
+                        text: this.textBuffer.pop()
+                    })
                     this.displayTimer.reset();
-                    this.displayTimer.start();
+                    this.displayTimer.start(2500);
                 }
                 else {
                     this.isDisplayingText = false;
+                    this.emitter.fireEvent(HW3Events.DONE_TALKING_TO_NPC);
                 }
             }
         }
@@ -163,6 +165,7 @@ export default class Hub extends HW3Level {
         // replace newlines with space, then spaces that are more than 1 with a single space
         // then split and remove trailing whitespace, then reverse so we can pop easily
         this.textBuffer = Quests[id].replace(/\n/g, " ").replace(/ +/g, " ").match(re).map(x => x.trim()).reverse();
+        this.textBuffer.splice(0, 0, "Will you accept my quest adventurer? (y) or (n)");
 
         this.prevText = this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(1, 1),text: ""})
         this.isDisplayingText = true;

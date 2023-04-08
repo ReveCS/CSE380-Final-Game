@@ -29,6 +29,9 @@ export const HW3Events = {
     */
     TALKING_TO_NPC: "TALKING_TO_NPC",
 
+    // The event sent when the NPC finishes talking
+    DONE_TALKING_TO_NPC: "DONE_TALKING_TO_NPC",
+
     /*
      * The events sent when the player accepts/declines a quest
      *

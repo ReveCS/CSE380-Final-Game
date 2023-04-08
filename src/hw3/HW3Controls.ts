@@ -8,4 +8,6 @@ export const HW3Controls = {
     ATTACK: "ATTACK",
     ESC: "ESC",
     INTERACT: "INTERACT",
+    ACCEPT_QUEST: "ACCEPT_QUEST",
+    DECLINE_QUEST: "DECLINE_QUEST",
 } as const;

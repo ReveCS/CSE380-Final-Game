@@ -18,11 +18,13 @@ export default class NPCController extends ControllerAI {
     protected owner: HW3AnimatedSprite;
     protected player: HW3AnimatedSprite;
     protected emitter: Emitter;
+    private isWaiting: Boolean;
 
     initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
         this.player = options.player;
         this.emitter = new Emitter();
+        this.isWaiting = true;
         this.owner.animation.playIfNotAlready(NPCAnimations.IDLE);
     }
 
@@ -46,11 +48,25 @@ export default class NPCController extends ControllerAI {
     }
 
     update(deltaT: number): void {
-        let playerPressedE = Input.isJustPressed(HW3Controls.INTERACT)
-        let playerNear = this.owner.boundary.overlaps(this.player.boundary)
-        if (playerPressedE && playerNear) {
-            console.log("Talking to NPC.")
-            this.emitter.fireEvent(HW3Events.TALKING_TO_NPC);
+        if (this.isWaiting) {
+            let playerWantsToTalk = Input.isJustPressed(HW3Controls.INTERACT)
+            let playerNear = this.owner.boundary.overlaps(this.player.boundary)
+
+            if (playerWantsToTalk && playerNear) {
+                console.log("Talking to NPC.")
+                this.emitter.fireEvent(HW3Events.TALKING_TO_NPC);
+                this.isWaiting = false;
+            }
+        }
+        else {
+            if (Input.isJustPressed(HW3Controls.ACCEPT_QUEST)) {
+                this.emitter.fireEvent(HW3Events.ACCEPT_QUEST);
+                this.isWaiting = true;
+            }
+            else if (Input.isJustPressed(HW3Controls.DECLINE_QUEST)) {
+                this.emitter.fireEvent(HW3Events.DECLINE_QUEST);
+                this.isWaiting = true;
+            }
         }
     }
 }

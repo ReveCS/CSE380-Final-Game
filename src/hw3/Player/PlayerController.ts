@@ -6,6 +6,8 @@ import Fall from "./PlayerStates/Fall";
 import Idle from "./PlayerStates/Idle";
 import Jump from "./PlayerStates/Jump";
 import Walk from "./PlayerStates/Walk";
+import Dead from "./PlayerStates/Dead";
+import Talking from "./PlayerStates/Talking";
 
 import PlayerWeapon from "./PlayerWeapon";
 import Input from "../../Wolfie2D/Input/Input";
@@ -14,7 +16,6 @@ import { HW3Controls } from "../HW3Controls";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import MathUtils from "../../Wolfie2D/Utils/MathUtils";
 import { HW3Events } from "../HW3Events";
-import Dead from "./PlayerStates/Dead";
 import SortingUtils from "../../Wolfie2D/Utils/SortingUtils";
 
 // TODO play your heros animations
@@ -95,6 +96,7 @@ export default class PlayerController extends StateMachineAI {
         this.addState(PlayerStates.JUMP, new Jump(this, this.owner));
         this.addState(PlayerStates.FALL, new Fall(this, this.owner));
         this.addState(PlayerStates.DEAD, new Dead(this, this.owner));
+        this.addState(PlayerStates.TALKING, new Talking(this, this.owner));
         
         // Start the player in the Idle state
         this.initialize(PlayerStates.IDLE);
@@ -115,7 +117,7 @@ export default class PlayerController extends StateMachineAI {
     public get faceDir(): Vec2 { return this.owner.position.dirTo(Input.getGlobalMousePosition()); }
 
     public update(deltaT: number): void {
-        console.log(this.owner.animation.currentAnimation);
+        // console.log(this.owner.animation.currentAnimation);
 		super.update(deltaT);
         // If the player hits the attack button and the weapon system isn't running, restart the system and fire!
         if (Input.isPressed(HW3Controls.ATTACK)) {

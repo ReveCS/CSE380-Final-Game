@@ -17,7 +17,7 @@ export default class Idle extends PlayerState {
         this.parent.velocity.x = 0;
         this.parent.velocity.y = 0;
 
-        this.receiver.subscribe(HW3Events.TALKING_TO_NPC);
+        // this.receiver.subscribe(HW3Events.TALKING_TO_NPC);
 	}
 
     public handleInput(event: GameEvent): void {

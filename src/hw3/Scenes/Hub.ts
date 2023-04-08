@@ -7,6 +7,10 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import RenderingManager from "../../Wolfie2D/Rendering/RenderingManager";
 import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 
+import NPCController from "../NPC/NPCController";
+import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
+import {HW3Layers} from "./HW3Level"
+
 export default class Hub extends HW3Level {
 
     public static readonly PLAYER_SPAWN = new Vec2(64, 250);
@@ -39,7 +43,16 @@ export default class Hub extends HW3Level {
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
 
+    // NPC Sprites
+    public static readonly PLACEHOLDER_SPAWN = new Vec2(200, 300);
+    public static readonly PLACEHOLDER_SPRITE_KEY = "PLACEHOLDER_SPRITE_KEY";
+    public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
+    protected placeholder: HW3AnimatedSprite
+    protected placeholderSpriteKey: string;
+    protected placeholderSpawn: Vec2;
+
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
+
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
         super(viewport, sceneManager, renderingManager, options);
@@ -65,6 +78,10 @@ export default class Hub extends HW3Level {
         // Sprites
         this.HP_KEY = Hub.HP_KEY;
 
+        // Set NPC sprites and spawns
+        this.placeholderSpriteKey = Hub.PLACEHOLDER_SPRITE_KEY;
+        this.placeholderSpawn = Hub.PLACEHOLDER_SPAWN
+
         // Level end size and position
         this.levelEndPosition = new Vec2(32, 216).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
@@ -86,6 +103,8 @@ export default class Hub extends HW3Level {
         this.load.audio(this.hitKey,Hub.HIT_PATH);
         // Game UI sprites
         this.load.image(this.HP_KEY, Hub.HP_PATH);
+        // Load in NPC sprites
+        this.load.spritesheet(this.placeholderSpriteKey, Hub.PLACEHOLDER_SPRITE_PATH);
     }
 
     public unloadScene(): void {
@@ -95,6 +114,23 @@ export default class Hub extends HW3Level {
     public startScene(): void {
         super.startScene();
         this.nextLevel = MainMenu;
+
+        this.initializeNPC(this.placeholderSpriteKey, this.placeholderSpawn);
+    }
+
+    protected initializeNPC(key:string, spawn:Vec2): void {
+        if (spawn === undefined) {
+            throw new Error("NPC spawn must be set before initializing!");
+        }
+
+        // Add the NPC to the scene
+        this.placeholder = this.add.animatedSprite(key, HW3Layers.PRIMARY);
+        this.placeholder.scale.set(1, 1);
+        this.placeholder.position.copy(spawn);
+        this.placeholder.disablePhysics();
+
+        // Give the NPC it's AI
+        this.placeholder.addAI(NPCController);
     }
 
     protected initializeViewport(): void {

@@ -22,11 +22,18 @@ export const HW3Events = {
 
     // The event sent when the player presses the escape button. Pauses th game and displays pause screen
     GAME_PAUSE: "GAME_PAUSE",
-
-    // The event sent when the player talks to an NPC
+    /*
+     * The event sent when the player talks to an NPC
+     *
+     * Has data: { id: number } id is that of the specific NPC's
+    */
     TALKING_TO_NPC: "TAKING_TO_NPC",
 
-    // The events sent when the player accepts/declines a quest
+    /*
+     * The events sent when the player accepts/declines a quest
+     *
+     * Has data: { id: number } id is that of the specific NPC's
+    */
     ACCEPT_QUEST: "ACCEPT_QUEST",
     DECLINE_QUEST: "DECLINE_QUEST",
     

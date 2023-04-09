@@ -21,7 +21,7 @@ import { Quests } from "../Text/Quests"
 
 export default class Hub extends HW3Level {
 
-    public static readonly PLAYER_SPAWN = new Vec2(64, 250);
+    public static readonly PLAYER_SPAWN = new Vec2(64, 1225);
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
 
@@ -52,7 +52,7 @@ export default class Hub extends HW3Level {
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
 
     // NPC Sprites
-    public static readonly PLACEHOLDER_SPAWN = new Vec2(200, 300);
+    public static readonly PLACEHOLDER_SPAWN = new Vec2(200, 1228);
     public static readonly PLACEHOLDER_SPRITE_KEY = "PLACEHOLDER_SPRITE_KEY";
     public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
     protected placeholder: HW3AnimatedSprite

@@ -90,8 +90,8 @@
 			]
 		},
 		{
-			"name": "ATTACK",
-			"repeat": true,
+			"name": "ATTACK_1",
+			"repeat": false,
 			"frames": [
 				{
 					"index": 12,

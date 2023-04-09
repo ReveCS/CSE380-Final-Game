@@ -26,8 +26,6 @@ import HW3FactoryManager from "../Factory/HW3FactoryManager";
 import MainMenu from "./MainMenu";
 import Particle from "../../Wolfie2D/Nodes/Graphics/Particle";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
-import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
-import EnemyController from "../Enemy/EnemyController";
 
 /**
  * A const object for the layer names
@@ -209,10 +207,6 @@ export default abstract class HW3Level extends Scene {
                 console.log(this.isRunning());
                 break;
             }
-            case HW3Events.TALKING_TO_NPC: {
-                this.handleTalkingNPC(event.data.get("id"));
-                break;
-            }
             // Default: Throw an error! No unhandled events allowed.
             default: {
                 throw new Error(`Unhandled event caught in scene with type ${event.type}`)
@@ -299,11 +293,6 @@ export default abstract class HW3Level extends Scene {
 		this.healthBar.backgroundColor = currentHealth < maxHealth * 1/4 ? Color.RED: currentHealth < maxHealth * 3/4 ? Color.RED : Color.RED;
 	}
 
-    // this method will be handled inside the hub subclass
-    protected handleTalkingNPC(id: string): void {
-        throw new Error("handleTalkingNPC wasn't implemented in Hub.ts");
-    }
-
     /* Initialization methods for everything in the scene */
 
     /**
@@ -352,7 +341,6 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.HEALTH_CHANGE);
         this.receiver.subscribe(HW3Events.PLAYER_DEAD);
         this.receiver.subscribe(HW3Events.GAME_PAUSE);
-        this.receiver.subscribe(HW3Events.TALKING_TO_NPC);
     }
     /**
      * Adds in any necessary UI to the game
@@ -489,7 +477,7 @@ export default abstract class HW3Level extends Scene {
             throw new Error("Player must be initialized before setting the viewport to folow the player");
         }
         this.viewport.follow(this.player);
-        this.viewport.setZoomLevel(3);
+        this.viewport.setZoomLevel(2);
         this.viewport.setBounds(48, 0, 2368, 1600);
     }
     /**
@@ -508,27 +496,6 @@ export default abstract class HW3Level extends Scene {
         
         
     // }
-
-    protected initializeEnemy(key:string, spawn:Vec2): HW3AnimatedSprite {
-        if (spawn === undefined) {
-            throw new Error("Enemy spawn must be set before initializing!");
-        }
-
-        // Add the Enemy to the scene
-        let enemy = this.add.animatedSprite(key, HW3Layers.PRIMARY);
-        enemy.scale.set(1, 1);
-        enemy.position.copy(spawn);
-
-        // Give the enemy physics
-        enemy.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
-        enemy.collisionShape.halfSize.set(20,this.player.collisionShape.halfSize.y);
-        // this.player.setGroup("PLAYER");
-
-        // Give the Enemy it's AI
-        enemy.addAI(EnemyController, {player: this.player});
-
-        return enemy
-    }
 
     /* Misc methods */
 

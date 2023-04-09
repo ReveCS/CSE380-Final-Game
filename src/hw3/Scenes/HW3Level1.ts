@@ -9,8 +9,6 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import HW4Level2 from "./HW3Level2";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
-import EnemyController from "../Enemy/EnemyController";
-import {HW3Layers} from "./HW3Level";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
@@ -135,27 +133,7 @@ export default class Level1 extends HW3Level {
     protected initializeEnemies() {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
-        this.initializeEnemy(this.placeholderSpriteKey, new Vec2(50,200));
-        this.initializeEnemy(this.placeholderSpriteKey, new Vec2(100,200));
-    }
-
-    protected initializeEnemy(key:string, spawn:Vec2): void {
-        if (spawn === undefined) {
-            throw new Error("Enemy spawn must be set before initializing!");
-        }
-
-        // Add the Enemy to the scene
-        this.placeholder = this.add.animatedSprite(key, HW3Layers.PRIMARY);
-        this.placeholder.scale.set(1, 1);
-        this.placeholder.position.copy(spawn);
-
-        // Give the enemy physics
-        this.placeholder.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
-        this.placeholder.collisionShape.halfSize.set(20,this.player.collisionShape.halfSize.y);
-        // this.player.setGroup("PLAYER");
-
-        // Give the Enemy it's AI
-        this.placeholder.addAI(EnemyController, {player: this.player});
+        this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(50,200));
     }
 
     /**

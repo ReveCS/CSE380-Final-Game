@@ -209,6 +209,10 @@ export default abstract class HW3Level extends Scene {
                 console.log(this.isRunning());
                 break;
             }
+            case HW3Events.TALKING_TO_NPC: {
+                this.handleTalkingNPC(event.data.get("id"));
+                break;
+            }
             // Default: Throw an error! No unhandled events allowed.
             default: {
                 throw new Error(`Unhandled event caught in scene with type ${event.type}`)
@@ -343,6 +347,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.HEALTH_CHANGE);
         this.receiver.subscribe(HW3Events.PLAYER_DEAD);
         this.receiver.subscribe(HW3Events.GAME_PAUSE);
+        this.receiver.subscribe(HW3Events.TALKING_TO_NPC);
     }
     /**
      * Adds in any necessary UI to the game
@@ -532,5 +537,9 @@ export default abstract class HW3Level extends Scene {
     }
     public getHitSoundKey():string{
         return this.hitKey
+    }
+    // this method will be handled inside the hub subclass
+    protected handleTalkingNPC(id: string): void {
+        throw new Error("handleTalkingNPC wasn't implemented in Hub.ts");
     }
 }

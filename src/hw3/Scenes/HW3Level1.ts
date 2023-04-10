@@ -17,7 +17,6 @@ export default class Level1 extends HW3Level {
     public static readonly PLAYER_SPAWN = new Vec2(64, 1225);;
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
-
     public static readonly TILEMAP_KEY = "LEVEL1";
     public static readonly TILEMAP_PATH = "game_assets/tilemaps/Hub.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
@@ -52,6 +51,10 @@ export default class Level1 extends HW3Level {
     protected placeholder: HW3AnimatedSprite
     protected placeholderSpriteKey: string;
 
+    public static readonly INV_KEY = "INVENTORY";
+    public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
+
+
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
@@ -62,7 +65,7 @@ export default class Level1 extends HW3Level {
         this.tilemapScale = Level1.TILEMAP_SCALE;
         this.destructibleLayerKey = Level1.DESTRUCTIBLE_LAYER_KEY;
         this.wallsLayerKey = Level1.WALLS_LAYER_KEY;
-
+        
         // Set the key for the player's sprite
         this.playerSpriteKey = Level1.PLAYER_SPRITE_KEY;
         // Set the player's spawn
@@ -82,6 +85,8 @@ export default class Level1 extends HW3Level {
         this.placeholderSpriteKey = Level1.PLACEHOLDER_SPRITE_KEY;
         this.defaultSpawn = Level1.ENEMY_DEFAULT_SPAWN
 
+        //Inventory
+        this.INV_KEY = Level1.INV_KEY;
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
@@ -103,6 +108,7 @@ export default class Level1 extends HW3Level {
         this.load.audio(this.hitKey,Level1.HIT_PATH);
         // Game UI sprites
         this.load.image(this.HP_KEY, Level1.HP_PATH);
+        this.load.image(this.INV_KEY,Level1.INV_PATH);
         // Load in Enemy sprites
         this.load.spritesheet(this.placeholderSpriteKey, Level1.PLACEHOLDER_SPRITE_PATH);
     }

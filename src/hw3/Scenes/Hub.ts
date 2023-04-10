@@ -162,6 +162,7 @@ export default class Hub extends HW3Level {
         }
     }
 
+
     // handle HW3Events.TALKING_TO_NPC
     protected handleTalkingNPC(id: string): void {
         // split the string into individual sentences.
@@ -171,7 +172,7 @@ export default class Hub extends HW3Level {
         this.textBuffer = Quests[id].replace(/\n/g, " ").replace(/ +/g, " ").match(re).map(x => x.trim()).reverse();
         this.textBuffer.splice(0, 0, "Will you accept my quest adventurer? (y) or (n)");
 
-        this.prevText = this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(1, 1),text: ""})
+        this.prevText = this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(1, 1),text: ""});
         this.isDisplayingText = true;
         this.displayTimer.start();
     }

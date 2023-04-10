@@ -386,7 +386,7 @@ export default abstract class HW3Level extends Scene {
         // Inventory screen and UI
         this.INVSprite = this.add.sprite(this.INV_KEY, HW3Layers.UI);
         this.INVSprite.position.copy(new Vec2(300, 200));
-        this.INVSprite.scale.set(1/2, 1/2);
+        this.INVSprite.scale.set(1/4, 1/4);
         this.INVSprite.visible = false;
 
          // End of level label (start off screen)

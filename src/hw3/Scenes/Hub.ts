@@ -50,6 +50,8 @@ export default class Hub extends HW3Level {
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
+    public static readonly INV_KEY = "INVENTORY";
+    public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
 
     // NPC Sprites
     public static readonly PLACEHOLDER_SPAWN = new Vec2(200, 1228);
@@ -90,6 +92,7 @@ export default class Hub extends HW3Level {
 
         // Sprites
         this.HP_KEY = Hub.HP_KEY;
+        this.INV_KEY = Hub.INV_KEY;
 
         // Set NPC sprites and spawns
         this.placeholderSpriteKey = Hub.PLACEHOLDER_SPRITE_KEY;
@@ -119,6 +122,7 @@ export default class Hub extends HW3Level {
         this.load.audio(this.hitKey,Hub.HIT_PATH);
         // Game UI sprites
         this.load.image(this.HP_KEY, Hub.HP_PATH);
+        this.load.image(this.INV_KEY, Hub.INV_PATH);
         // Load in NPC sprites
         this.load.spritesheet(this.placeholderSpriteKey, Hub.PLACEHOLDER_SPRITE_PATH);
     }

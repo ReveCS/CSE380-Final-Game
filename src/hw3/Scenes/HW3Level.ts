@@ -38,7 +38,7 @@ export const HW3Layers = {
     PRIMARY: "PRIMARY",
     // The UI layer
     UI: "UI",
-    INVENTORY: "INVENTORY"
+    //INVENTORY: "INVENTORY"
 } as const;
 
 // The layers as a type
@@ -200,6 +200,15 @@ export default abstract class HW3Level extends Scene {
                 this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey, loop: true, holdReference: true});
                 this.sceneManager.changeToScene(MainMenu);
                 break;
+            }
+            case HW3Events.INVENTORY: {
+                console.log("visible");
+                if (this.INVSprite.visible == false) {
+                    this.INVSprite.visible = true;
+                }
+                else {
+                    this.INVSprite.visible = false;
+                }
             }
             // When player presses escape button, pause game layer and display pause screen
             case HW3Events.GAME_PAUSE: {
@@ -373,8 +382,10 @@ export default abstract class HW3Level extends Scene {
 		this.healthBarBg.borderColor = Color.TRANSPARENT;
 
         // Inventory screen and UI
-        this.INVSprite = this.add.sprite(this.INV_KEY, HW3Layers.INVENTORY);
-        this.INVprite.position.copy(new Vec2(150, 150));
+        this.INVSprite = this.add.sprite(this.INV_KEY, HW3Layers.UI);
+        this.INVSprite.position.copy(new Vec2(300, 200));
+        this.INVSprite.scale.set(1/2, 1/2);
+        this.INVSprite.visible = false;
 
          // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, { position: new Vec2(-300, 100), text: "Level Complete" });

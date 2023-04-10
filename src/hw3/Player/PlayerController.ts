@@ -165,6 +165,11 @@ export default class PlayerController extends StateMachineAI {
             this.emitter.fireEvent(HW3Events.GAME_PAUSE);
         }
 
+        if (Input.isPressed(HW3Controls.INVENTORY)) {
+            this.emitter.fireEvent(HW3Events.INVENTORY);
+        }
+
+
 	}
 
     public get enemyDamage(): number { return this._enemyDamage; }

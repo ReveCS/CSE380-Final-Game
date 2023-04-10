@@ -285,7 +285,10 @@ export default class MainMenu extends Scene {
         const i = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 125), text: "I - Inventory"});
         i.textColor = Color.WHITE;
         i.font = "Hjet-Regular";  
-        const esc = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 175), text: "ESC - Pause the Game"});
+        const e = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 175), text: "E - Interact"});
+        e.textColor = Color.WHITE;
+        e.font = "Hjet-Regular"; 
+        const esc = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 225), text: "ESC - Pause the Game"});
         esc.textColor = Color.WHITE;
         esc.font = "Hjet-Regular";  
 

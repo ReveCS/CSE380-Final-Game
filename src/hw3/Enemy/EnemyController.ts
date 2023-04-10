@@ -3,14 +3,14 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 // import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 
 import Idle from "./EnemyStates/Idle";
-// import Fall from "./PlayerStates/Fall";
-// import Jump from "./PlayerStates/Jump";
-// import Walk from "./PlayerStates/Walk";
-// import Dead from "./PlayerStates/Dead";
-// import Talking from "./PlayerStates/Talking";
+import Pathing from "./EnemyStates/Pathing";
+import Returning from "./EnemyStates/Returning";
+import Hurt from "./EnemyStates/Hurt";
+import Dead from "./EnemyStates/Dead";
+import Combat from "./EnemyStates/Combat";
 
-// import PlayerWeapon from "./EnemyWeapon";
-import Input from "../../Wolfie2D/Input/Input";
+// // import PlayerWeapon from "./EnemyWeapon";
+// import Input from "../../Wolfie2D/Input/Input";
 
 import { HW3Controls } from "../HW3Controls";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
@@ -22,15 +22,15 @@ import { HW3Events } from "../HW3Events";
  */
 export const EnemyAnimations = {
     IDLE: "IDLE",
-    // WALK: "WALK",
-    // ATTACK_1: "ATTACK_1",
-    // ATTACK_2: "ATTACK_2",
-    // TAKE_DAMAGE: "TAKE_DAMAGE",
-    // DYING: "DYING",
-    // DEATH: "DEATH",
-    // JUMP: "JUMP",
-    // FALL: "FALL",
-    // LAND: "LAND"
+    WALK: "WALK",
+    ATTACK_1: "ATTACK_1",
+    ATTACK_2: "ATTACK_2",
+    TAKE_DAMAGE: "TAKE_DAMAGE",
+    DYING: "DYING",
+    DEATH: "DEATH",
+    JUMP: "JUMP",
+    FALL: "FALL",
+    LAND: "LAND"
 } as const
 
 /**
@@ -42,15 +42,15 @@ export const EnemyTweens = {
 } as const
 
 /**
- * Keys for the states the PlayerController can be in.
+ * Keys for the states the EnemyController can be in.
  */
 export const EnemyStates = {
     IDLE: "IDLE",
-    // WALK: "WALK",
-	// JUMP: "JUMP",
-    // FALL: "FALL",
-    // DEAD: "DEAD",
-    // TALKING: "TALKING"
+    PATHING: "PATHING",
+    RETURNING: "RETURNING",
+    HURT: "HURT",
+    DEAD: "DEAD",
+    COMBAT: "COMBAT",
 } as const
 
 /**
@@ -70,6 +70,10 @@ export default class EnemyController extends StateMachineAI {
     protected _velocity: Vec2;
 	protected _speed: number;
 
+    protected _aggroRadius: number;
+    protected _spawn: Vec2;
+    private _player: HW3AnimatedSprite;
+
     // protected tilemap: OrthogonalTilemap;
     // protected cannon: Sprite;
     // protected weapon: EnemyWeapon;
@@ -87,12 +91,17 @@ export default class EnemyController extends StateMachineAI {
         this.health = 5
         this.maxHealth = 5;
 
+        this.aggroRadius = options.radius;
+        this.spawn = options.spawn;
+        this._player = options.player;
+
         // Add the different states the enemy can be in to the EnemyController 
 		this.addState(EnemyStates.IDLE, new Idle(this, this.owner));
-		// this.addState(PlayerStates.WALK, new Walk(this, this.owner));
-        // this.addState(PlayerStates.JUMP, new Jump(this, this.owner));
-        // this.addState(PlayerStates.FALL, new Fall(this, this.owner));
-        // this.addState(PlayerStates.DEAD, new Dead(this, this.owner));
+        this.addState(EnemyStates.PATHING, new Pathing(this, this.owner));
+        this.addState(EnemyStates.RETURNING, new Returning(this, this.owner));
+        this.addState(EnemyStates.HURT, new Hurt(this, this.owner));
+        this.addState(EnemyStates.DEAD, new Dead(this, this.owner));
+        this.addState(EnemyStates.COMBAT, new Combat(this, this.owner));
         
         // Start the enemy in the Idle state
         this.initialize(EnemyStates.IDLE);
@@ -101,6 +110,14 @@ export default class EnemyController extends StateMachineAI {
     public update(deltaT: number): void {
 		super.update(deltaT);
 	}
+
+    public get aggroRadius(): number { return this._aggroRadius; }
+    public set aggroRadius(radius: number) {this._aggroRadius = radius; }
+
+    public get spawn(): Vec2 { return this._spawn; }
+    public set spawn(spawn: Vec2) {this._spawn = spawn; } 
+
+    public get playerPosition(): Vec2 { return this._player.position; }
 
     public get velocity(): Vec2 { return this._velocity; }
     public set velocity(velocity: Vec2) { this._velocity = velocity; }
@@ -122,7 +139,7 @@ export default class EnemyController extends StateMachineAI {
         // this.emitter.fireEvent(HW3Events.HEALTH_CHANGE, {curhp: this.health, maxhp: this.maxHealth});
         // If the health hit 0, change the state of the player
         if (this.health === 0) { 
-            // this.changeState(EnemyStates.DEAD);
+            this.changeState(EnemyStates.DEAD);
          }
     }
 }

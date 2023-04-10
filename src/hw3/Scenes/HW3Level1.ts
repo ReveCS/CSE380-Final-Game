@@ -133,7 +133,7 @@ export default class Level1 extends HW3Level {
     protected initializeEnemies() {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
-        this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(50,200));
+        this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(50,200), 10);
     }
 
     /**

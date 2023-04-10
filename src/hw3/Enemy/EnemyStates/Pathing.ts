@@ -1,10 +1,10 @@
 import { EnemyStates, EnemyAnimations } from "../EnemyController";
 import EnemyState from "./EnemyState";
 
-export default class Idle extends EnemyState {
+export default class Pathing extends EnemyState {
 
 	public onEnter(options: Record<string, any>): void {
-        this.owner.animation.playIfNotAlready(EnemyAnimations.IDLE,true);
+        this.owner.animation.playIfNotAlready(EnemyAnimations.WALK,true);
         
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
@@ -22,15 +22,15 @@ export default class Idle extends EnemyState {
         if (this.playerInCombatRange()) {
             this.finished(EnemyStates.COMBAT);
         }
-        // // If not, path to the player if they are in our aggro range
-        // else if (this.playerInRange()) {
-        //     this.finished(EnemyStates.PATHING);
-        // }
-        // // Change state if we're hit
-        // else if (false) {
-        //     this.finished(EnemyStates.HURT);
-        // }
-        // // Otherwise, do nothing (keep idling)
+        // Stop aggro if the player runs away
+        else if (!this.playerInRange()) {
+            this.finished(EnemyStates.RETURNING);
+        }
+        // Change state if we're hit
+        else if (false) {
+            this.finished(EnemyStates.HURT);
+        }
+        // Otherwise, do nothing (keep idling)
         else {
             // Update the vertical velocity of the Enemy
             this.parent.velocity.y += this.gravity*deltaT;

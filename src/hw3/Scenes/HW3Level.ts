@@ -477,7 +477,7 @@ export default abstract class HW3Level extends Scene {
         });
     }
 
-    protected initializeEnemy(key:string, spawn:Vec2): HW3AnimatedSprite {
+    protected initializeEnemy(key:string, spawn:Vec2, AggroRadius:number): HW3AnimatedSprite {
         if (spawn === undefined) {
             throw new Error("Enemy spawn must be set before initializing!");
         }
@@ -493,7 +493,7 @@ export default abstract class HW3Level extends Scene {
         // this.player.setGroup("PLAYER");
 
         // Give the Enemy it's AI
-        enemy.addAI(EnemyController, {player: this.player});
+        enemy.addAI(EnemyController, { player: this.player, radius: AggroRadius, spawn: spawn });
 
         return enemy
     }

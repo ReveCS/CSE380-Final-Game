@@ -26,6 +26,8 @@ import HW3FactoryManager from "../Factory/HW3FactoryManager";
 import MainMenu from "./MainMenu";
 import Particle from "../../Wolfie2D/Nodes/Graphics/Particle";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
+import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
+import EnemyController from "../Enemy/EnemyController";
 
 /**
  * A const object for the layer names
@@ -469,6 +471,28 @@ export default abstract class HW3Level extends Scene {
             tilemap: "Destructable" 
         });
     }
+
+    protected initializeEnemy(key:string, spawn:Vec2): HW3AnimatedSprite {
+        if (spawn === undefined) {
+            throw new Error("Enemy spawn must be set before initializing!");
+        }
+
+        // Add the Enemy to the scene
+        let enemy = this.add.animatedSprite(key, HW3Layers.PRIMARY);
+        enemy.scale.set(1, 1);
+        enemy.position.copy(spawn);
+
+        // Give the enemy physics
+        enemy.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
+        enemy.collisionShape.halfSize.set(20,this.player.collisionShape.halfSize.y);
+        // this.player.setGroup("PLAYER");
+
+        // Give the Enemy it's AI
+        enemy.addAI(EnemyController, {player: this.player});
+
+        return enemy
+    }
+
     /**
      * Initializes the viewport
      */

@@ -57,8 +57,8 @@ export const EnemyStates = {
  * The controller that controls the enemy.
  */
 export default class EnemyController extends StateMachineAI {
-    public readonly MAX_SPEED: number = 600;
-    public readonly MIN_SPEED: number = 500;
+    public readonly MAX_SPEED: number = 300;
+    public readonly MIN_SPEED: number = 200;
 
     /** Health and max health for the enemy */
     protected _health: number;
@@ -85,7 +85,7 @@ export default class EnemyController extends StateMachineAI {
         // this.weapon = options.weaponSystem;
 
         // this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
-        this.speed = 400;
+        this.speed = 200;
         this.velocity = Vec2.ZERO;
 
         this.health = 5

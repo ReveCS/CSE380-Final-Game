@@ -60,8 +60,8 @@ export const PlayerStates = {
  * The controller that controls the player.
  */
 export default class PlayerController extends StateMachineAI {
-    public readonly MAX_SPEED: number = 600;
-    public readonly MIN_SPEED: number = 500;
+    public readonly MAX_SPEED: number = 400;
+    public readonly MIN_SPEED: number = 300;
 
     /** Health and max health for the player */
     protected _health: number;
@@ -84,7 +84,7 @@ export default class PlayerController extends StateMachineAI {
         this.weapon = options.weaponSystem;
 
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
-        this.speed = 400;
+        this.speed = 350;
         this.velocity = Vec2.ZERO;
 
         this.health = 5

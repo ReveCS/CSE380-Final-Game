@@ -42,9 +42,10 @@ export default abstract class EnemyState extends State {
 	public update(deltaT: number): void {
         // This updates the direction the Player is in (left or right)
         this.dirToPlayer = this.owner.position.dirTo(this.parent.playerPosition);
-		if(this.dirToPlayer.x !== 0){
-			this.owner.invertX = MathUtils.sign(this.dirToPlayer.x) < 0;
-		}
+        // make sure were facing the player
+        if(this.dirToPlayer.x !== 0){
+            this.owner.invertX = MathUtils.sign(this.dirToPlayer.x) < 0;
+        }
     }
 
     public abstract onExit(): Record<string, any>;
@@ -60,5 +61,11 @@ export default abstract class EnemyState extends State {
     // returns if the player is in range to be attacked
     protected playerInCombatRange(): Boolean {
         return this.owner.boundary.containsPoint(this.parent.playerPosition);
+    }
+
+    // returns if we are at our spawn
+    protected atSpawn(): Boolean {
+        let threshold = 2.6; // 2.5 but do 2.6 for rounding errors
+        return this.owner.position.distanceSqTo(this.parent.spawn) < threshold * threshold;
     }
 }

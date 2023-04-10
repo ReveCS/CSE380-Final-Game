@@ -18,7 +18,7 @@ import MathUtils from "../../Wolfie2D/Utils/MathUtils";
 import { HW3Events } from "../HW3Events";
 
 /**
- * Animation keys for the enemy spritesheet
+ * Animation keys for any enemy spritesheet
  */
 export const EnemyAnimations = {
     IDLE: "IDLE",

@@ -15,15 +15,15 @@ import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
  */
 export default class Level1 extends HW3Level {
 
-    public static readonly PLAYER_SPAWN = new Vec2(50, 32);
+    public static readonly PLAYER_SPAWN = new Vec2(64, 1225);;
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
 
     public static readonly TILEMAP_KEY = "LEVEL1";
-    public static readonly TILEMAP_PATH = "hw4_assets/tilemaps/HW4Level1.json";
+    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Hub.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
     public static readonly DESTRUCTIBLE_LAYER_KEY = "Destructable";
-    public static readonly WALLS_LAYER_KEY = "Main";
+    public static readonly WALLS_LAYER_KEY = "Ground";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
     public static readonly LEVEL_MUSIC_PATH = "hw4_assets/music/hw5_level_music.wav";
@@ -45,7 +45,7 @@ export default class Level1 extends HW3Level {
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
 
     // Enemy Sprites
-    public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(50, 50);
+    public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1225);
     protected defaultSpawn: Vec2;
 
     public static readonly PLACEHOLDER_SPRITE_KEY = "PLACEHOLDER_SPRITE_KEY";
@@ -133,7 +133,7 @@ export default class Level1 extends HW3Level {
     protected initializeEnemies() {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
-        this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(50,200), 10);
+        this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(200, 1225), 10);
     }
 
     /**
@@ -144,7 +144,7 @@ export default class Level1 extends HW3Level {
      */
     protected initializeViewport(): void {
         super.initializeViewport();
-        this.viewport.setBounds(16, 16, 496, 512);
+        this.viewport.setBounds(32, 16, 2368, 1600);
     }
 
 }

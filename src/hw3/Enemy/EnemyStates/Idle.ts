@@ -12,20 +12,16 @@ export default class Idle extends EnemyState {
 	}
 
 	public update(deltaT: number): void {
-        // Adjust the direction the Enemy is facing
 		super.update(deltaT);
-
-        // // Get the direction of the Enemy's movement
-		// let dir = this.parent.inputDir;
 
         // Attack the player if they are near
         if (this.playerInCombatRange()) {
             this.finished(EnemyStates.COMBAT);
         }
-        // // If not, path to the player if they are in our aggro range
-        // else if (this.playerInRange()) {
-        //     this.finished(EnemyStates.PATHING);
-        // }
+        // If not, path to the player if they are in our aggro range
+        else if (this.playerInRange()) {
+            this.finished(EnemyStates.PATHING);
+        }
         // // Change state if we're hit
         // else if (false) {
         //     this.finished(EnemyStates.HURT);

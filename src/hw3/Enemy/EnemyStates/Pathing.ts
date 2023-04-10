@@ -4,19 +4,12 @@ import EnemyState from "./EnemyState";
 export default class Pathing extends EnemyState {
 
 	public onEnter(options: Record<string, any>): void {
-        this.owner.animation.playIfNotAlready(EnemyAnimations.WALK,true);
-        
 		this.parent.speed = this.parent.MIN_SPEED;
-        this.parent.velocity.x = 0;
-        this.parent.velocity.y = 0;
+        this.owner.animation.playIfNotAlready(EnemyAnimations.WALK,true);
 	}
 
 	public update(deltaT: number): void {
-        // Adjust the direction the Enemy is facing
 		super.update(deltaT);
-
-        // // Get the direction of the Enemy's movement
-		// let dir = this.parent.inputDir;
 
         // Attack the player if they are near
         if (this.playerInCombatRange()) {
@@ -30,11 +23,11 @@ export default class Pathing extends EnemyState {
         else if (false) {
             this.finished(EnemyStates.HURT);
         }
-        // Otherwise, do nothing (keep idling)
+        // Otherwise, keep pathing
         else {
-            // Update the vertical velocity of the Enemy
-            this.parent.velocity.y += this.gravity*deltaT;
-            // Move the Enemy
+            let dir = this.dirToPlayer;
+            this.parent.velocity.y += this.gravity*deltaT; 
+            this.parent.velocity.x = dir.x * this.parent.speed
             this.owner.move(this.parent.velocity.scaled(deltaT));
         }
 		

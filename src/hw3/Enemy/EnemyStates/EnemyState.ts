@@ -15,6 +15,7 @@ export default abstract class EnemyState extends State {
 	protected owner: HW3AnimatedSprite;
 	protected gravity: number;
     protected aggroRadius: number;
+    protected dirToPlayer: Vec2;
 
 	public constructor(parent: EnemyController, owner: HW3AnimatedSprite){
 		super(parent);
@@ -39,11 +40,11 @@ export default abstract class EnemyState extends State {
 	}
 
 	public update(deltaT: number): void {
-        // This updates the direction the Enemy sprite is facing (left or right)
-        // let direction = this.parent.inputDir;
-		// if(direction.x !== 0){
-		// 	this.owner.invertX = MathUtils.sign(direction.x) < 0;
-		// }
+        // This updates the direction the Player is in (left or right)
+        this.dirToPlayer = this.owner.position.dirTo(this.parent.playerPosition);
+		if(this.dirToPlayer.x !== 0){
+			this.owner.invertX = MathUtils.sign(this.dirToPlayer.x) < 0;
+		}
     }
 
     public abstract onExit(): Record<string, any>;
@@ -51,7 +52,8 @@ export default abstract class EnemyState extends State {
     // returns whether a player is inside our aggro range or not
     protected playerInRange(): Boolean {
         let sqPlayerDist = this.parent.spawn.distanceSqTo(this.parent.playerPosition);
-        let sqAggroRadius = this.aggroRadius * this.aggroRadius;
+        let factor = 20; // cause sqDist is crazy large
+        let sqAggroRadius = this.aggroRadius * factor * this.aggroRadius * factor;
         return sqPlayerDist <= sqAggroRadius;
     }
 

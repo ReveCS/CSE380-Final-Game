@@ -147,7 +147,7 @@
 		},
 		{
 			"name": "TAKE_DAMAGE",
-			"repeat": true,
+			"repeat": false,
 			"frames": [
 				{
 					"index": 23,

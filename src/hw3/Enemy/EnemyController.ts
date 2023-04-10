@@ -1,5 +1,6 @@
 import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
+import GameEvent from "../../Wolfie2D/Events/GameEvent";
 // import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 
 import Idle from "./EnemyStates/Idle";
@@ -105,6 +106,16 @@ export default class EnemyController extends StateMachineAI {
         
         // Start the enemy in the Idle state
         this.initialize(EnemyStates.IDLE);
+
+        this.receiver.subscribe(HW3Events.PLAYER_ATTACK);
+    }
+
+    // Override
+    handleEvent(event: GameEvent): void {
+        if(this.active){
+            if (event.type === HW3Events.PLAYER_ATTACK) this.changeState(EnemyStates.HURT);
+            else this.currentState.handleInput(event);
+        }
     }
 
     public update(deltaT: number): void {

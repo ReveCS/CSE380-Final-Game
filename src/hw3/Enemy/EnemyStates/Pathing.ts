@@ -20,10 +20,7 @@ export default class Pathing extends EnemyState {
         else if (!this.playerInRange()) {
             this.finished(EnemyStates.RETURNING);
         }
-        // Change state if we're hit
-        else if (false) {
-            this.finished(EnemyStates.HURT);
-        }
+        // We handle hit state in superclass
         // Otherwise, keep pathing
         else {
             let dir = this.dirToPlayer;

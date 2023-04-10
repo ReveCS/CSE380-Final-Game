@@ -17,14 +17,11 @@ export default class Pathing extends EnemyState {
         if (this.playerInRange()) {
             this.finished(EnemyStates.PATHING);
         }
-        // Change state if we're hit
-        else if (false) {
-            this.finished(EnemyStates.HURT);
-        }
         // if we're at our spawn we go back to idling
         else if (this.atSpawn()) {
             this.finished(EnemyStates.IDLE);
         }
+        // We handle hit state in superclass
         // Otherwise, path back to spawn
         else {
             let dir = this.owner.position.dirTo(this.parent.spawn);

@@ -1,29 +1,23 @@
 import { EnemyStates, EnemyAnimations } from "../EnemyController";
 import EnemyState from "./EnemyState";
+import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 
 export default class Hurt extends EnemyState {
 
 	public onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready(EnemyAnimations.TAKE_DAMAGE);
-        
-		this.parent.speed = this.parent.MIN_SPEED;
-        this.parent.velocity.x = 0;
-        this.parent.velocity.y = 0;
+        console.log("hurt")
 	}
 
 	public update(deltaT: number): void {
-        // Adjust the direction the Enemy is facing
 		super.update(deltaT);
-
-        // // Get the direction of the Enemy's movement
-		// let dir = this.parent.inputDir;
 
         // If we take lethal damage we die
         if (false) {
             this.finished(EnemyStates.DEAD);
         }
-        // Otherwise, do nothing (keep idling)
-        else {
+        // After anim is done , go back to idle so we can check what to do next
+        else if (!this.owner.animation.isPlaying(EnemyAnimations.TAKE_DAMAGE)) {
             this.finished(EnemyStates.IDLE);
         }
 		

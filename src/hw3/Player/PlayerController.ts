@@ -131,6 +131,7 @@ export default class PlayerController extends StateMachineAI {
         }
         if (this.isAttacking && !this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
             this.isAttacking = false;
+            this.emitter.fireEvent(HW3Events.PLAYER_ATTACK);
         }
 
         if (Input.isPressed(HW3Controls.ESC)) {

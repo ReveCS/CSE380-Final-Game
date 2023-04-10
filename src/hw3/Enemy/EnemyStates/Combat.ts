@@ -5,6 +5,7 @@ export default class Combat extends EnemyState {
 
 	public onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready(EnemyAnimations.ATTACK_1);
+        console.log("combat")
 	}
 
 	public update(deltaT: number): void {

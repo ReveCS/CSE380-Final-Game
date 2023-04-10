@@ -23,23 +23,19 @@ export default class Idle extends EnemyState {
         else if (this.playerInRange()) {
             this.finished(EnemyStates.PATHING);
         }
-        // Change state if we're hit
-        else if (false) {
-            this.finished(EnemyStates.HURT);
-        }
         // we already checked so player must be out of aggro range
         // return to our spawn if we aren't there
         else if (!this.atSpawn()) {
             this.finished(EnemyStates.RETURNING);
         }
+        // We handle hit state in superclass
         // // Otherwise, do nothing (keep idling)
         else {
             // Update the vertical velocity of the Enemy
             this.parent.velocity.y += this.gravity*deltaT;
             // Move the Enemy
             this.owner.move(this.parent.velocity.scaled(deltaT));
-        }
-		
+        }	
 	}
 
 	public onExit(): Record<string, any> {

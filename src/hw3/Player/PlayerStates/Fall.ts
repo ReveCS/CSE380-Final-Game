@@ -1,4 +1,3 @@
-import MathUtils from "../../../Wolfie2D/Utils/MathUtils";
 import { PlayerAnimations, PlayerStates } from "../PlayerController";
 import PlayerState from "./PlayerState";
 import Timer from "../../../Wolfie2D/Timing/Timer";
@@ -33,11 +32,7 @@ export default class Fall extends PlayerState {
                 }
                 
             }
-            this.finished(PlayerStates.IDLE)
-            
-            
-
-            
+            this.finished(PlayerStates.IDLE)   
             
         } 
         // Otherwise, keep moving

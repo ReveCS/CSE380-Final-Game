@@ -13,10 +13,9 @@ import Combat from "./EnemyStates/Combat";
 // // import PlayerWeapon from "./EnemyWeapon";
 // import Input from "../../Wolfie2D/Input/Input";
 
-import { HW3Controls } from "../HW3Controls";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import MathUtils from "../../Wolfie2D/Utils/MathUtils";
-import { HW3Events } from "../HW3Events";
+import { CombatEvents } from "../Events/CombatEvents";
 
 /**
  * Animation keys for any enemy spritesheet
@@ -65,6 +64,8 @@ export default class EnemyController extends StateMachineAI {
     protected _health: number;
     protected _maxHealth: number;
 
+    protected _damage: number;
+
     /** The enemy's game node */
     protected owner: HW3AnimatedSprite;
 
@@ -93,6 +94,8 @@ export default class EnemyController extends StateMachineAI {
         this.health = 5
         this.maxHealth = 5;
 
+        this._damage = 1;
+
         this._playerDamage = 1;
 
         this.aggroRadius = options.radius;
@@ -110,15 +113,18 @@ export default class EnemyController extends StateMachineAI {
         // Start the enemy in the Idle state
         this.initialize(EnemyStates.IDLE);
 
-        this.receiver.subscribe(HW3Events.PLAYER_ATTACK);
+        this.receiver.subscribe(CombatEvents.PLAYER_ATTACK_PHYSICAL);
     }
 
     // Override
     handleEvent(event: GameEvent): void {
         if(this.active){
-            if (event.type === HW3Events.PLAYER_ATTACK) {
-                this._playerDamage = event.data.get("dmg");
-                this.changeState(EnemyStates.HURT);
+            if (event.type === CombatEvents.PLAYER_ATTACK_PHYSICAL) {
+                // make sure we are in the range of player's attack
+                if (this._player.boundary.containsPoint(this.owner.position)) {
+                    this._playerDamage = event.data.get("dmg");
+                    this.changeState(EnemyStates.HURT);
+                }
             }
             else this.currentState.handleInput(event);
         }
@@ -142,6 +148,9 @@ export default class EnemyController extends StateMachineAI {
 
     public get speed(): number { return this._speed; }
     public set speed(speed: number) { this._speed = speed; }
+
+    public get damage(): number { return this._damage; }
+    public set damage(damage: number) { this._damage = damage }
 
     public get maxHealth(): number { return this._maxHealth; }
     public set maxHealth(maxHealth: number) { 

@@ -8,6 +8,8 @@ import Jump from "./PlayerStates/Jump";
 import Walk from "./PlayerStates/Walk";
 import Dead from "./PlayerStates/Dead";
 import Talking from "./PlayerStates/Talking";
+import Hurt from "./PlayerStates/Hurt";
+import Combat from "./PlayerStates/Combat";
 
 import PlayerWeapon from "./PlayerWeapon";
 import Input from "../../Wolfie2D/Input/Input";
@@ -15,8 +17,9 @@ import Input from "../../Wolfie2D/Input/Input";
 import { HW3Controls } from "../HW3Controls";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import MathUtils from "../../Wolfie2D/Utils/MathUtils";
-import { HW3Events } from "../HW3Events";
-import SortingUtils from "../../Wolfie2D/Utils/SortingUtils";
+import { HW3Events } from "../Events/HW3Events";
+import { CombatEvents } from "../Events/CombatEvents";
+import GameEvent from "../../Wolfie2D/Events/GameEvent";
 
 // TODO play your heros animations
 
@@ -52,8 +55,10 @@ export const PlayerStates = {
     WALK: "WALK",
 	JUMP: "JUMP",
     FALL: "FALL",
+    HURT: "HURT",
     DEAD: "DEAD",
-    TALKING: "TALKING"
+    TALKING: "TALKING",
+    COMBAT: "COMBAT",
 } as const
 
 /**
@@ -79,6 +84,7 @@ export default class PlayerController extends StateMachineAI {
     protected _damage: number;
 
     protected isAttacking: Boolean;
+    protected _enemyDamage: number;
 
     
     public initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>){
@@ -95,18 +101,35 @@ export default class PlayerController extends StateMachineAI {
 
         this.damage = 1;
 
+        this._enemyDamage = 0;
+
         this.isAttacking = false;
 
         // Add the different states the player can be in to the PlayerController 
 		this.addState(PlayerStates.IDLE, new Idle(this, this.owner));
 		this.addState(PlayerStates.WALK, new Walk(this, this.owner));
         this.addState(PlayerStates.JUMP, new Jump(this, this.owner));
+        this.addState(PlayerStates.HURT, new Hurt(this, this.owner));
         this.addState(PlayerStates.FALL, new Fall(this, this.owner));
         this.addState(PlayerStates.DEAD, new Dead(this, this.owner));
         this.addState(PlayerStates.TALKING, new Talking(this, this.owner));
+        this.addState(PlayerStates.COMBAT, new Combat(this, this.owner));
         
         // Start the player in the Idle state
         this.initialize(PlayerStates.IDLE);
+
+        this.receiver.subscribe(CombatEvents.ENEMY_ATTACK_PHYSICAL);
+    }
+
+    // Override
+    handleEvent(event: GameEvent): void {
+        if(this.active){
+            if (event.type === CombatEvents.ENEMY_ATTACK_PHYSICAL) {
+                this._enemyDamage = event.data.get("dmg");
+                this.changeState(PlayerStates.HURT);
+            }
+            else this.currentState.handleInput(event);
+        }
     }
 
     /** 
@@ -134,14 +157,17 @@ export default class PlayerController extends StateMachineAI {
         }
         if (this.isAttacking && !this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
             this.isAttacking = false;
-            this.emitter.fireEvent(HW3Events.PLAYER_ATTACK, { dmg: this.damage });
+            this.emitter.fireEvent(CombatEvents.PLAYER_ATTACK_PHYSICAL, { dmg: this.damage });
         }
+        // if (Input.isPressed(HW3Controls.ATTACK)) this.changeState(PlayerStates.COMBAT);
 
         if (Input.isPressed(HW3Controls.ESC)) {
             this.emitter.fireEvent(HW3Events.GAME_PAUSE);
         }
 
 	}
+
+    public get enemyDamage(): number { return this._enemyDamage; }
 
     public get velocity(): Vec2 { return this._velocity; }
     public set velocity(velocity: Vec2) { this._velocity = velocity; }

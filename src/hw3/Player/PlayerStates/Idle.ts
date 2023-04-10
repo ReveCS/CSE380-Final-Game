@@ -3,7 +3,7 @@ import PlayerState from "./PlayerState";
 import Input from "../../../Wolfie2D/Input/Input";
 import { HW3Controls } from "../../HW3Controls";
 import GameEvent from "../../../Wolfie2D/Events/GameEvent";
-import { HW3Events } from "../../HW3Events";
+import { NPCEvents } from "../../Events/NPCEvents";
 import Receiver from "../../../Wolfie2D/Events/Receiver";
 import HW3AnimatedSprite from "../../Nodes/HW3AnimatedSprite";
 import PlayerController from "../PlayerController";
@@ -15,7 +15,7 @@ export default class Idle extends PlayerState {
     public constructor(parent: PlayerController, owner: HW3AnimatedSprite){
 		super(parent, owner);
         this.receiver = new Receiver();
-        this.receiver.subscribe(HW3Events.TALKING_TO_NPC);
+        this.receiver.subscribe(NPCEvents.TALKING_TO_NPC);
 	}
 
 	public onEnter(options: Record<string, any>): void {
@@ -28,7 +28,7 @@ export default class Idle extends PlayerState {
 
     public handleInput(event: GameEvent): void {
         switch(event.type) {
-            case HW3Events.TALKING_TO_NPC: {
+            case (NPCEvents.TALKING_TO_NPC): {
                 this.finished(PlayerStates.TALKING);
                 break;
             }

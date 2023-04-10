@@ -5,7 +5,7 @@ import ControllerAI from "../../Wolfie2D/AI/ControllerAI";
 import Input from "../../Wolfie2D/Input/Input";
 
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
-import { HW3Events } from "../HW3Events";
+import { NPCEvents } from "../Events/NPCEvents";
 import { HW3Controls } from "../HW3Controls";
 
 /**
@@ -33,7 +33,7 @@ export default class NPCController extends ControllerAI {
         this.doneTalking = false;
         this.quests = options.quests;
 
-        this.receiver.subscribe(HW3Events.DONE_TALKING_TO_NPC);
+        this.receiver.subscribe(NPCEvents.DONE_TALKING_TO_NPC);
         this.owner.animation.playIfNotAlready(NPCAnimations.IDLE);
     }
 
@@ -43,7 +43,7 @@ export default class NPCController extends ControllerAI {
 
     handleEvent(event: GameEvent): void {
         switch(event.type) {
-            case (HW3Events.DONE_TALKING_TO_NPC): {
+            case (NPCEvents.DONE_TALKING_TO_NPC): {
                 this.doneTalking = true;
                 break;
             }
@@ -69,18 +69,18 @@ export default class NPCController extends ControllerAI {
                 this.isWaiting = false;
                 if (this.quests.length === 0) throw new Error("NPC ran out of quests!");
                 let currentQuest = this.quests[this.quests.length - 1];
-                this.emitter.fireEvent(HW3Events.TALKING_TO_NPC, {id: currentQuest});
+                this.emitter.fireEvent(NPCEvents.TALKING_TO_NPC, {id: currentQuest});
             }
         }
         // wait for player to accept/decline the quest
         else if (this.doneTalking) {
             if (Input.isJustPressed(HW3Controls.ACCEPT_QUEST)) {
-                this.emitter.fireEvent(HW3Events.ACCEPT_QUEST);
+                this.emitter.fireEvent(NPCEvents.ACCEPT_QUEST);
                 this.isWaiting = true;
                 this.doneTalking = false;
             }
             else if (Input.isJustPressed(HW3Controls.DECLINE_QUEST)) {
-                this.emitter.fireEvent(HW3Events.DECLINE_QUEST);
+                this.emitter.fireEvent(NPCEvents.DECLINE_QUEST);
                 this.isWaiting = true;
                 this.doneTalking = false;
             }

@@ -10,7 +10,7 @@ import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 import NPCController from "../NPC/NPCController";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import {HW3Layers} from "./HW3Level";
-import { HW3Events } from "../HW3Events";
+import { NPCEvents } from "../Events/NPCEvents";
 
 // imports for quest displaying
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
@@ -152,7 +152,7 @@ export default class Hub extends HW3Level {
                 }
                 else {
                     this.isDisplayingText = false;
-                    this.emitter.fireEvent(HW3Events.DONE_TALKING_TO_NPC);
+                    this.emitter.fireEvent(NPCEvents.DONE_TALKING_TO_NPC);
                 }
             }
         }

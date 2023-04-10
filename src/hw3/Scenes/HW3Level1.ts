@@ -7,7 +7,6 @@ import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 
 import HW4Level2 from "./HW3Level2";
-import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 
 /**
@@ -26,19 +25,19 @@ export default class Level1 extends HW3Level {
     public static readonly WALLS_LAYER_KEY = "Ground";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
-    public static readonly LEVEL_MUSIC_PATH = "hw4_assets/music/hw5_level_music.wav";
+    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/levelmusic.wav";
 
     public static readonly JUMP_AUDIO_KEY = "PLAYER_JUMP";
-    public static readonly JUMP_AUDIO_PATH = "hw4_assets/sounds/jump.wav";
+    public static readonly JUMP_AUDIO_PATH = "game_assets/sounds/jump.wav";
 
     public static readonly TILE_DESTROYED_KEY = "TILE_DESTROYED";
     public static readonly TILE_DESTROYED_PATH = "hw4_assets/sounds/switch.wav";
 
     public static readonly DEATH_KEY = "DEATH";
-    public static readonly DEATH_PATH = "hw4_assets/sounds/deathsound.mp3";
+    public static readonly DEATH_PATH = "game_assets/sounds/deathsound.mp3";
 
     public static readonly HIT_KEY = "HIT";
-    public static readonly HIT_PATH = "hw4_assets/sounds/gettinghit.wav";
+    public static readonly HIT_PATH = "game_assets/sounds/gettinghit.wav";
 
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";

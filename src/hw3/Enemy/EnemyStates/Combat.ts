@@ -1,10 +1,12 @@
 import { EnemyStates, EnemyAnimations } from "../EnemyController";
 import EnemyState from "./EnemyState";
+import { CombatEvents } from "../../Events/CombatEvents";
 
 export default class Combat extends EnemyState {
 
 	public onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready(EnemyAnimations.ATTACK_1);
+		this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: this.parent.damage });
 	}
 
 	public update(deltaT: number): void {

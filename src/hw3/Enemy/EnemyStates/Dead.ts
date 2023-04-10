@@ -7,8 +7,11 @@ export default class Dead extends EnemyState {
         this.owner.animation.play(EnemyAnimations.DYING);
 	}
 
-    // Empty update method - if the enemy is dead, don't update anything
-    public update(deltaT: number): void {}
+    public update(deltaT: number): void {
+        if (!this.owner.animation.isPlaying(EnemyAnimations.DYING)) {
+            this.owner.destroy();
+        }
+    }
 
     public onExit(): Record<string, any> { return {}; }
 }

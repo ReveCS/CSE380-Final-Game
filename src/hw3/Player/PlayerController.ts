@@ -76,6 +76,7 @@ export default class PlayerController extends StateMachineAI {
     protected tilemap: OrthogonalTilemap;
     // protected cannon: Sprite;
     protected weapon: PlayerWeapon;
+    protected _damage: number;
 
     protected isAttacking: Boolean;
 
@@ -91,6 +92,8 @@ export default class PlayerController extends StateMachineAI {
 
         this.health = 5
         this.maxHealth = 5;
+
+        this.damage = 1;
 
         this.isAttacking = false;
 
@@ -131,7 +134,7 @@ export default class PlayerController extends StateMachineAI {
         }
         if (this.isAttacking && !this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
             this.isAttacking = false;
-            this.emitter.fireEvent(HW3Events.PLAYER_ATTACK);
+            this.emitter.fireEvent(HW3Events.PLAYER_ATTACK, { dmg: this.damage });
         }
 
         if (Input.isPressed(HW3Controls.ESC)) {
@@ -145,6 +148,9 @@ export default class PlayerController extends StateMachineAI {
 
     public get speed(): number { return this._speed; }
     public set speed(speed: number) { this._speed = speed; }
+
+    public get damage(): number { return this._damage; }
+    public set damage(damage: number) { this._damage = damage; }
 
     public get maxHealth(): number { return this._maxHealth; }
     public set maxHealth(maxHealth: number) { 

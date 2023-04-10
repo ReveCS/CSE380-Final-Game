@@ -74,6 +74,7 @@ export default class EnemyController extends StateMachineAI {
     protected _aggroRadius: number;
     protected _spawn: Vec2;
     private _player: HW3AnimatedSprite;
+    protected _playerDamage: number;
 
     // protected tilemap: OrthogonalTilemap;
     // protected cannon: Sprite;
@@ -91,6 +92,8 @@ export default class EnemyController extends StateMachineAI {
 
         this.health = 5
         this.maxHealth = 5;
+
+        this._playerDamage = 1;
 
         this.aggroRadius = options.radius;
         this.spawn = options.spawn;
@@ -113,7 +116,10 @@ export default class EnemyController extends StateMachineAI {
     // Override
     handleEvent(event: GameEvent): void {
         if(this.active){
-            if (event.type === HW3Events.PLAYER_ATTACK) this.changeState(EnemyStates.HURT);
+            if (event.type === HW3Events.PLAYER_ATTACK) {
+                this._playerDamage = event.data.get("dmg");
+                this.changeState(EnemyStates.HURT);
+            }
             else this.currentState.handleInput(event);
         }
     }
@@ -129,6 +135,7 @@ export default class EnemyController extends StateMachineAI {
     public set spawn(spawn: Vec2) {this._spawn = spawn; } 
 
     public get playerPosition(): Vec2 { return this._player.position; }
+    public get playerDamage(): number { return this._playerDamage }
 
     public get velocity(): Vec2 { return this._velocity; }
     public set velocity(velocity: Vec2) { this._velocity = velocity; }

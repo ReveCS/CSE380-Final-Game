@@ -20,13 +20,14 @@ import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import PlayerController, { PlayerTweens } from "../Player/PlayerController";
 import PlayerWeapon from "../Player/PlayerWeapon";
 
-import { HW3Events } from "../HW3Events";
+import { HW3Events } from "../Events/HW3Events";
 import { HW3PhysicsGroups } from "../HW3PhysicsGroups";
 import HW3FactoryManager from "../Factory/HW3FactoryManager";
 import MainMenu from "./MainMenu";
 import Particle from "../../Wolfie2D/Nodes/Graphics/Particle";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
+import { NPCEvents } from "../Events/NPCEvents";
 import EnemyController from "../Enemy/EnemyController";
 
 /**
@@ -209,7 +210,7 @@ export default abstract class HW3Level extends Scene {
                 console.log(this.isRunning());
                 break;
             }
-            case HW3Events.TALKING_TO_NPC: {
+            case NPCEvents.TALKING_TO_NPC: {
                 this.handleTalkingNPC(event.data.get("id"));
                 break;
             }
@@ -347,7 +348,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.HEALTH_CHANGE);
         this.receiver.subscribe(HW3Events.PLAYER_DEAD);
         this.receiver.subscribe(HW3Events.GAME_PAUSE);
-        this.receiver.subscribe(HW3Events.TALKING_TO_NPC);
+        this.receiver.subscribe(NPCEvents.TALKING_TO_NPC);
     }
     /**
      * Adds in any necessary UI to the game

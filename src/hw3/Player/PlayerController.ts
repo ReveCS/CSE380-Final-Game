@@ -9,7 +9,7 @@ import Walk from "./PlayerStates/Walk";
 import Dead from "./PlayerStates/Dead";
 import Talking from "./PlayerStates/Talking";
 import Hurt from "./PlayerStates/Hurt";
-import Combat from "./PlayerStates/Combat";
+// import Combat from "./PlayerStates/Combat";
 
 import PlayerWeapon from "./PlayerWeapon";
 import Input from "../../Wolfie2D/Input/Input";
@@ -58,7 +58,7 @@ export const PlayerStates = {
     HURT: "HURT",
     DEAD: "DEAD",
     TALKING: "TALKING",
-    COMBAT: "COMBAT",
+    // COMBAT: "COMBAT",
 } as const
 
 /**
@@ -113,7 +113,7 @@ export default class PlayerController extends StateMachineAI {
         this.addState(PlayerStates.FALL, new Fall(this, this.owner));
         this.addState(PlayerStates.DEAD, new Dead(this, this.owner));
         this.addState(PlayerStates.TALKING, new Talking(this, this.owner));
-        this.addState(PlayerStates.COMBAT, new Combat(this, this.owner));
+        // this.addState(PlayerStates.COMBAT, new Combat(this, this.owner));
         
         // Start the player in the Idle state
         this.initialize(PlayerStates.IDLE);

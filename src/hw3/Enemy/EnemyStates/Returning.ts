@@ -6,7 +6,7 @@ export default class Pathing extends EnemyState {
 
 	public onEnter(options: Record<string, any>): void {
         this.parent.speed = this.parent.MIN_SPEED;
-        this.owner.animation.playIfNotAlready(EnemyAnimations.WALK,true);
+        this.owner.animation.playIfNotAlready(EnemyAnimations.WALK, true);
         console.log("returning")
 	}
 

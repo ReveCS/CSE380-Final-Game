@@ -5,6 +5,7 @@ import HW3AnimatedSprite from "../../Nodes/HW3AnimatedSprite";
 import EnemyController from "../EnemyController";
 import Receiver from "../../../Wolfie2D/Events/Receiver";
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import { HW3Events } from "../../HW3Events";
 
 /**
  * An abstract state for the EnemyController 
@@ -13,6 +14,7 @@ export default abstract class EnemyState extends State {
 
     protected parent: EnemyController;
 	protected owner: HW3AnimatedSprite;
+    protected receiver: Receiver;
 	protected gravity: number;
     protected aggroRadius: number;
     protected dirToPlayer: Vec2;
@@ -20,8 +22,11 @@ export default abstract class EnemyState extends State {
 	public constructor(parent: EnemyController, owner: HW3AnimatedSprite){
 		super(parent);
 		this.owner = owner;
+        this.receiver = new Receiver();
         this.gravity = 500;
         this.aggroRadius = this.parent.aggroRadius;
+
+        this.receiver.subscribe(HW3Events.PLAYER_ATTACK);
 	}
 
     public abstract onEnter(options: Record<string, any>): void;
@@ -32,6 +37,9 @@ export default abstract class EnemyState extends State {
      */
 	public handleInput(event: GameEvent): void {
         switch(event.type) {
+            case (HW3Events.PLAYER_ATTACK): {
+                break;
+            }
             // Default - throw an error
             default: {
                 throw new Error(`Unhandled event in EnemyState of type ${event.type}`);

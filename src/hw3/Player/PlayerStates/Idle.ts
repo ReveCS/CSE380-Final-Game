@@ -44,7 +44,7 @@ export default class Idle extends PlayerState {
             this.handleInput(this.receiver.getNextEvent());
         }
 
-        if(!this.owner.animation.isPlaying(PlayerAnimations.IDLE)){
+        if(!this.owner.animation.isPlaying(PlayerAnimations.IDLE) && !this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)){
            if(this.parent.health> 0 && !this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE) && (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) || (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_2))){
                 this.owner.animation.play(PlayerAnimations.IDLE)
            }

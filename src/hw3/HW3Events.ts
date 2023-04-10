@@ -39,5 +39,8 @@ export const HW3Events = {
     */
     ACCEPT_QUEST: "ACCEPT_QUEST",
     DECLINE_QUEST: "DECLINE_QUEST",
+
+    // The event sent when the player attacks
+    PLAYER_ATTACK: "PLAYER_ATTACK",
     
 } as const;

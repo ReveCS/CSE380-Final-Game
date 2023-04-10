@@ -77,6 +77,8 @@ export default class PlayerController extends StateMachineAI {
     // protected cannon: Sprite;
     protected weapon: PlayerWeapon;
 
+    protected isAttacking: Boolean;
+
     
     public initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>){
         this.owner = owner;
@@ -89,6 +91,8 @@ export default class PlayerController extends StateMachineAI {
 
         this.health = 5
         this.maxHealth = 5;
+
+        this.isAttacking = false;
 
         // Add the different states the player can be in to the PlayerController 
 		this.addState(PlayerStates.IDLE, new Idle(this, this.owner));
@@ -120,9 +124,13 @@ export default class PlayerController extends StateMachineAI {
         // console.log(this.owner.animation.currentAnimation);
 		super.update(deltaT);
         // If the player hits the attack button and the weapon system isn't running, restart the system and fire!
-        if (Input.isPressed(HW3Controls.ATTACK)) {
-
+        // wait for animation to reset before we can attack again
+        if (Input.isPressed(HW3Controls.ATTACK) && !this.isAttacking) {
             this.owner.animation.play(PlayerAnimations.ATTACK_1);
+            this.isAttacking = true;
+        }
+        if (this.isAttacking && !this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
+            this.isAttacking = false;
         }
 
         if (Input.isPressed(HW3Controls.ESC)) {

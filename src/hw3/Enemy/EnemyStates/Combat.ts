@@ -10,9 +10,6 @@ export default class Combat extends EnemyState {
 	public update(deltaT: number): void {
 		super.update(deltaT);
 
-        // // Get the direction of the Enemy's movement
-		// let dir = this.parent.inputDir;
-
         // After we're done attacking , go back to idle so we can check what to do next
         if (!this.owner.animation.isPlaying(EnemyAnimations.ATTACK_1)) {
             this.finished(EnemyStates.IDLE);

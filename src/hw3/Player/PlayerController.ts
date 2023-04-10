@@ -160,14 +160,16 @@ export default class PlayerController extends StateMachineAI {
             this.emitter.fireEvent(CombatEvents.PLAYER_ATTACK_PHYSICAL, { dmg: this.damage });
         }
         // if (Input.isPressed(HW3Controls.ATTACK)) this.changeState(PlayerStates.COMBAT);
+        
+        if (Input.isPressed(HW3Controls.INVENTORY)) {
+            console.log("visible");
+            this.emitter.fireEvent(HW3Events.INVENTORY);
+        }
 
         if (Input.isPressed(HW3Controls.ESC)) {
             this.emitter.fireEvent(HW3Events.GAME_PAUSE);
         }
 
-        if (Input.isPressed(HW3Controls.INVENTORY)) {
-            this.emitter.fireEvent(HW3Events.INVENTORY);
-        }
 
 
 	}

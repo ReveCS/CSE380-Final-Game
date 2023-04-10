@@ -209,6 +209,7 @@ export default abstract class HW3Level extends Scene {
                 else {
                     this.INVSprite.visible = false;
                 }
+                break;
             }
             // When player presses escape button, pause game layer and display pause screen
             case HW3Events.GAME_PAUSE: {
@@ -359,6 +360,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.LEVEL_END);
         this.receiver.subscribe(HW3Events.HEALTH_CHANGE);
         this.receiver.subscribe(HW3Events.PLAYER_DEAD);
+        this.receiver.subscribe(HW3Events.INVENTORY);
         this.receiver.subscribe(HW3Events.GAME_PAUSE);
         this.receiver.subscribe(NPCEvents.TALKING_TO_NPC);
     }

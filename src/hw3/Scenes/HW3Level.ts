@@ -37,7 +37,8 @@ export const HW3Layers = {
     // The primary layer
     PRIMARY: "PRIMARY",
     // The UI layer
-    UI: "UI"
+    UI: "UI",
+    INVENTORY: "INVENTORY"
 } as const;
 
 // The layers as a type
@@ -67,11 +68,13 @@ export default abstract class HW3Level extends Scene {
 
     // Spites for UI
     private HPSprite: Sprite;
+    private INVSprite: Sprite;
 
     // The key and path to the sprites
     protected HP_KEY: string;
     protected HP_PATH: string;
-
+    protected INV_KEY: string;
+    protected INV_PATH: string;
 
     /** The end of level stuff */
 
@@ -368,6 +371,10 @@ export default abstract class HW3Level extends Scene {
 		this.healthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(55, 20), text: ""});
         this.healthBarBg.size.set(250, 25);
 		this.healthBarBg.borderColor = Color.TRANSPARENT;
+
+        // Inventory screen and UI
+        this.INVSprite = this.add.sprite(this.INV_KEY, HW3Layers.INVENTORY);
+        this.INVprite.position.copy(new Vec2(150, 150));
 
          // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, { position: new Vec2(-300, 100), text: "Level Complete" });

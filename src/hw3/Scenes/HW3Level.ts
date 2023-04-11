@@ -374,13 +374,13 @@ export default abstract class HW3Level extends Scene {
         this.HPSprite.position.copy(new Vec2(50, 20));
 
         // HealthBar
-		this.healthBar = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(55, 20), text: ""});
-        this.healthBar.size.set(250, 25);
+		this.healthBar = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(57, 20), text: ""});
+        this.healthBar.size.set(125, 20);
 		this.healthBar.backgroundColor = Color.RED;
 
         // HealthBar Border
-		this.healthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(55, 20), text: ""});
-        this.healthBarBg.size.set(250, 25);
+		this.healthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(57, 20), text: ""});
+        this.healthBarBg.size.set(125, 20);
 		this.healthBarBg.borderColor = Color.TRANSPARENT;
 
         // Inventory screen and UI

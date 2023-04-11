@@ -14,7 +14,7 @@ import SplashScreen from "./hw3/Scenes/SplashScreen";
             {name: HW3Controls.MOVE_LEFT, keys: ["a"]},
             {name: HW3Controls.MOVE_RIGHT, keys: ["d"]},
             {name: HW3Controls.JUMP, keys: ["w", "space"]},
-            {name: HW3Controls.ATTACK, keys: ["x"]},
+            {name: HW3Controls.ATTACK, keys: ["j"]},
             {name: HW3Controls.INVENTORY, keys: ["i"]},
             {name: HW3Controls.ESC, keys: ["escape"]},
             {name: HW3Controls.INTERACT, keys: ["e"]},

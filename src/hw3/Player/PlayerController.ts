@@ -124,7 +124,7 @@ export default class PlayerController extends StateMachineAI {
     // Override
     handleEvent(event: GameEvent): void {
         if(this.active){
-            if (event.type === CombatEvents.ENEMY_ATTACK_PHYSICAL) {
+            if (this.health > 0 && event.type === CombatEvents.ENEMY_ATTACK_PHYSICAL) {
                 this._enemyDamage = event.data.get("dmg");
                 this.changeState(PlayerStates.HURT);
             }

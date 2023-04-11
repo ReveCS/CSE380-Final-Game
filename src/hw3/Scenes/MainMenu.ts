@@ -94,6 +94,10 @@ export default class MainMenu extends Scene {
     }
 
     public startScene(): void {
+        // when we return from dying we have to reset zoom and bounds
+        this.viewport.setZoomLevel(1);
+        this.viewport.setCenter(600, 400);
+
         const center = this.viewport.getCenter();
 
         // Main menu screen

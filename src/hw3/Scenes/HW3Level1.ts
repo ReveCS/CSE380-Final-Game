@@ -47,7 +47,7 @@ export default class Level1 extends HW3Level {
     protected defaultSpawn: Vec2;
 
     public static readonly PLACEHOLDER_SPRITE_KEY = "PLACEHOLDER_SPRITE_KEY";
-    public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
+    public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/goblin.json";
     protected placeholder: HW3AnimatedSprite
     protected placeholderSpriteKey: string;
 
@@ -138,7 +138,7 @@ export default class Level1 extends HW3Level {
     protected initializeEnemies() {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
-        this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(500, 1225), 10);
+        this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(500, 1227), 10);
     }
 
     /**

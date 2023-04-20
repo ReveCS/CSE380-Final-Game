@@ -505,7 +505,7 @@ export default abstract class HW3Level extends Scene {
 
         // Add the Enemy to the scene
         let enemy = this.add.animatedSprite(key, HW3Layers.PRIMARY);
-        enemy.scale.set(1, 1);
+        enemy.scale.set(1/2, 1/2);
         enemy.position.copy(spawn);
 
         // Give the enemy physics

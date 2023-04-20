@@ -12,6 +12,9 @@ import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Hub from "./Hub";
 import Level1 from "./HW3Level1";
 import Level2 from "./HW3Level2";
+import Level3 from "./Level3";
+import Level4 from "./Level4";
+
 
 
 // Layers for the main menu scene
@@ -217,9 +220,9 @@ export default class MainMenu extends Scene {
         level2.borderColor = Color.TRANSPARENT;
         level2.backgroundColor = Color.TRANSPARENT;
         level2.font = "Hjet-Regular";
-        //level2.onClick = () => {
-        //    this.sceneManager.changeToScene(Level2);
-        //}
+        level2.onClick = () => {
+            this.sceneManager.changeToScene(Level2);
+        }
         
         const level3 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 300, center.y + 200), text: "Level 3"});
         this.level3Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
@@ -229,9 +232,9 @@ export default class MainMenu extends Scene {
         level3.borderColor = Color.TRANSPARENT;
         level3.backgroundColor = Color.TRANSPARENT;
         level3.font = "Hjet-Regular";
-        //level3.onClick = () => {
-        //    this.sceneManager.changeToScene(Level3);
-        //}
+        level3.onClick = () => {
+            this.sceneManager.changeToScene(Level3);
+        }
 
         const level4 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 200), text: "Level 4"});
         this.level4Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
@@ -241,9 +244,9 @@ export default class MainMenu extends Scene {
         level4.borderColor = Color.TRANSPARENT;
         level4.backgroundColor = Color.TRANSPARENT;
         level4.font = "Hjet-Regular";
-        //level4.onClick = () => {
-        //    this.sceneManager.changeToScene(Level4);
-        //}
+        level4.onClick = () => {
+            this.sceneManager.changeToScene(Level4);
+        }
 
         const boss = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 300, center.y + 200), text: "Level 5"});
         this.bossSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);

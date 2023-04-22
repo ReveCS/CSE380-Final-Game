@@ -81,6 +81,10 @@ export default abstract class HW3Level extends Scene {
     protected GOBLINSKULL_KEY: string;
     protected GOBLINSKULL_PATH: string;
 
+     /* Portal */
+     protected portalPosition: Vec2;
+     protected portalHalfSize: Vec2;
+
     // Keep track of how many of each enemy
     protected enemiesKilled: number = 0;
 
@@ -559,7 +563,19 @@ export default abstract class HW3Level extends Scene {
 
         return enemy
     }
+    protected initializePortal(key:string,spawn:Vec2): HW3AnimatedSprite{
+        if(spawn == undefined){
+            throw new Error("Portal must be set before initialiing!");
+        }
+        let portal = this.add.animatedSprite(key,HW3Layers.PRIMARY);
+        portal.scale.set(1.5,1.5);
+        portal.position.copy(spawn);
+        portal.addPhysics(new AABB(spawn,portal.boundary.getHalfSize().clone()),undefined, false,true);
+        portal.setTrigger(HW3PhysicsGroups.PLAYER,HW3Events.PLAYER_ENTERED_LEVEL_END,null);
 
+        return portal;
+
+    }
     /**
      * Initializes the viewport
      */

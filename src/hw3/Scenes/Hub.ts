@@ -18,6 +18,7 @@ import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import UIElement from "../../Wolfie2D/Nodes/UIElement";
 import Timer from "../../Wolfie2D/Timing/Timer";
 import { Quests } from "../Text/Quests"
+import { PortalAnimation } from "../Portal/Portal";
 
 export default class Hub extends HW3Level {
 
@@ -56,12 +57,46 @@ export default class Hub extends HW3Level {
     public static readonly GOBLINSKULL_PATH = "game_assets/sprites/Goblin_Skull.png";
 
     // NPC Sprites
-    public static readonly PLACEHOLDER_SPAWN = new Vec2(200, 1228);
-    public static readonly PLACEHOLDER_SPRITE_KEY = "PLACEHOLDER_SPRITE_KEY";
-    public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
-    protected placeholder: HW3AnimatedSprite
-    protected placeholderSpriteKey: string;
-    protected placeholderSpawn: Vec2;
+    public static readonly NPC_1_SPAWN = new Vec2(200, 1243);
+    public static readonly NPC_1_SPRITE_KEY = "NPC_1_KEY";
+    public static readonly NPC_1_SPRITE_PATH = "game_assets/spritesheets/NPC_1.json";
+
+    public static readonly NPC_2_SPAWN = new Vec2(700, 1243);
+    public static readonly NPC_2_SPRITE_KEY = "NPC_2_KEY";
+    public static readonly NPC_2_SPRITE_PATH = "game_assets/spritesheets/NPC_2.json";
+
+    public static readonly NPC_3_SPAWN = new Vec2(1100, 1243);
+    public static readonly NPC_3_SPRITE_KEY = "NPC_3_KEY";
+    public static readonly NPC_3_SPRITE_PATH = "game_assets/spritesheets/NPC_3.json";
+
+    public static readonly NPC_4_SPAWN = new Vec2(1700, 1243);
+    public static readonly NPC_4_SPRITE_KEY = "NPC_4_KEY";
+    public static readonly NPC_4_SPRITE_PATH = "game_assets/spritesheets/NPC_4.json";
+
+     //Portal
+    public static readonly PORTAL_SPAWN = new Vec2(2300, 1210);
+    public static readonly PORTAL_KEY = "PORTAL_KEY";
+    public static readonly PORTAL_PATH = "game_assets/spritesheets/portal.json";
+
+    protected NPC_1: HW3AnimatedSprite
+    protected NPC_1_SpriteKey: string;
+    protected NPC_1_Spawn: Vec2;
+
+    protected NPC_2: HW3AnimatedSprite
+    protected NPC_2_SpriteKey: string;
+    protected NPC_2_Spawn: Vec2;
+
+    protected NPC_3: HW3AnimatedSprite
+    protected NPC_3_SpriteKey: string;
+    protected NPC_3_Spawn: Vec2;
+
+    protected NPC_4: HW3AnimatedSprite
+    protected NPC_4_SpriteKey: string;
+    protected NPC_4_Spawn: Vec2;
+
+    protected portal: HW3AnimatedSprite;
+    protected portalSpriteKey:string;
+    protected portalSpawn: Vec2;
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
@@ -97,9 +132,22 @@ export default class Hub extends HW3Level {
         this.INV_KEY = Hub.INV_KEY;
         this.GOBLINSKULL_KEY = Hub.GOBLINSKULL_KEY;
 
+         // Set Portal sprite and spawn
+        this.portalSpriteKey = Hub.PORTAL_KEY;
+        this.portalSpawn = Hub.PORTAL_SPAWN;
+
         // Set NPC sprites and spawns
-        this.placeholderSpriteKey = Hub.PLACEHOLDER_SPRITE_KEY;
-        this.placeholderSpawn = Hub.PLACEHOLDER_SPAWN
+        this.NPC_1_SpriteKey = Hub.NPC_1_SPRITE_KEY;
+        this.NPC_1_Spawn = Hub.NPC_1_SPAWN
+
+        this.NPC_2_SpriteKey = Hub.NPC_2_SPRITE_KEY;
+        this.NPC_2_Spawn = Hub.NPC_2_SPAWN
+
+        this.NPC_3_SpriteKey = Hub.NPC_3_SPRITE_KEY;
+        this.NPC_3_Spawn = Hub.NPC_3_SPAWN
+
+        this.NPC_4_SpriteKey = Hub.NPC_4_SPRITE_KEY;
+        this.NPC_4_Spawn = Hub.NPC_4_SPAWN
 
         // Level end size and position
         this.levelEndPosition = new Vec2(32, 216).mult(this.tilemapScale);
@@ -129,7 +177,11 @@ export default class Hub extends HW3Level {
         this.load.image(this.INV_KEY, Hub.INV_PATH);
         this.load.image(this.GOBLINSKULL_KEY, Hub.GOBLINSKULL_PATH);
         // Load in NPC sprites
-        this.load.spritesheet(this.placeholderSpriteKey, Hub.PLACEHOLDER_SPRITE_PATH);
+        this.load.spritesheet(this.NPC_1_SpriteKey, Hub.NPC_1_SPRITE_PATH);
+        this.load.spritesheet(this.NPC_2_SpriteKey, Hub.NPC_2_SPRITE_PATH);
+        this.load.spritesheet(this.NPC_3_SpriteKey, Hub.NPC_3_SPRITE_PATH);
+        this.load.spritesheet(this.NPC_4_SpriteKey, Hub.NPC_4_SPRITE_PATH);
+        this.load.spritesheet(this.portalSpriteKey,Hub.PORTAL_PATH);
     }
 
     public unloadScene(): void {
@@ -141,6 +193,7 @@ export default class Hub extends HW3Level {
         this.nextLevel = MainMenu;
 
         this.initializeNPCs();
+        this.portalInitialize();
     }
 
     public updateScene(deltaT: number) {
@@ -187,24 +240,36 @@ export default class Hub extends HW3Level {
     protected initializeNPCs() {
         // initialize placeholder
         let placeholderQuests = ["A"]
-        this.initializeNPC(this.placeholderSpriteKey, this.placeholderSpawn, placeholderQuests);
+        this.initializeNPC(this.NPC_1,this.NPC_1_SpriteKey, this.NPC_1_Spawn, placeholderQuests);
+        
+        this.initializeNPC(this.NPC_2,this.NPC_2_SpriteKey, this.NPC_2_Spawn, placeholderQuests);
+        
+        this.initializeNPC(this.NPC_3,this.NPC_3_SpriteKey, this.NPC_3_Spawn, placeholderQuests);
+       
+        this.initializeNPC(this.NPC_4,this.NPC_4_SpriteKey, this.NPC_4_Spawn, placeholderQuests);
+        
+
     }
 
-    protected initializeNPC(key:string, spawn:Vec2, quests:Array<string>): void {
+    protected initializeNPC(npc:HW3AnimatedSprite, key:string, spawn:Vec2, quests:Array<string>): void {
         if (spawn === undefined) {
             throw new Error("NPC spawn must be set before initializing!");
         }
 
         // Add the NPC to the scene
-        this.placeholder = this.add.animatedSprite(key, HW3Layers.PRIMARY);
-        this.placeholder.scale.set(1, 1);
-        this.placeholder.position.copy(spawn);
-        this.placeholder.disablePhysics();
+        npc = this.add.animatedSprite(key, HW3Layers.PRIMARY);
+        npc.scale.set(1/2, 1/2);
+        npc.position.copy(spawn);
+        npc.disablePhysics();
 
         // Give the NPC it's AI
-        this.placeholder.addAI(NPCController, {player: this.player, quests: quests});
+        npc.addAI(NPCController, {player: this.player, quests: quests});
+        
     }
-
+    protected portalInitialize(){
+        this.portal = this.initializePortal(this.portalSpriteKey,this.portalSpawn)
+        this.portal.animation.play(PortalAnimation.IDLE);
+    }
     protected initializeViewport(): void {
         super.initializeViewport();
         this.viewport.setBounds(32, 16, 2368, 1600);

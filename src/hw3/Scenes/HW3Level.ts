@@ -69,12 +69,17 @@ export default abstract class HW3Level extends Scene {
     // Spites for UI
     private HPSprite: Sprite;
     private INVSprite: Sprite;
+    private goblinSkullSprite: Sprite;
+    private goblinCount: Label;
+
 
     // The key and path to the sprites
     protected HP_KEY: string;
     protected HP_PATH: string;
     protected INV_KEY: string;
     protected INV_PATH: string;
+    protected GOBLINSKULL_KEY: string;
+    protected GOBLINSKULL_PATH: string;
 
     // Keep track of how many of each enemy
     protected enemiesKilled: number = 0;
@@ -210,13 +215,7 @@ export default abstract class HW3Level extends Scene {
                 break;
             }
             case HW3Events.INVENTORY: {
-                console.log("visible");
-                if (this.INVSprite.visible == false) {
-                    this.INVSprite.visible = true;
-                }
-                else {
-                    this.INVSprite.visible = false;
-                }
+                this.handleInventory();
                 break;
             }
             // When player presses escape button, pause game layer and display pause screen
@@ -234,6 +233,10 @@ export default abstract class HW3Level extends Scene {
             case HW3Events.ENEMY_KILLED: {
                 this.enemiesKilled += 1;
                 console.log(this.enemiesKilled);
+                this.goblinCount.destroy;
+                this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.enemiesKilled});
+                this.goblinCount.visible = false;
+                break;
             }
             case NPCEvents.TALKING_TO_NPC: {
                 this.handleTalkingNPC(event.data.get("id"));
@@ -325,6 +328,19 @@ export default abstract class HW3Level extends Scene {
 		this.healthBar.backgroundColor = currentHealth < maxHealth * 1/4 ? Color.RED: currentHealth < maxHealth * 3/4 ? Color.RED : Color.RED;
 	}
 
+    protected handleInventory(): void {
+        if (this.INVSprite.visible == false) {
+            this.INVSprite.visible = true;
+            this.goblinSkullSprite.visible = true;
+            this.goblinCount.visible = true;
+        }
+        else {
+            this.INVSprite.visible = false;
+            this.goblinSkullSprite.visible = false;
+            this.goblinCount.visible = false;
+        }
+    }
+
     /* Initialization methods for everything in the scene */
 
     /**
@@ -401,6 +417,17 @@ export default abstract class HW3Level extends Scene {
         this.INVSprite.position.copy(new Vec2(300, 200));
         this.INVSprite.scale.set(1/4, 1/4);
         this.INVSprite.visible = false;
+
+        this.goblinSkullSprite = this.add.sprite(this.GOBLINSKULL_KEY, HW3Layers.UI);
+        this.goblinSkullSprite.position.copy(new Vec2(240, 180));
+        this.goblinSkullSprite.scale.set(1/2, 1/2);
+        this.goblinSkullSprite.visible = false;
+
+        this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 165), text: "" + this.enemiesKilled});
+        this.goblinCount.textColor = Color.BLACK;
+        this.goblinCount.font = "Hjet-Regular";
+        this.goblinCount.scale.set(3/4, 3/4);
+        this.goblinCount.visible = false;
 
          // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, { position: new Vec2(-300, 100), text: "Level Complete" });
@@ -528,6 +555,7 @@ export default abstract class HW3Level extends Scene {
 
         // Give the Enemy it's AI
         enemy.addAI(EnemyController, { player: this.player, radius: AggroRadius, spawn: spawn });
+        console.log(enemy.id);
 
         return enemy
     }

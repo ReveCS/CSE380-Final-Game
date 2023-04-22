@@ -6,6 +6,7 @@ import MainMenu from "./MainMenu";
 import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import RenderingManager from "../../Wolfie2D/Rendering/RenderingManager";
 import SceneManager from "../../Wolfie2D/Scene/SceneManager";
+import Hub from "./Hub";
 
 /**
  * The second level for HW4. It should be the goose dungeon / cave.
@@ -37,6 +38,11 @@ export default class Level2 extends HW3Level {
     public static readonly HIT_KEY = "HIT";
     public static readonly HIT_PATH = "hw4_assets/sounds/gettinghit.wav";
 
+    public static readonly HP_KEY = "HEALTH";
+    public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
+    public static readonly INV_KEY = "INVENTORY";
+    public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
+
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
@@ -60,8 +66,17 @@ export default class Level2 extends HW3Level {
         this.deathSoundKey = Level2.DEATH_KEY;
         this.hitKey = Level2.HIT_KEY;
 
+        // Sprites
+        this.HP_KEY = Level2.HP_KEY;
+
+        // Set Enemy sprites and spawns
+        //this.placeholderSpriteKey = Level2.PLACEHOLDER_SPRITE_KEY;
+        //this.defaultSpawn = Level2.ENEMY_DEFAULT_SPAWN
+
+        //Inventory
+        this.INV_KEY = Level2.INV_KEY;
         // Level end size and position
-        this.levelEndPosition = new Vec2(32, 216).mult(this.tilemapScale);
+        this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
 
     }
@@ -81,7 +96,7 @@ export default class Level2 extends HW3Level {
 
     public startScene(): void {
         super.startScene();
-        this.nextLevel = MainMenu;
+        this.nextLevel = Hub;
     }
 
 }

@@ -6,8 +6,8 @@ import RenderingManager from "../../Wolfie2D/Rendering/RenderingManager";
 import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 
-import HW4Level2 from "./HW3Level2";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
+import Hub from "./Hub";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
@@ -41,6 +41,10 @@ export default class Level1 extends HW3Level {
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
+    public static readonly INV_KEY = "INVENTORY";
+    public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
+    public static readonly GOBLINSKULL_KEY = "GOBLINSKULL_SPRITE_KEY";
+    public static readonly GOBLINSKULL_PATH = "game_assets/sprites/Goblin_Skull.png";
 
     // Enemy Sprites
     public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1225);
@@ -51,8 +55,7 @@ export default class Level1 extends HW3Level {
     protected placeholder: HW3AnimatedSprite
     protected placeholderSpriteKey: string;
 
-    public static readonly INV_KEY = "INVENTORY";
-    public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
+
 
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
@@ -87,6 +90,7 @@ export default class Level1 extends HW3Level {
 
         //Inventory
         this.INV_KEY = Level1.INV_KEY;
+        this.GOBLINSKULL_KEY = Level1.GOBLINSKULL_KEY;
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
@@ -108,7 +112,8 @@ export default class Level1 extends HW3Level {
         this.load.audio(this.hitKey,Level1.HIT_PATH);
         // Game UI sprites
         this.load.image(this.HP_KEY, Level1.HP_PATH);
-        this.load.image(this.INV_KEY,Level1.INV_PATH);
+        this.load.image(this.INV_KEY, Level1.INV_PATH);
+        this.load.image(this.GOBLINSKULL_KEY, Level1.GOBLINSKULL_PATH);
         // Load in Enemy sprites
         this.load.spritesheet(this.placeholderSpriteKey, Level1.PLACEHOLDER_SPRITE_PATH);
     }
@@ -130,7 +135,7 @@ export default class Level1 extends HW3Level {
     public startScene(): void {
         super.startScene();
         // Set the next level to be Level2
-        this.nextLevel = HW4Level2;
+        this.nextLevel = Hub;
 
         this.initializeEnemies();
     }

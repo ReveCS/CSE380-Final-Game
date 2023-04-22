@@ -8,6 +8,7 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 
 import HW4Level5 from "./Level5";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
+import Hub from "./Hub";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
@@ -130,7 +131,7 @@ export default class Level4 extends HW3Level {
     public startScene(): void {
         super.startScene();
         // Set the next level to be Level4
-        this.nextLevel = HW4Level5;
+        this.nextLevel = Hub;
 
         this.initializeEnemies();
     }

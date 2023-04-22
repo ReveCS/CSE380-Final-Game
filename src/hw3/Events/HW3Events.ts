@@ -25,4 +25,7 @@ export const HW3Events = {
 
     // The event sent when the player presses the escape button. Pauses th game and displays pause screen
     GAME_PAUSE: "GAME_PAUSE",
+
+    // The event sent when an enemy is killed
+    ENEMY_KILLED: "ENEMY_KILLED"
 } as const;

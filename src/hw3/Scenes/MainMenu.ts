@@ -15,8 +15,6 @@ import Level2 from "./HW3Level2";
 import Level3 from "./Level3";
 import Level4 from "./Level4";
 
-
-
 // Layers for the main menu scene
 export const MenuLayers = {
     BACKGROUND: "BACKGROUND",
@@ -67,7 +65,8 @@ export default class MainMenu extends Scene {
 
     // Live background
     public static LIVEBACKGROUND_KEY = "LIVE_BACKGROUND";
-    public static LIVEBACKGROUND_PATH = "game_assets/backgrounds/Last Delivery Background.json";
+    public static LIVEBACKGROUND_PATH = "game_assets/backgrounds/Background.json";
+    //public static readonly LIVEBACKGROUND_SCALE = new Vec2(2, 2);
 
     // Background
     public static BACKGROUND_KEY = "BACKGROUND";
@@ -91,8 +90,9 @@ export default class MainMenu extends Scene {
         //this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
 
         // Load sprites
-        //this.load.spritesheet(MainMenu.LIVEBACKGROUND_KEY, MainMenu.LIVEBACKGROUND_PATH);
-		this.load.image(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
+        /* this.load.spritesheet(MainMenu.LIVEBACKGROUND_KEY, MainMenu.LIVEBACKGROUND_PATH); */
+		//this.load.tilemap(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
+        this.load.image(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
         this.load.image(MainMenu.BUTTON_KEY, MainMenu.BUTTON_PATH);
     }
 
@@ -124,8 +124,8 @@ export default class MainMenu extends Scene {
 
         // Background layer for all screens
         this.background = this.addUILayer(MenuLayers.BACKGROUND);
-        //this.bg = this.add.animatedSprite(MainMenu.LIVEBACKGROUND_KEY, MenuLayers.MAIN);
-        //this.bg.position.copy(new Vec2(center.x, center.y));
+        /* this.bg = this.add.animatedSprite(MainMenu.LIVEBACKGROUND_KEY, MenuLayers.MAIN);
+        this.bg.position.copy(new Vec2(center.x, center.y)); */
         this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.MAIN);
         this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
         this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.SELECTION);

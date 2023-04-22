@@ -167,6 +167,7 @@ export default class EnemyController extends StateMachineAI {
         // If the health hit 0, change the state of the player
         if (this.health === 0) { 
             this.changeState(EnemyStates.DEAD);
+            //this.emitter.fireEvent();
          }
     }
 }

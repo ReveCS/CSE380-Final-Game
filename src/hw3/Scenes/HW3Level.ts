@@ -76,7 +76,15 @@ export default abstract class HW3Level extends Scene {
     protected INV_KEY: string;
     protected INV_PATH: string;
 
+    // Keep track of how many of each enemy
+    protected enemiesKilled: number = 0;
+
     /** The end of level stuff */
+
+    protected level1Complete: boolean;
+    protected level2Complete: boolean;
+    protected level3Complete: boolean;
+    protected level4Complete: boolean;
 
     protected levelEndPosition: Vec2;
     protected levelEndHalfSize: Vec2;
@@ -223,6 +231,10 @@ export default abstract class HW3Level extends Scene {
                 console.log(this.isRunning());
                 break;
             }
+            case HW3Events.ENEMY_KILLED: {
+                this.enemiesKilled += 1;
+                console.log(this.enemiesKilled);
+            }
             case NPCEvents.TALKING_TO_NPC: {
                 this.handleTalkingNPC(event.data.get("id"));
                 break;
@@ -362,6 +374,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.PLAYER_DEAD);
         this.receiver.subscribe(HW3Events.INVENTORY);
         this.receiver.subscribe(HW3Events.GAME_PAUSE);
+        this.receiver.subscribe(HW3Events.ENEMY_KILLED);
         this.receiver.subscribe(NPCEvents.TALKING_TO_NPC);
     }
     /**

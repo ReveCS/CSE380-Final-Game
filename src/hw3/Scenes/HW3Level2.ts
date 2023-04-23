@@ -21,7 +21,7 @@ export default class Level2 extends HW3Level {
     public static readonly TILEMAP_KEY = "LEVEL2";
     public static readonly TILEMAP_PATH = "hw4_assets/tilemaps/HW4Level2.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
-    public static readonly DESTRUCTIBLE_LAYER_KEY = "Destructable";
+    public static readonly PLATFORM_LAYER_KEY = "Platform";
     public static readonly WALLS_LAYER_KEY = "Main";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
@@ -52,7 +52,7 @@ export default class Level2 extends HW3Level {
         // Set the keys for the different layers of the tilemap
         this.tilemapKey = Level2.TILEMAP_KEY;
         this.tilemapScale = Level2.TILEMAP_SCALE;
-        this.destructibleLayerKey = Level2.DESTRUCTIBLE_LAYER_KEY;
+        this.platformLayerKey = Level2.PLATFORM_LAYER_KEY;
         this.wallsLayerKey = Level2.WALLS_LAYER_KEY;
 
         // Set the key for the player's sprite

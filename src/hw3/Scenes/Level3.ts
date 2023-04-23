@@ -20,9 +20,9 @@ export default class Level3 extends HW3Level {
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
     public static readonly TILEMAP_KEY = "Level3";
-    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Hub.json";
+    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Level3.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
-    public static readonly DESTRUCTIBLE_LAYER_KEY = "Destructable";
+    public static readonly PLATFORM_LAYER_KEY = "Platform";
     public static readonly WALLS_LAYER_KEY = "Ground";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
@@ -68,7 +68,7 @@ export default class Level3 extends HW3Level {
         // Set the keys for the different layers of the tilemap
         this.tilemapKey = Level3.TILEMAP_KEY;
         this.tilemapScale = Level3.TILEMAP_SCALE;
-        this.destructibleLayerKey = Level3.DESTRUCTIBLE_LAYER_KEY;
+        this.platformLayerKey = Level3.PLATFORM_LAYER_KEY;
         this.wallsLayerKey = Level3.WALLS_LAYER_KEY;
         
         // Set the key for the player's sprite

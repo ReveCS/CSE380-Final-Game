@@ -518,8 +518,9 @@ export default abstract class HW3Level extends Scene {
         
         
         // Give the player physics
+        console.log(this.player.position.clone().x,this.player.position.clone().y)
         this.player.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
-        this.player.collisionShape.halfSize.set(20,this.player.collisionShape.halfSize.y);
+        this.player.collisionShape.halfSize.set(20,this.player.collisionShape.halfSize.y-7);
         console.log(this.player.collisionShape.halfSize.x,this.player.collisionShape.halfSize.y);
         this.player.setGroup("PLAYER");
         

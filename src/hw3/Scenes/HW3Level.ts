@@ -563,6 +563,7 @@ export default abstract class HW3Level extends Scene {
 
         return enemy
     }
+    
     protected initializePortal(key:string,spawn:Vec2): HW3AnimatedSprite{
         if(spawn == undefined){
             throw new Error("Portal must be set before initialiing!");

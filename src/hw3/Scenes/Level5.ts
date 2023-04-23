@@ -7,6 +7,7 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import RenderingManager from "../../Wolfie2D/Rendering/RenderingManager";
 import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 import Hub from "./Hub";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 export default class Level5 extends HW3Level {
 
@@ -21,7 +22,7 @@ export default class Level5 extends HW3Level {
     public static readonly WALLS_LAYER_KEY = "Main";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
-    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/levelmusic.mp3";
+    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/level5.wav";
 
     public static readonly JUMP_AUDIO_KEY = "PLAYER_JUMP";
     public static readonly JUMP_AUDIO_PATH = "game_assets/sounds/jump.wav";
@@ -75,6 +76,7 @@ export default class Level5 extends HW3Level {
 
     public unloadScene(): void {
         // TODO decide which resources to keep/cull 
+        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
     }
 
     public startScene(): void {

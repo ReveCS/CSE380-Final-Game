@@ -84,14 +84,13 @@ export default class Level1 extends HW3Level {
 
         // Sprites
         this.HP_KEY = Level1.HP_KEY;
+        this.INV_KEY = Level1.INV_KEY;
+        this.GOBLINSKULL_KEY = Level1.GOBLINSKULL_KEY;
 
         // Set Enemy sprites and spawns
         this.placeholderSpriteKey = Level1.PLACEHOLDER_SPRITE_KEY;
         this.defaultSpawn = Level1.ENEMY_DEFAULT_SPAWN
 
-        //Inventory
-        this.INV_KEY = Level1.INV_KEY;
-        this.GOBLINSKULL_KEY = Level1.GOBLINSKULL_KEY;
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);

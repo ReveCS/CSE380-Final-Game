@@ -11,4 +11,10 @@ export const HW3Controls = {
     INTERACT: "INTERACT",
     ACCEPT_QUEST: "ACCEPT_QUEST",
     DECLINE_QUEST: "DECLINE_QUEST",
+    CHEAT1: "CHEAT1", 
+    CHEAT2: "CHEAT2",
+    CHEAT3: "CHEAT3",
+    CHEAT4: "CHEAT4",
+    CHEAT5: "CHEAT5",
+    INVINCIBLE: "INVINCIBLE"
 } as const;

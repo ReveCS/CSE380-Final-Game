@@ -15,11 +15,17 @@ import SplashScreen from "./hw3/Scenes/SplashScreen";
             {name: HW3Controls.MOVE_RIGHT, keys: ["d"]},
             {name: HW3Controls.JUMP, keys: ["w", "space"]},
             {name: HW3Controls.ATTACK, keys: ["j"]},
-            {name: HW3Controls.INVENTORY, keys: ["i"]},
+            {name: HW3Controls.INVENTORY, keys: ["k"]},
             {name: HW3Controls.ESC, keys: ["escape"]},
             {name: HW3Controls.INTERACT, keys: ["e"]},
             {name: HW3Controls.ACCEPT_QUEST, keys: ["y"]},
             {name: HW3Controls.DECLINE_QUEST, keys: ["n"]},
+            {name: HW3Controls.CHEAT1, keys: ["1"]},
+            {name: HW3Controls.CHEAT2, keys: ["2"]},
+            {name: HW3Controls.CHEAT3, keys: ["3"]},
+            {name: HW3Controls.CHEAT4, keys: ["4"]},
+            {name: HW3Controls.CHEAT5, keys: ["5"]},
+            {name: HW3Controls.INVINCIBLE, keys: ["i"]},
         ],
         useWebGL: false,                        // Tell the game we want to use webgl
         showDebug: false                       // Whether to show debug messages. You can change this to true if you want

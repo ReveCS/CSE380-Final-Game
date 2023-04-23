@@ -20,13 +20,13 @@ export default class Level3 extends HW3Level {
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
     public static readonly TILEMAP_KEY = "Level3";
-    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Level3.json";
+    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Hub.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
     public static readonly DESTRUCTIBLE_LAYER_KEY = "Destructable";
     public static readonly WALLS_LAYER_KEY = "Ground";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
-    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/levelmusic.wav";
+    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/level3.wav";
 
     public static readonly JUMP_AUDIO_KEY = "PLAYER_JUMP";
     public static readonly JUMP_AUDIO_PATH = "game_assets/sounds/jump.wav";
@@ -43,6 +43,10 @@ export default class Level3 extends HW3Level {
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
+    public static readonly INV_KEY = "INVENTORY";
+    public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
+    public static readonly GOBLINSKULL_KEY = "GOBLINSKULL_SPRITE_KEY";
+    public static readonly GOBLINSKULL_PATH = "game_assets/sprites/Goblin_Skull.png";
 
     // Enemy Sprites
     public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1225);
@@ -53,8 +57,7 @@ export default class Level3 extends HW3Level {
     protected placeholder: HW3AnimatedSprite
     protected placeholderSpriteKey: string;
 
-    public static readonly INV_KEY = "INVENTORY";
-    public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
+
 
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
@@ -82,13 +85,13 @@ export default class Level3 extends HW3Level {
 
         // Sprites
         this.HP_KEY = Level3.HP_KEY;
+        this.INV_KEY = Level3.INV_KEY;
+        this.GOBLINSKULL_KEY = Level3.GOBLINSKULL_KEY;
 
         // Set Enemy sprites and spawns
         this.placeholderSpriteKey = Level3.PLACEHOLDER_SPRITE_KEY;
         this.defaultSpawn = Level3.ENEMY_DEFAULT_SPAWN
 
-        //Inventory
-        this.INV_KEY = Level3.INV_KEY;
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
@@ -111,6 +114,7 @@ export default class Level3 extends HW3Level {
         // Game UI sprites
         this.load.image(this.HP_KEY, Level3.HP_PATH);
         this.load.image(this.INV_KEY,Level3.INV_PATH);
+        this.load.image(this.GOBLINSKULL_KEY, Level3.GOBLINSKULL_PATH);
         // Load in Enemy sprites
         this.load.spritesheet(this.placeholderSpriteKey, Level3.PLACEHOLDER_SPRITE_PATH);
     }

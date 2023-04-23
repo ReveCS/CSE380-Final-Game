@@ -26,7 +26,7 @@ export default class Level4 extends HW3Level {
     public static readonly WALLS_LAYER_KEY = "Ground";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
-    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/levelmusic.wav";
+    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/level4.wav";
 
     public static readonly JUMP_AUDIO_KEY = "PLAYER_JUMP";
     public static readonly JUMP_AUDIO_PATH = "game_assets/sounds/jump.wav";

@@ -18,6 +18,11 @@ export default class Level5 extends HW3Level {
     public static readonly PLAYER_SPAWN = new Vec2(64, 1225);;
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
+
+    public static readonly BOSS_SPAWN = new Vec2(600,1100)
+    public static readonly BOSS_SPRITE_KEY = "PLAYER_SPRITE_KEY";
+    public static readonly BOSS_SPRITE_PATH = "game_assets/spritesheets/boss.json";
+
     public static readonly TILEMAP_KEY = "LEVEL1";
     public static readonly TILEMAP_PATH = "game_assets/tilemaps/bosslevel.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);

@@ -66,6 +66,9 @@ export default abstract class HW3Level extends Scene {
 	private healthBar: Label;
 	private healthBarBg: Label;
 
+    protected bossSpriteKey: string;
+    protected boss: AnimatedSprite;
+    protected bossSpawn: Vec2;
     // Spites for UI
     private HPSprite: Sprite;
     private INVSprite: Sprite;
@@ -129,8 +132,8 @@ export default abstract class HW3Level extends Scene {
         super(viewport, sceneManager, renderingManager, {...options, physics: {
             
             // TODO configure the collision groups and collision map
-           groupNames:["GROUND","PLAYER","WEAPON"],
-           collisions: [[0,1,1,0],[1,0,0,1],[1,0,0,1]]
+           groupNames:["GROUND","PLAYER","WEAPON","BOSS"],
+           collisions: [[0,1,1,0],[1,0,0,1],[1,0,0,1],[0,1,1,0]]
 
          }});
         this.add = new HW3FactoryManager(this, this.tilemaps);
@@ -150,6 +153,7 @@ export default abstract class HW3Level extends Scene {
 
         // Initialize the player 
         this.initializePlayer(this.playerSpriteKey);
+        this.initializeBoss(this.bossSpriteKey);
 
         // Initialize the viewport - this must come after the player has been initialized
         this.initializeViewport();
@@ -183,7 +187,7 @@ export default abstract class HW3Level extends Scene {
         //     this.playerWeaponSystem.getPool()[i].setGroup("WEAPON");
         //     // this.handleParticleHit(i);
         // }
-
+        
         while (this.receiver.hasNextEvent()) {
             this.handleEvent(this.receiver.getNextEvent());
         }
@@ -380,8 +384,8 @@ export default abstract class HW3Level extends Scene {
         // Add physicss to the wall layer
         this.walls.addPhysics();
         // Add physics to the destructible layer of the tilemap
-        this.platform.addPhysics();   
-        console.log(this.platform.isTileCollidable(37,8));
+        
+        
      }
     /**
      * Handles all subscriptions to events
@@ -543,6 +547,40 @@ export default abstract class HW3Level extends Scene {
         });
     }
 
+    protected initializeBoss(key:string): void{
+        if (this.bossSpawn === undefined) {
+            throw new Error("Boss spawn must be set before initializing the boss!");
+        }
+
+        // Add the player to the scene
+        this.boss = this.add.animatedSprite(key, HW3Layers.PRIMARY);
+        this.boss.scale.set(1, 1);
+        this.boss.position.copy(this.bossSpawn);
+        
+        
+        // Give the player physics
+        this.boss.addPhysics(new AABB(this.boss.position.clone(), this.boss.boundary.getHalfSize().clone()));
+        this.boss.collisionShape.halfSize.set(this.boss.collisionShape.halfSize.x,this.boss.collisionShape.halfSize.y);
+        this.boss.setGroup("BOSS");
+        
+       
+        
+        // Give the player a death animation
+        // this.player.tweens.add(PlayerTweens.DEATH, {
+        //     startDelay: 0,
+        //     duration: 1900,
+        //     effects: [],
+        //     onEnd: HW3Events.PLAYER_DEAD
+        // });
+
+       
+
+        // Give the player it's AI
+        // this.player.addAI(PlayerController, { 
+        //     weaponSystem: this.playerWeaponSystem, 
+        //     tilemap: "Destructable" 
+        // });
+    }
     protected initializeEnemy(key:string, spawn:Vec2, AggroRadius:number): HW3AnimatedSprite {
         if (spawn === undefined) {
             throw new Error("Enemy spawn must be set before initializing!");
@@ -554,8 +592,8 @@ export default abstract class HW3Level extends Scene {
         enemy.position.copy(spawn);
 
         // Give the enemy physics
-        enemy.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
-        enemy.collisionShape.halfSize.set(20,this.player.collisionShape.halfSize.y);
+        enemy.addPhysics(new AABB(enemy.position.clone(), enemy.boundary.getHalfSize().clone()));
+        enemy.collisionShape.halfSize.set(20,enemy.collisionShape.halfSize.y);
         // this.player.setGroup("PLAYER");
 
         // Give the Enemy it's AI

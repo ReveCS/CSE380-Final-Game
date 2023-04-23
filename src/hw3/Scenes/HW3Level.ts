@@ -29,6 +29,7 @@ import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import { NPCEvents } from "../Events/NPCEvents";
 import EnemyController from "../Enemy/EnemyController";
+import BossController from "../Boss/BossController";
 
 /**
  * A const object for the layer names
@@ -66,9 +67,6 @@ export default abstract class HW3Level extends Scene {
 	private healthBar: Label;
 	private healthBarBg: Label;
 
-    protected bossSpriteKey: string;
-    protected boss: AnimatedSprite;
-    protected bossSpawn: Vec2;
     // Spites for UI
     private HPSprite: Sprite;
     private INVSprite: Sprite;
@@ -158,7 +156,7 @@ export default abstract class HW3Level extends Scene {
 
         // Initialize the player 
         this.initializePlayer(this.playerSpriteKey);
-        this.initializeBoss(this.bossSpriteKey);
+        
 
         // Initialize the viewport - this must come after the player has been initialized
         this.initializeViewport();
@@ -575,23 +573,25 @@ export default abstract class HW3Level extends Scene {
         });
     }
 
-    protected initializeBoss(key:string): void{
-        if (this.bossSpawn === undefined) {
+    protected initializeBoss(key:string, spawn:Vec2,AggroRadius:number): HW3AnimatedSprite{
+        if (spawn === undefined) {
             throw new Error("Boss spawn must be set before initializing the boss!");
         }
-
+        let boss = this.add.animatedSprite(key, HW3Layers.PRIMARY);
         // Add the player to the scene
-        this.boss = this.add.animatedSprite(key, HW3Layers.PRIMARY);
-        this.boss.scale.set(1, 1);
-        this.boss.position.copy(this.bossSpawn);
+        boss.scale.set(1, 1);
+        boss.position.copy(spawn);
         
         
         // Give the player physics
-        this.boss.addPhysics(new AABB(this.boss.position.clone(), this.boss.boundary.getHalfSize().clone()));
-        this.boss.collisionShape.halfSize.set(this.boss.collisionShape.halfSize.x,this.boss.collisionShape.halfSize.y);
-        this.boss.setGroup("BOSS");
+        boss.addPhysics(new AABB(boss.position.clone(), boss.boundary.getHalfSize().clone()));
+        boss.isCollidable = false;
+        boss.collisionShape.halfSize.set(boss.collisionShape.halfSize.x,boss.collisionShape.halfSize.y);
+        boss.setGroup("BOSS");
         
-       
+        boss.addAI(BossController, { player: this.player, radius: AggroRadius,spawn: spawn });
+        
+        return boss;
         
         // Give the player a death animation
         // this.player.tweens.add(PlayerTweens.DEATH, {

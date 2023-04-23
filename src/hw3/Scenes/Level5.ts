@@ -19,10 +19,6 @@ export default class Level5 extends HW3Level {
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
 
-    public static readonly BOSS_SPAWN = new Vec2(600,1100)
-    public static readonly BOSS_SPRITE_KEY = "PLAYER_SPRITE_KEY";
-    public static readonly BOSS_SPRITE_PATH = "game_assets/spritesheets/boss.json";
-
     public static readonly TILEMAP_KEY = "LEVEL1";
     public static readonly TILEMAP_PATH = "game_assets/tilemaps/bosslevel.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
@@ -53,15 +49,13 @@ export default class Level5 extends HW3Level {
     public static readonly GOBLINSKULL_PATH = "game_assets/sprites/Goblin_Skull.png";
 
     // Enemy Sprites
-    public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1225);
-    protected defaultSpawn: Vec2;
 
-    public static readonly PLACEHOLDER_SPRITE_KEY = "PLACEHOLDER_SPRITE_KEY";
-    public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/goblin.json";
-    protected placeholder: HW3AnimatedSprite
-    protected placeholderSpriteKey: string;
-
-
+    public static readonly BOSS_SPAWN = new Vec2(500,1275)
+    public static readonly BOSS_SPRITE_KEY = "BOSS_SPRITE_KEY";
+    public static readonly BOSS_SPRITE_PATH = "game_assets/spritesheets/boss.json";
+    protected bossSpawn: Vec2;
+    protected boss:HW3AnimatedSprite;
+    protected bossSpriteKey: string;
 
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
@@ -79,7 +73,9 @@ export default class Level5 extends HW3Level {
         this.playerSpriteKey = Level5.PLAYER_SPRITE_KEY;
         // Set the player's spawn
         this.playerSpawn = Level5.PLAYER_SPAWN;
-
+        
+        this.bossSpriteKey = Level5.BOSS_SPRITE_KEY;
+        this.bossSpawn = Level5.BOSS_SPAWN;
         // Music and sound
         this.levelMusicKey = Level5.LEVEL_MUSIC_KEY
         this.jumpAudioKey = Level5.JUMP_AUDIO_KEY;
@@ -106,6 +102,8 @@ export default class Level5 extends HW3Level {
         this.load.tilemap(this.tilemapKey, Level5.TILEMAP_PATH);
         // Load in the player's sprite
         this.load.spritesheet(this.playerSpriteKey, Level5.PLAYER_SPRITE_PATH);
+
+        this.load.spritesheet(this.bossSpriteKey,Level5.BOSS_SPRITE_PATH)
         // Audio and music
         this.load.audio(this.levelMusicKey, Level5.LEVEL_MUSIC_PATH);
         this.load.audio(this.jumpAudioKey, Level5.JUMP_AUDIO_PATH);
@@ -138,10 +136,13 @@ export default class Level5 extends HW3Level {
     public startScene(): void {
         super.startScene();
         // Set the next level to be Level2
+        this.initializeFinalBoss();
         this.nextLevel = Hub;
 
     }
-
+    protected initializeFinalBoss(){
+        this.boss = this.initializeBoss(this.bossSpriteKey,this.bossSpawn,5);
+    }
   
 
     /**

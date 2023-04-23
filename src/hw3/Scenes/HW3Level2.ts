@@ -7,6 +7,7 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import RenderingManager from "../../Wolfie2D/Rendering/RenderingManager";
 import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 import Hub from "./Hub";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 /**
  * The second level for HW4. It should be the goose dungeon / cave.
@@ -92,6 +93,7 @@ export default class Level2 extends HW3Level {
 
     public unloadScene(): void {
         // TODO decide which resources to keep/cull 
+        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
     }
 
     public startScene(): void {

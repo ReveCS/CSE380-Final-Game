@@ -61,7 +61,7 @@ export default class MainMenu extends Scene {
     
     // Music
     public static readonly MUSIC_KEY = "MAIN_MENU_MUSIC";
-    public static readonly MUSIC_PATH = "game_assets/music/menu.mp3";
+    public static readonly MUSIC_PATH = "game_assets/music/mainmenu.wav";
 
     // Live background
     public static LIVEBACKGROUND_KEY = "LIVE_BACKGROUND";
@@ -87,7 +87,7 @@ export default class MainMenu extends Scene {
 
     public loadScene(): void {
         // Load the menu song
-        //this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
+        this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
 
         // Load sprites
         /* this.load.spritesheet(MainMenu.LIVEBACKGROUND_KEY, MainMenu.LIVEBACKGROUND_PATH); */

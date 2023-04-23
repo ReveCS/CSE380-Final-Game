@@ -8,6 +8,7 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import Hub from "./Hub";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
@@ -24,7 +25,7 @@ export default class Level1 extends HW3Level {
     public static readonly WALLS_LAYER_KEY = "Ground";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
-    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/levelmusic.wav";
+    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/level1.wav";
 
     public static readonly JUMP_AUDIO_KEY = "PLAYER_JUMP";
     public static readonly JUMP_AUDIO_PATH = "game_assets/sounds/jump.wav";
@@ -123,7 +124,7 @@ export default class Level1 extends HW3Level {
      */
     public unloadScene(): void {
         // // TODO decide which resources to keep/cull 
-        // this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
+        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
         // this.load.spritesheet(this.playerSpriteKey, Level1.PLAYER_SPRITE_PATH);
         // this.load.audio(this.jumpAudioKey, Level1.JUMP_AUDIO_PATH);
         // this.load.audio(this.tileDestroyedAudioKey, Level1.TILE_DESTROYED_PATH);

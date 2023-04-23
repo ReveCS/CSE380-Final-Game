@@ -19,6 +19,7 @@ import UIElement from "../../Wolfie2D/Nodes/UIElement";
 import Timer from "../../Wolfie2D/Timing/Timer";
 import { Quests } from "../Text/Quests"
 import { PortalAnimation } from "../Portal/Portal";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 export default class Hub extends HW3Level {
 
@@ -34,7 +35,7 @@ export default class Hub extends HW3Level {
 
     // Audio and music
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
-    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/levelmusic.wav";
+    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/hub.wav";
 
     public static readonly JUMP_AUDIO_KEY = "PLAYER_JUMP";
     public static readonly JUMP_AUDIO_PATH = "game_assets/sounds/jump.wav";
@@ -185,7 +186,7 @@ export default class Hub extends HW3Level {
     }
 
     public unloadScene(): void {
-        // TODO decide which resources to keep/cull 
+        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
     }
 
     public startScene(): void {

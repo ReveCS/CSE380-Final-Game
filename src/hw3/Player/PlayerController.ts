@@ -128,7 +128,7 @@ export default class PlayerController extends StateMachineAI {
                 this._enemyDamage = event.data.get("dmg");
                 this.changeState(PlayerStates.HURT);
             }
-            else this.currentState.handleInput(event);
+            else this.currentState.handleInput(event); 
         }
     }
 

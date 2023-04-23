@@ -72,8 +72,11 @@ export default abstract class HW3Level extends Scene {
     // Spites for UI
     private HPSprite: Sprite;
     private INVSprite: Sprite;
+    private INVLabel: Label;
     private goblinSkullSprite: Sprite;
     private goblinCount: Label;
+    private jellyHeartSprite: Sprite;
+    private jellyCount: Label;
 
 
     // The key and path to the sprites
@@ -83,6 +86,8 @@ export default abstract class HW3Level extends Scene {
     protected INV_PATH: string;
     protected GOBLINSKULL_KEY: string;
     protected GOBLINSKULL_PATH: string;
+    protected JELLYHEART_KEY: string;
+    protected JELLYHEART_PATH: string;
 
      /* Portal */
      protected portalPosition: Vec2;
@@ -339,13 +344,19 @@ export default abstract class HW3Level extends Scene {
     protected handleInventory(): void {
         if (this.INVSprite.visible == false) {
             this.INVSprite.visible = true;
+            this.INVLabel.visible = true;
             this.goblinSkullSprite.visible = true;
             this.goblinCount.visible = true;
+            this.jellyHeartSprite.visible = true;
+            this.jellyCount.visible = true;
         }
         else {
             this.INVSprite.visible = false;
+            this.INVLabel.visible = false;
             this.goblinSkullSprite.visible = false;
             this.goblinCount.visible = false;
+            this.jellyHeartSprite.visible = false;
+            this.jellyCount.visible = false;
         }
     }
 
@@ -426,6 +437,12 @@ export default abstract class HW3Level extends Scene {
         this.INVSprite.scale.set(1/4, 1/4);
         this.INVSprite.visible = false;
 
+        this.INVLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(282, 135), text: "Inventory"});
+        this.INVLabel.textColor = Color.BLACK;
+        this.INVLabel.size.set(75, 20);
+        this.INVLabel.font = "Hjet-Regular";
+        this.INVLabel.visible = false;
+
         this.goblinSkullSprite = this.add.sprite(this.GOBLINSKULL_KEY, HW3Layers.UI);
         this.goblinSkullSprite.position.copy(new Vec2(240, 180));
         this.goblinSkullSprite.scale.set(1/2, 1/2);
@@ -436,6 +453,17 @@ export default abstract class HW3Level extends Scene {
         this.goblinCount.font = "Hjet-Regular";
         this.goblinCount.scale.set(3/4, 3/4);
         this.goblinCount.visible = false;
+
+        this.jellyHeartSprite = this.add.sprite(this.JELLYHEART_KEY, HW3Layers.UI);
+        this.jellyHeartSprite.position.copy(new Vec2(300, 180));
+        this.jellyHeartSprite.scale.set(9/24, 9/24);
+        this.jellyHeartSprite.visible = false;
+
+        this.jellyCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(282, 165), text: "" + this.enemiesKilled});
+        this.jellyCount.textColor = Color.BLACK;
+        this.jellyCount.font = "Hjet-Regular";
+        this.jellyCount.scale.set(3/4, 3/4);
+        this.jellyCount.visible = false;
 
          // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, { position: new Vec2(-300, 100), text: "Level Complete" });

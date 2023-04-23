@@ -20,7 +20,7 @@ export default class Level4 extends HW3Level {
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
     public static readonly TILEMAP_KEY = "Level4";
-    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Level3.json";
+    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Level3&4.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
     public static readonly PLATFORM_LAYER_KEY = "Platform";
     public static readonly WALLS_LAYER_KEY = "Ground";
@@ -47,6 +47,8 @@ export default class Level4 extends HW3Level {
     public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
     public static readonly GOBLINSKULL_KEY = "GOBLINSKULL_SPRITE_KEY";
     public static readonly GOBLINSKULL_PATH = "game_assets/sprites/Goblin_Skull.png";
+    public static readonly JELLYHEART_KEY = "JELLYHEART_SPRITE_KEY";
+    public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
 
     // Enemy Sprites
     public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1225);
@@ -85,13 +87,12 @@ export default class Level4 extends HW3Level {
         this.HP_KEY = Level4.HP_KEY;
         this.INV_KEY = Level4.INV_KEY;
         this.GOBLINSKULL_KEY = Level4.GOBLINSKULL_KEY;
-
+        this.JELLYHEART_KEY = Level4.JELLYHEART_KEY;
+        
         // Set Enemy sprites and spawns
         this.placeholderSpriteKey = Level4.PLACEHOLDER_SPRITE_KEY;
         this.defaultSpawn = Level4.ENEMY_DEFAULT_SPAWN
 
-        //Inventory
-        this.INV_KEY = Level4.INV_KEY;
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
@@ -115,6 +116,7 @@ export default class Level4 extends HW3Level {
         this.load.image(this.HP_KEY, Level4.HP_PATH);
         this.load.image(this.INV_KEY,Level4.INV_PATH);
         this.load.image(this.GOBLINSKULL_KEY, Level4.GOBLINSKULL_PATH);
+        this.load.image(this.JELLYHEART_KEY, Level4.JELLYHEART_PATH);
 
         // Load in Enemy sprites
         this.load.spritesheet(this.placeholderSpriteKey, Level4.PLACEHOLDER_SPRITE_PATH);

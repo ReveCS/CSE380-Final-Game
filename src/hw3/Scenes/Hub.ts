@@ -56,6 +56,8 @@ export default class Hub extends HW3Level {
     public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
     public static readonly GOBLINSKULL_KEY = "GOBLINSKULL_SPRITE_KEY";
     public static readonly GOBLINSKULL_PATH = "game_assets/sprites/Goblin_Skull.png";
+    public static readonly JELLYHEART_KEY = "JELLYHEART_SPRITE_KEY";
+    public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
 
     // NPC Sprites
     public static readonly NPC_1_SPAWN = new Vec2(200, 1243);
@@ -132,6 +134,7 @@ export default class Hub extends HW3Level {
         this.HP_KEY = Hub.HP_KEY;
         this.INV_KEY = Hub.INV_KEY;
         this.GOBLINSKULL_KEY = Hub.GOBLINSKULL_KEY;
+        this.JELLYHEART_KEY = Hub.JELLYHEART_KEY;
 
          // Set Portal sprite and spawn
         this.portalSpriteKey = Hub.PORTAL_KEY;
@@ -177,6 +180,7 @@ export default class Hub extends HW3Level {
         this.load.image(this.HP_KEY, Hub.HP_PATH);
         this.load.image(this.INV_KEY, Hub.INV_PATH);
         this.load.image(this.GOBLINSKULL_KEY, Hub.GOBLINSKULL_PATH);
+        this.load.image(this.JELLYHEART_KEY, Hub.JELLYHEART_PATH);
         // Load in NPC sprites
         this.load.spritesheet(this.NPC_1_SpriteKey, Hub.NPC_1_SPRITE_PATH);
         this.load.spritesheet(this.NPC_2_SpriteKey, Hub.NPC_2_SPRITE_PATH);

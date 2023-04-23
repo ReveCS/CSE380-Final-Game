@@ -30,7 +30,7 @@ export default class Hub extends HW3Level {
     public static readonly TILEMAP_KEY = "HUB";
     public static readonly TILEMAP_PATH = "game_assets/tilemaps/Hub.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
-    public static readonly DESTRUCTIBLE_LAYER_KEY = "Destructable";
+    public static readonly PLATFORM_LAYER_KEY = "Platform";
     public static readonly WALLS_LAYER_KEY = "Ground";
 
     // Audio and music
@@ -113,7 +113,7 @@ export default class Hub extends HW3Level {
         // Set the keys for the different layers of the tilemap
         this.tilemapKey = Hub.TILEMAP_KEY;
         this.tilemapScale = Hub.TILEMAP_SCALE;
-        this.destructibleLayerKey = Hub.DESTRUCTIBLE_LAYER_KEY;
+        this.platformLayerKey = Hub.PLATFORM_LAYER_KEY;
         this.wallsLayerKey = Hub.WALLS_LAYER_KEY;
 
         // Set the key for the player's sprite

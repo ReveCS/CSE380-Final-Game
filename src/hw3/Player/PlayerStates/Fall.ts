@@ -14,7 +14,7 @@ export default class Fall extends PlayerState {
         this.parent.velocity.y = 0;
         this.fallTimer = new Timer(200)
         this.curHealth = this.parent.health;
-        this.owner.animation.play(PlayerAnimations.FALL)
+        this.owner.animation.play(PlayerAnimations.LAND);
         
     }
 
@@ -23,7 +23,7 @@ export default class Fall extends PlayerState {
         // If the player hits the ground, start idling and check if we should take damage
         if (this.owner.onGround) {
             // this.parent.health -= Math.floor(this.parent.velocity.y / 250);
-            this.owner.animation.play(PlayerAnimations.LAND);
+            
             if(this.curHealth > this.parent.health){
                 this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: this.hitSound, loop: false, holdReference: false});
                 this.curHealth = this.parent.health;

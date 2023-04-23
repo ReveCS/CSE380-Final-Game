@@ -14,6 +14,7 @@ import Level1 from "./HW3Level1";
 import Level2 from "./HW3Level2";
 import Level3 from "./Level3";
 import Level4 from "./Level4";
+import Level5 from "./Level5"
 
 // Layers for the main menu scene
 export const MenuLayers = {
@@ -252,14 +253,15 @@ export default class MainMenu extends Scene {
         this.bossSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
         this.bossSprite.position.copy(boss.position);
         
+        
         boss.size.set(200, 50);
         boss.borderWidth = 2;
         boss.borderColor = Color.WHITE;
         boss.backgroundColor = Color.TRANSPARENT;
         boss.font = "Hjet-Regular";
-        //boss.onClick = () => {
-        //    this.sceneManager.changeToScene(Boss);
-        //}
+        boss.onClick = () => {
+           this.sceneManager.changeToScene(Level5)
+        }
 
         const selectionBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 475, center.y + 300), text: "Back"});
         selectionBack.size.set(200, 50);

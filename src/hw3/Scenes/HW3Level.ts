@@ -109,12 +109,12 @@ export default abstract class HW3Level extends Scene {
 
     /** The keys to the tilemap and different tilemap layers */
     protected tilemapKey: string;
-    protected destructibleLayerKey: string;
+    protected platformLayerKey: string;
     protected wallsLayerKey: string;
     /** The scale for the tilemap */
     protected tilemapScale: Vec2;
-    /** The destrubtable layer of the tilemap */
-    protected destructable: OrthogonalTilemap;
+    /** The platform layer of the tilemap */
+    protected platform: OrthogonalTilemap;
     /** The wall layer of the tilemap */
     protected walls: OrthogonalTilemap;
 
@@ -129,8 +129,8 @@ export default abstract class HW3Level extends Scene {
         super(viewport, sceneManager, renderingManager, {...options, physics: {
             
             // TODO configure the collision groups and collision map
-           groupNames:["GROUND","PLAYER","WEAPON","DESTRUCTABLE"],
-           collisions: [[0,1,1,0],[1,0,0,1],[1,0,0,1],[0,1,1,0]]
+           groupNames:["GROUND","PLAYER","WEAPON"],
+           collisions: [[0,1,1,0],[1,0,0,1],[1,0,0,1]]
 
          }});
         this.add = new HW3FactoryManager(this, this.tilemaps);
@@ -368,21 +368,21 @@ export default abstract class HW3Level extends Scene {
         // Add the tilemap to the scene
         this.add.tilemap(this.tilemapKey, this.tilemapScale);
 
-        if (this.destructibleLayerKey === undefined || this.wallsLayerKey === undefined) {
+        if (this.platformLayerKey === undefined || this.wallsLayerKey === undefined) {
             throw new Error("Make sure the keys for the destuctible layer and wall layer are both set");
         }
 
         // Get the wall and destructible layers 
-        console.log(this.wallsLayerKey);
+        
         this.walls = this.getTilemap(this.wallsLayerKey) as OrthogonalTilemap;
-        // this.destructable = this.getTilemap(this.destructibleLayerKey) as OrthogonalTilemap;
+        this.platform = this.getTilemap(this.platformLayerKey) as OrthogonalTilemap;
 
         // Add physicss to the wall layer
         this.walls.addPhysics();
         // Add physics to the destructible layer of the tilemap
-        // this.destructable.addPhysics();
-        // this.destructable.setGroup("DESTRUCTABLE");
-    }
+        this.platform.addPhysics();   
+        console.log(this.platform.isTileCollidable(37,8));
+     }
     /**
      * Handles all subscriptions to events
      */

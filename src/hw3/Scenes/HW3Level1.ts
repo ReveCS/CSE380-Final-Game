@@ -69,6 +69,10 @@ export default class Level1 extends HW3Level {
     public static readonly GOBLIN_SPRITE_PATH = "game_assets/spritesheets/goblin.json";
     protected goblinSpriteKey: string;
 
+    public static readonly DEMON_SPRITE_KEY = "DEMON_SPRITE_KEY";
+    public static readonly DEMON_SPRITE_PATH = "game_assets/spritesheets/flying_sword.json";
+    protected demonSpriteKey: string;
+
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
@@ -100,6 +104,7 @@ export default class Level1 extends HW3Level {
 
         // Set Enemy sprites and spawns
         this.goblinSpriteKey = Level1.GOBLIN_SPRITE_KEY;
+        this.demonSpriteKey = Level1.DEMON_SPRITE_KEY;
         this.defaultSpawn = Level1.ENEMY_DEFAULT_SPAWN;
 
         // Set Portal sprite and spawn
@@ -132,6 +137,7 @@ export default class Level1 extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Level1.JELLYHEART_PATH);
         // Load in Enemy sprites
         this.load.spritesheet(this.goblinSpriteKey, Level1.GOBLIN_SPRITE_PATH);
+        this.load.spritesheet(this.demonSpriteKey, Level1.DEMON_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey,Level1.PORTAL_PATH);
     }
 
@@ -163,6 +169,9 @@ export default class Level1 extends HW3Level {
         // can use this.defaultSpawn or define your own spawn
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(500, 1216), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(600, 1216), 10);
+
+        this.initializeEnemy(this.demonSpriteKey, new Vec2(800, 1216), 10);
+
     }
 
     protected handleCheat1(): void {

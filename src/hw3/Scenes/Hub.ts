@@ -20,6 +20,7 @@ import Timer from "../../Wolfie2D/Timing/Timer";
 import { Quests } from "../Text/Quests"
 import { PortalAnimation } from "../Portal/Portal";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
+import Level1 from "./HW3Level1";
 
 export default class Hub extends HW3Level {
 
@@ -270,6 +271,10 @@ export default class Hub extends HW3Level {
         // Give the NPC it's AI
         npc.addAI(NPCController, {player: this.player, quests: quests});
         
+    }
+
+    protected handleCheat1(): void {
+        this.sceneManager.changeToScene(Level1);
     }
     protected portalInitialize(){
         this.portal = this.initializePortal(this.portalSpriteKey,this.portalSpawn)

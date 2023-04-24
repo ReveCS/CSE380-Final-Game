@@ -10,6 +10,7 @@ import HW4Level4 from "./Level4";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import Hub from "./Hub";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
+import { PortalAnimation } from "../Portal/Portal";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
@@ -54,6 +55,14 @@ export default class Level3 extends HW3Level {
     public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1225);
     protected defaultSpawn: Vec2;
 
+    //Portal
+    public static readonly PORTAL_SPAWN = new Vec2(2300, 1210);
+    public static readonly PORTAL_KEY = "PORTAL_KEY";
+    public static readonly PORTAL_PATH = "game_assets/spritesheets/portal.json";
+    protected portal: HW3AnimatedSprite;
+    protected portalSpriteKey:string;
+    protected portalSpawn: Vec2;
+
     public static readonly PLACEHOLDER_SPRITE_KEY = "PLACEHOLDER_SPRITE_KEY";
     public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/ocher_jelly.json";
     protected placeholder: HW3AnimatedSprite
@@ -93,7 +102,11 @@ export default class Level3 extends HW3Level {
 
         // Set Enemy sprites and spawns
         this.placeholderSpriteKey = Level3.PLACEHOLDER_SPRITE_KEY;
-        this.defaultSpawn = Level3.ENEMY_DEFAULT_SPAWN
+        this.defaultSpawn = Level3.ENEMY_DEFAULT_SPAWN;
+
+        // Set Portal sprite and spawn
+        this.portalSpriteKey = Hub.PORTAL_KEY;
+        this.portalSpawn = Hub.PORTAL_SPAWN;
 
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
@@ -121,6 +134,7 @@ export default class Level3 extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Level3.JELLYHEART_PATH);
         // Load in Enemy sprites
         this.load.spritesheet(this.placeholderSpriteKey, Level3.PLACEHOLDER_SPRITE_PATH);
+        this.load.spritesheet(this.portalSpriteKey,Hub.PORTAL_PATH);
     }
 
     /**
@@ -142,12 +156,18 @@ export default class Level3 extends HW3Level {
         this.nextLevel = Hub;
 
         this.initializeEnemies();
+        this.portalInitialize();
     }
 
     protected initializeEnemies() {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
         this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(500, 1227), 10);
+    }
+
+    protected portalInitialize(){
+        this.portal = this.initializePortal(this.portalSpriteKey,this.portalSpawn)
+        this.portal.animation.play(PortalAnimation.IDLE);
     }
 
     /**

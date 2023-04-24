@@ -169,7 +169,7 @@ export default abstract class HW3Level extends Scene {
         // this.initializeLevelEnds();
 
         this.levelTransitionTimer = new Timer(500);
-        this.levelEndTimer = new Timer(3000, () => {
+        this.levelEndTimer = new Timer(1000, () => {
             // After the level end timer ends, fade to black and then go to the next scene
             this.levelTransitionScreen.tweens.play("fadeIn");
         });
@@ -252,7 +252,7 @@ export default abstract class HW3Level extends Scene {
                 break;
             }
             case HW3Events.CHEAT1: {
-                //this.sceneManager.changeToScene(Level1);
+                this.handleCheat1();
                 break;
             }
             case HW3Events.CHEAT2: {
@@ -349,7 +349,6 @@ export default abstract class HW3Level extends Scene {
         // If the timer hasn't run yet, start the end level animation
         if (!this.levelEndTimer.hasRun() && this.levelEndTimer.isStopped()) {
             this.levelEndTimer.start();
-            this.levelEndLabel.tweens.play("slideIn");
         }
     }
     /**
@@ -712,6 +711,12 @@ export default abstract class HW3Level extends Scene {
     public getHitSoundKey():string{
         return this.hitKey
     }
+    
+    protected handleCheat1(): void {
+        throw new Error("handleCheat1 wasn't implemented");
+    }
+
+
     // this method will be handled inside the hub subclass
     protected handleTalkingNPC(id: string): void {
         throw new Error("handleTalkingNPC wasn't implemented in Hub.ts");

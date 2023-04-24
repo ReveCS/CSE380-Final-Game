@@ -20,11 +20,11 @@ import Level5 from "./Level5";
  */
 export default class Level1 extends HW3Level {
 
-    public static readonly PLAYER_SPAWN = new Vec2(64, 1225);
+    public static readonly PLAYER_SPAWN = new Vec2(64, 1200);
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
     public static readonly TILEMAP_KEY = "LEVEL1";
-    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Hub.json";
+    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Level1.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
     public static readonly PLATFORM_LAYER_KEY = "Platform";
     public static readonly WALLS_LAYER_KEY = "Ground";
@@ -54,25 +54,20 @@ export default class Level1 extends HW3Level {
     public static readonly JELLYHEART_KEY = "JELLYHEART_SPRITE_KEY";
     public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
 
-    // Enemy Sprites
-    public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1225);
-    protected defaultSpawn: Vec2;
-
     //Portal
-    public static readonly PORTAL_SPAWN = new Vec2(2300, 1210);
+    public static readonly PORTAL_SPAWN = new Vec2(2300, 800);
     public static readonly PORTAL_KEY = "PORTAL_KEY";
     public static readonly PORTAL_PATH = "game_assets/spritesheets/portal.json";
     protected portal: HW3AnimatedSprite;
     protected portalSpriteKey:string;
     protected portalSpawn: Vec2;
 
-    public static readonly PLACEHOLDER_SPRITE_KEY = "PLACEHOLDER_SPRITE_KEY";
-    public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/goblin.json";
-    protected placeholder: HW3AnimatedSprite
-    protected placeholderSpriteKey: string;
-
-
-
+    // Enemy Sprites
+    public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1216);
+    protected defaultSpawn: Vec2;
+    public static readonly GOBLIN_SPRITE_KEY = "GOBLIN_SPRITE_KEY";
+    public static readonly GOBLIN_SPRITE_PATH = "game_assets/spritesheets/goblin.json";
+    protected goblinSpriteKey: string;
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
@@ -104,7 +99,7 @@ export default class Level1 extends HW3Level {
         this.JELLYHEART_KEY = Level1.JELLYHEART_KEY;
 
         // Set Enemy sprites and spawns
-        this.placeholderSpriteKey = Level1.PLACEHOLDER_SPRITE_KEY;
+        this.goblinSpriteKey = Level1.GOBLIN_SPRITE_KEY;
         this.defaultSpawn = Level1.ENEMY_DEFAULT_SPAWN;
 
         // Set Portal sprite and spawn
@@ -136,7 +131,7 @@ export default class Level1 extends HW3Level {
         this.load.image(this.GOBLINSKULL_KEY, Level1.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Level1.JELLYHEART_PATH);
         // Load in Enemy sprites
-        this.load.spritesheet(this.placeholderSpriteKey, Level1.PLACEHOLDER_SPRITE_PATH);
+        this.load.spritesheet(this.goblinSpriteKey, Level1.GOBLIN_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey,Level1.PORTAL_PATH);
     }
 
@@ -166,7 +161,8 @@ export default class Level1 extends HW3Level {
     protected initializeEnemies() {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
-        this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(500, 1227), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(500, 1216), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(600, 1216), 10);
     }
 
     protected handleCheat1(): void {

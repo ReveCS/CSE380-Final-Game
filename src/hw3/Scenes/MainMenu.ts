@@ -48,6 +48,7 @@ export default class MainMenu extends Scene {
     // Sprites for the background images
 	private bg: AnimatedSprite;
     private backgroundSprite: Sprite;
+    private backgroundSprite2: Sprite;
     private levelsSprite: Sprite;
     private controlsSprite: Sprite;
     private aboutSprite: Sprite;
@@ -65,13 +66,15 @@ export default class MainMenu extends Scene {
     public static readonly MUSIC_PATH = "game_assets/music/mainmenu.wav";
 
     // Live background
-    public static LIVEBACKGROUND_KEY = "LIVE_BACKGROUND";
-    public static LIVEBACKGROUND_PATH = "game_assets/backgrounds/Background.json";
+    //public static LIVEBACKGROUND_KEY = "LIVE_BACKGROUND";
+    //public static LIVEBACKGROUND_PATH = "game_assets/backgrounds/Background.json";
     //public static readonly LIVEBACKGROUND_SCALE = new Vec2(2, 2);
 
     // Background
-    public static BACKGROUND_KEY = "BACKGROUND";
-    public static BACKGROUND_PATH = "game_assets/backgrounds/background.png";
+    public static BACKGROUND1_KEY = "BACKGROUND";
+    public static BACKGROUND1_PATH = "game_assets/backgrounds/Last Delivery Background Still.png";
+    public static BACKGROUND2_KEY = "BACKGROUND2";
+    public static BACKGROUND2_PATH = "game_assets/backgrounds/Last Delivery Background Still2.png";
 
     // The key and path to the sprites
     public static BUTTON_KEY = "LEVELS";
@@ -91,9 +94,10 @@ export default class MainMenu extends Scene {
         // this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
 
         // Load sprites
-        /* this.load.spritesheet(MainMenu.LIVEBACKGROUND_KEY, MainMenu.LIVEBACKGROUND_PATH); */
+        //this.load.spritesheet(MainMenu.LIVEBACKGROUND_KEY, MainMenu.LIVEBACKGROUND_PATH);
 		//this.load.tilemap(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
-        this.load.image(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
+        this.load.image(MainMenu.BACKGROUND1_KEY, MainMenu.BACKGROUND1_PATH);
+        this.load.image(MainMenu.BACKGROUND2_KEY, MainMenu.BACKGROUND2_PATH);
         this.load.image(MainMenu.BUTTON_KEY, MainMenu.BUTTON_PATH);
     }
 
@@ -125,21 +129,27 @@ export default class MainMenu extends Scene {
 
         // Background layer for all screens
         this.background = this.addUILayer(MenuLayers.BACKGROUND);
-        /* this.bg = this.add.animatedSprite(MainMenu.LIVEBACKGROUND_KEY, MenuLayers.MAIN);
-        this.bg.position.copy(new Vec2(center.x, center.y)); */
-        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.MAIN);
+        //this.bg = this.add.animatedSprite(MainMenu.LIVEBACKGROUND_KEY, MenuLayers.MAIN);
+        //this.bg.position.copy(new Vec2(center.x, center.y)); 
+        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND1_KEY, MenuLayers.MAIN);
         this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
-        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.SELECTION);
-        this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
-        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.CONTROLS);
-        this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
-        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.ABOUT);
-        this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
-        this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND_KEY, MenuLayers.CREDIT);
-        this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
+        this.backgroundSprite2 = this.add.sprite(MainMenu.BACKGROUND2_KEY, MenuLayers.SELECTION);
+        this.backgroundSprite2.position.copy(new Vec2(center.x, center.y));
+        this.backgroundSprite2 = this.add.sprite(MainMenu.BACKGROUND2_KEY, MenuLayers.CONTROLS);
+        this.backgroundSprite2.position.copy(new Vec2(center.x, center.y));
+        this.backgroundSprite2 = this.add.sprite(MainMenu.BACKGROUND2_KEY, MenuLayers.ABOUT);
+        this.backgroundSprite2.position.copy(new Vec2(center.x, center.y));
+        this.backgroundSprite2 = this.add.sprite(MainMenu.BACKGROUND2_KEY, MenuLayers.CREDIT);
+        this.backgroundSprite2.position.copy(new Vec2(center.x, center.y));
+
+        // Title for main menu
+        const title = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.MAIN, {position: new Vec2(center.x, center.y - 250), text: "The Last Delivery"});
+        title.textColor = Color.BLACK;
+        title.font = "Hjet-Regular";  
+        title.fontSize = 90;
 
         // Add levels button, and give it an event to emit on press
-        const levels = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y - 100), text: "Levels"});
+        const levels = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y + 250), text: "Levels"});
         this.levelsSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
         this.levelsSprite.position.copy(levels.position);
 
@@ -153,7 +163,7 @@ export default class MainMenu extends Scene {
         levels.font = "Hjet-Regular";
 
         // Add controls button
-        const controls = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y), text: "Controls"});
+        const controls = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, 750), text: "Controls"});
         this.controlsSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
         this.controlsSprite.position.copy(controls.position);
         
@@ -165,7 +175,7 @@ export default class MainMenu extends Scene {
         controls.font = "Hjet-Regular"
         
         // Add about button
-        const about = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y + 100), text: "About"});
+        const about = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(300, 750), text: "About"});
         this.aboutSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
         this.aboutSprite.position.copy(about.position);
         
@@ -177,7 +187,7 @@ export default class MainMenu extends Scene {
         about.font = "Hjet-Regular";
 
         // Add credit button
-        const credit = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y + 200), text: "Credit"});
+        const credit = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(900, 750), text: "Credit"});
         this.creditSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
         this.creditSprite.position.copy(credit.position);
         

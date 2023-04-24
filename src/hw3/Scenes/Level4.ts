@@ -54,6 +54,8 @@ export default class Level4 extends HW3Level {
     public static readonly GOBLINSKULL_PATH = "game_assets/sprites/Goblin_Skull.png";
     public static readonly JELLYHEART_KEY = "JELLYHEART_SPRITE_KEY";
     public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
+    public static readonly SWORDRUBY_KEY = "SWORDRUBY_SPRITE_KEY";
+    public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
 
     // Enemy Sprites
     public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1216);
@@ -61,6 +63,12 @@ export default class Level4 extends HW3Level {
     public static readonly JELLY_SPRITE_KEY = "JELLY_SPRITE_KEY";
     public static readonly JELLY_SPRITE_PATH = "game_assets/spritesheets/ocher_jelly.json";
     protected jellySpriteKey: string;
+    public static readonly GOBLIN_SPRITE_KEY = "GOBLIN_SPRITE_KEY";
+    public static readonly GOBLIN_SPRITE_PATH = "game_assets/spritesheets/goblin.json";
+    protected goblinSpriteKey: string;
+    public static readonly SWORD_SPRITE_KEY = "DEMON_SPRITE_KEY";
+    public static readonly SWORD_SPRITE_PATH = "game_assets/spritesheets/flying_sword.json";
+    protected swordSpriteKey: string;
 
     //Portal
     public static readonly PORTAL_SPAWN = new Vec2(2300, 1210);
@@ -98,9 +106,12 @@ export default class Level4 extends HW3Level {
         this.INV_KEY = Level4.INV_KEY;
         this.GOBLINSKULL_KEY = Level4.GOBLINSKULL_KEY;
         this.JELLYHEART_KEY = Level4.JELLYHEART_KEY;
+        this.SWORDRUBY_KEY = Level4.SWORDRUBY_KEY;
         
         // Set Enemy sprites and spawns
         this.jellySpriteKey = Level4.JELLY_SPRITE_KEY;
+        this.goblinSpriteKey = Level4.GOBLIN_SPRITE_KEY;
+        this.swordSpriteKey = Level4.SWORD_SPRITE_KEY;
         this.defaultSpawn = Level4.ENEMY_DEFAULT_SPAWN;
 
         // Set Portal sprite and spawn
@@ -131,9 +142,12 @@ export default class Level4 extends HW3Level {
         this.load.image(this.INV_KEY,Level4.INV_PATH);
         this.load.image(this.GOBLINSKULL_KEY, Level4.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Level4.JELLYHEART_PATH);
+        this.load.image(this.SWORDRUBY_KEY, Level4.SWORDRUBY_PATH);
 
         // Load in Enemy sprites
         this.load.spritesheet(this.jellySpriteKey, Level4.JELLY_SPRITE_PATH);
+        this.load.spritesheet(this.goblinSpriteKey, Level4.GOBLIN_SPRITE_PATH);
+        this.load.spritesheet(this.swordSpriteKey, Level4.SWORD_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey, Level4.PORTAL_PATH);
     }
 
@@ -164,10 +178,14 @@ export default class Level4 extends HW3Level {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
         this.initializeEnemy(this.jellySpriteKey, new Vec2(500, 1200), 10);
-        this.initializeEnemy(this.jellySpriteKey, new Vec2(550, 1200), 10);
-        this.initializeEnemy(this.jellySpriteKey, new Vec2(1050, 1216), 10);
-        this.initializeEnemy(this.jellySpriteKey, new Vec2(1500, 1216), 10);
-        this.initializeEnemy(this.jellySpriteKey, new Vec2(2050, 1216), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1050, 1200), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1500, 1200), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(2050, 1200), 10);
+
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(750, 1216), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(1250, 1216), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(1700, 1216), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(1800, 1216), 10);
 
 
 

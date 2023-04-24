@@ -56,6 +56,8 @@ export default class Level5 extends HW3Level {
     public static readonly GOBLINSKULL_PATH = "game_assets/sprites/Goblin_Skull.png";
     public static readonly JELLYHEART_KEY = "JELLYHEART_SPRITE_KEY";
     public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
+    public static readonly SWORDRUBY_KEY = "SWORDRUBY_SPRITE_KEY";
+    public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
 
     // Enemy Sprites
 
@@ -100,7 +102,7 @@ export default class Level5 extends HW3Level {
         this.INV_KEY = Level5.INV_KEY;
         this.GOBLINSKULL_KEY = Level5.GOBLINSKULL_KEY;
         this.JELLYHEART_KEY = Level5.JELLYHEART_KEY;
-
+        this.SWORDRUBY_KEY = Level5.SWORDRUBY_KEY;
 
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
@@ -129,6 +131,7 @@ export default class Level5 extends HW3Level {
         this.load.image(this.INV_KEY, Level5.INV_PATH);
         this.load.image(this.GOBLINSKULL_KEY, Level5.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Level5.JELLYHEART_PATH);
+        this.load.image(this.SWORDRUBY_KEY, Level5.SWORDRUBY_PATH);
 
         // Load in Enemy sprites
     }

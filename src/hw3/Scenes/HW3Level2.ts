@@ -53,6 +53,8 @@ export default class Level2 extends HW3Level {
     public static readonly GOBLINSKULL_PATH = "game_assets/sprites/Goblin_Skull.png";
     public static readonly JELLYHEART_KEY = "JELLYHEART_SPRITE_KEY";
     public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
+    public static readonly SWORDRUBY_KEY = "SWORDRUBY_SPRITE_KEY";
+    public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
 
     //Portal
     public static readonly PORTAL_SPAWN = new Vec2(2300, 1210);
@@ -98,6 +100,7 @@ export default class Level2 extends HW3Level {
         this.INV_KEY = Level2.INV_KEY;
         this.GOBLINSKULL_KEY = Level2.GOBLINSKULL_KEY;
         this.JELLYHEART_KEY = Level2.JELLYHEART_KEY;
+        this.SWORDRUBY_KEY = Level2.SWORDRUBY_KEY;
 
         // Set Enemy sprites and spawns
         this.placeholderSpriteKey = Level2.PLACEHOLDER_SPRITE_KEY;
@@ -131,6 +134,7 @@ export default class Level2 extends HW3Level {
         this.load.image(this.INV_KEY, Level2.INV_PATH);
         this.load.image(this.GOBLINSKULL_KEY, Level2.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Level2.JELLYHEART_PATH);
+        this.load.image(this.SWORDRUBY_KEY, Level2.SWORDRUBY_PATH);
         // Load in Enemy sprites
         this.load.spritesheet(this.placeholderSpriteKey, Level2.PLACEHOLDER_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey,Level2.PORTAL_PATH);

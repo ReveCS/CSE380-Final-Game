@@ -53,6 +53,8 @@ export default class Level1 extends HW3Level {
     public static readonly GOBLINSKULL_PATH = "game_assets/sprites/Goblin_Skull.png";
     public static readonly JELLYHEART_KEY = "JELLYHEART_SPRITE_KEY";
     public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
+    public static readonly SWORDRUBY_KEY = "SWORDRUBY_SPRITE_KEY";
+    public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
 
     //Portal
     public static readonly PORTAL_SPAWN = new Vec2(2300, 800);
@@ -69,9 +71,9 @@ export default class Level1 extends HW3Level {
     public static readonly GOBLIN_SPRITE_PATH = "game_assets/spritesheets/goblin.json";
     protected goblinSpriteKey: string;
 
-    public static readonly DEMON_SPRITE_KEY = "DEMON_SPRITE_KEY";
-    public static readonly DEMON_SPRITE_PATH = "game_assets/spritesheets/flying_sword.json";
-    protected demonSpriteKey: string;
+    public static readonly SWORD_SPRITE_KEY = "DEMON_SPRITE_KEY";
+    public static readonly SWORD_SPRITE_PATH = "game_assets/spritesheets/flying_sword.json";
+    protected swordSpriteKey: string;
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
@@ -101,10 +103,11 @@ export default class Level1 extends HW3Level {
         this.INV_KEY = Level1.INV_KEY;
         this.GOBLINSKULL_KEY = Level1.GOBLINSKULL_KEY;
         this.JELLYHEART_KEY = Level1.JELLYHEART_KEY;
+        this.SWORDRUBY_KEY = Level1.SWORDRUBY_KEY;
 
         // Set Enemy sprites and spawns
         this.goblinSpriteKey = Level1.GOBLIN_SPRITE_KEY;
-        this.demonSpriteKey = Level1.DEMON_SPRITE_KEY;
+        this.swordSpriteKey = Level1.SWORD_SPRITE_KEY;
         this.defaultSpawn = Level1.ENEMY_DEFAULT_SPAWN;
 
         // Set Portal sprite and spawn
@@ -135,9 +138,10 @@ export default class Level1 extends HW3Level {
         this.load.image(this.INV_KEY, Level1.INV_PATH);
         this.load.image(this.GOBLINSKULL_KEY, Level1.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Level1.JELLYHEART_PATH);
+        this.load.image(this.SWORDRUBY_KEY, Level1.SWORDRUBY_PATH);
         // Load in Enemy sprites
         this.load.spritesheet(this.goblinSpriteKey, Level1.GOBLIN_SPRITE_PATH);
-        this.load.spritesheet(this.demonSpriteKey, Level1.DEMON_SPRITE_PATH);
+        this.load.spritesheet(this.swordSpriteKey, Level1.SWORD_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey,Level1.PORTAL_PATH);
     }
 
@@ -170,7 +174,7 @@ export default class Level1 extends HW3Level {
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(500, 1216), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(600, 1216), 10);
 
-        this.initializeEnemy(this.demonSpriteKey, new Vec2(800, 1216), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(800, 1216), 10);
 
     }
 

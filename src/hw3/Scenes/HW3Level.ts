@@ -75,6 +75,8 @@ export default abstract class HW3Level extends Scene {
     private goblinCount: Label;
     private jellyHeartSprite: Sprite;
     private jellyCount: Label;
+    private swordRubySprite: Sprite;
+    private swordCount: Label;
 
 
     // The key and path to the sprites
@@ -86,6 +88,8 @@ export default abstract class HW3Level extends Scene {
     protected GOBLINSKULL_PATH: string;
     protected JELLYHEART_KEY: string;
     protected JELLYHEART_PATH: string;
+    protected SWORDRUBY_KEY: string;
+    protected SWORDRUBY_PATH: string;
 
      /* Portal */
      protected portalPosition: Vec2;
@@ -253,6 +257,12 @@ export default abstract class HW3Level extends Scene {
                 this.goblinCount.destroy;
                 this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.enemiesKilled});
                 this.goblinCount.visible = false;
+                this.jellyCount.destroy;
+                this.jellyCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.enemiesKilled});
+                this.jellyCount.visible = false;
+                this.swordCount.destroy;
+                this.swordCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.enemiesKilled});
+                this.swordCount.visible = false;
                 break;
             }
             case HW3Events.CHEAT1: {
@@ -379,6 +389,8 @@ export default abstract class HW3Level extends Scene {
             this.goblinCount.visible = true;
             this.jellyHeartSprite.visible = true;
             this.jellyCount.visible = true;
+            this.swordRubySprite.visible = true;
+            this.swordCount.visible = true;
         }
         else {
             this.INVSprite.visible = false;
@@ -387,6 +399,8 @@ export default abstract class HW3Level extends Scene {
             this.goblinCount.visible = false;
             this.jellyHeartSprite.visible = false;
             this.jellyCount.visible = false;
+            this.swordRubySprite.visible = false;
+            this.swordCount.visible = false;
         }
     }
 
@@ -502,6 +516,17 @@ export default abstract class HW3Level extends Scene {
         this.jellyCount.font = "Hjet-Regular";
         this.jellyCount.scale.set(3/4, 3/4);
         this.jellyCount.visible = false;
+
+        this.swordRubySprite = this.add.sprite(this.SWORDRUBY_KEY, HW3Layers.UI);
+        this.swordRubySprite.position.copy(new Vec2(360, 180));
+        this.swordRubySprite.scale.set(11/24, 11/24);
+        this.swordRubySprite.visible = false;
+
+        this.swordCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(343, 165), text: "" + this.enemiesKilled});
+        this.swordCount.textColor = Color.BLACK;
+        this.swordCount.font = "Hjet-Regular";
+        this.swordCount.scale.set(3/4, 3/4);
+        this.swordCount.visible = false;
 
          // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, { position: new Vec2(-300, 100), text: "Level Complete" });

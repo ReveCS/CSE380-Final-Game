@@ -56,8 +56,11 @@ export default class Level3 extends HW3Level {
     public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
 
     // Enemy Sprites
-    public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1225);
+    public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1216);
     protected defaultSpawn: Vec2;
+    public static readonly JELLY_SPRITE_KEY = "JELLY_SPRITE_KEY";
+    public static readonly JELLY_SPRITE_PATH = "game_assets/spritesheets/ocher_jelly.json";
+    protected jellySpriteKey: string;
 
     //Portal
     public static readonly PORTAL_SPAWN = new Vec2(2300, 1210);
@@ -66,14 +69,6 @@ export default class Level3 extends HW3Level {
     protected portal: HW3AnimatedSprite;
     protected portalSpriteKey:string;
     protected portalSpawn: Vec2;
-
-    public static readonly PLACEHOLDER_SPRITE_KEY = "PLACEHOLDER_SPRITE_KEY";
-    public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/ocher_jelly.json";
-    protected placeholder: HW3AnimatedSprite
-    protected placeholderSpriteKey: string;
-
-
-
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
@@ -105,7 +100,7 @@ export default class Level3 extends HW3Level {
         this.JELLYHEART_KEY = Level3.JELLYHEART_KEY;
 
         // Set Enemy sprites and spawns
-        this.placeholderSpriteKey = Level3.PLACEHOLDER_SPRITE_KEY;
+        this.jellySpriteKey = Level3.JELLY_SPRITE_KEY;
         this.defaultSpawn = Level3.ENEMY_DEFAULT_SPAWN;
 
         // Set Portal sprite and spawn
@@ -137,7 +132,7 @@ export default class Level3 extends HW3Level {
         this.load.image(this.GOBLINSKULL_KEY, Level3.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Level3.JELLYHEART_PATH);
         // Load in Enemy sprites
-        this.load.spritesheet(this.placeholderSpriteKey, Level3.PLACEHOLDER_SPRITE_PATH);
+        this.load.spritesheet(this.jellySpriteKey, Level3.JELLY_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey, Level3.PORTAL_PATH);
     }
 
@@ -166,7 +161,16 @@ export default class Level3 extends HW3Level {
     protected initializeEnemies() {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
-        this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(500, 1227), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(500, 1200), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(550, 1200), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(600, 1200), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1000, 1200), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1050, 1216), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1100, 1216), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1500, 1216), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1600, 1216), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(2000, 1216), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(2100, 1216), 10);
     }
 
     protected handleCheat1(): void {

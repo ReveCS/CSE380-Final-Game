@@ -5,8 +5,7 @@ import { CombatEvents } from "../../Events/CombatEvents";
 export default class Combat extends PlayerState {
 
 	public onEnter(options: Record<string, any>): void {
-        this.owner.animation.playIfNotAlready(PlayerAnimations.ATTACK_1);
-		
+        this.owner.animation.playIfNotAlready(PlayerAnimations.ATTACK_1);		
 	}
 
 	public update(deltaT: number): void {

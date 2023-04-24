@@ -96,8 +96,8 @@ export default class PlayerController extends StateMachineAI {
         this.speed = 350;
         this.velocity = Vec2.ZERO;
 
-        this.health = 5
-        this.maxHealth = 5;
+        this.health = 10
+        this.maxHealth = 10;
 
         this.damage = 1;
 

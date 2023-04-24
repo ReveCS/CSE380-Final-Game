@@ -464,9 +464,8 @@ export default abstract class HW3Level extends Scene {
         this.INVSprite.scale.set(1/4, 1/4);
         this.INVSprite.visible = false;
 
-        this.INVLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(282, 135), text: "Inventory"});
+        this.INVLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(300, 135), text: "Inventory"});
         this.INVLabel.textColor = Color.BLACK;
-        this.INVLabel.size.set(75, 20);
         this.INVLabel.font = "Hjet-Regular";
         this.INVLabel.visible = false;
 

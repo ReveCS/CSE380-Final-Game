@@ -3,6 +3,7 @@ import BossState from "./BossState";
 import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
 import MathUtils from "../../../Wolfie2D/Utils/MathUtils";
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import { HW3PhysicsGroups } from "../../HW3PhysicsGroups";
 export default class Attack_1 extends BossState {
     protected timer:number = 0;
     protected right:boolean = false;
@@ -11,7 +12,9 @@ export default class Attack_1 extends BossState {
     protected rightToLeft:Vec2;
     
 	public onEnter(options: Record<string, any>): void {
-        
+        this.owner.removePhysics();
+        this.owner.addPhysics(new AABB(this.owner.position.clone()));
+        this.owner.setGroup(HW3PhysicsGroups.BOSS)
 	}
 
 	public update(deltaT: number): void {
@@ -23,8 +26,7 @@ export default class Attack_1 extends BossState {
         this.parent.velocity.y = dir.y * 500;
         this.parent.velocity.x = dir.x * 500;      
 		
-        this.owner.removePhysics();
-        this.owner.addPhysics(new AABB(this.owner.position.clone()));
+        
         this.owner.move(this.parent.velocity.scaled(deltaT)); 
 
 

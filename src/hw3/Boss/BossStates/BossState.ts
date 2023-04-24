@@ -17,7 +17,7 @@ export default abstract class BossState extends State {
     protected dirToSky: Vec2;
     protected dirToPlayerRight: Vec2;
     protected dirToPlayerLeft: Vec2;
-    protected sky: Vec2 = new Vec2(1200,1000)
+    protected sky: Vec2 = new Vec2(1200,1150)
     protected playerRight:Vec2; 
     protected playerLeft:Vec2;
 

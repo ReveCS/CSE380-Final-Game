@@ -1,6 +1,8 @@
 import { BossStates, BossAnimations } from "../BossController";
 import BossState from "./BossState";
 import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
+import { HW3PhysicsGroups } from "../../HW3PhysicsGroups";
+
 export default class Idle extends BossState {
     protected timer:number = 0;
 	public onEnter(options: Record<string, any>): void {        
@@ -24,6 +26,7 @@ export default class Idle extends BossState {
             this.parent.velocity.x = 0;
             this.owner.removePhysics();
             this.owner.addPhysics(new AABB(this.owner.position.clone(), this.owner.boundary.getHalfSize().clone()),null, false);
+            this.owner.setGroup(HW3PhysicsGroups.BOSS);
             this.owner.collisionShape.halfSize.set(this.owner.collisionShape.halfSize.x,this.owner.collisionShape.halfSize.y);
         }else{
             this.parent.velocity.y = dir.y * this.parent.speed; 

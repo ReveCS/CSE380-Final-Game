@@ -104,7 +104,7 @@ export default class BossController extends StateMachineAI {
         // this.addState(BossStates.ATTACK_2, new Returning(this, this.owner));
         // this.addState(BossStates.HURT, new Hurt(this, this.owner));
         // this.addState(BossStates.DEATH, new Dead(this, this.owner));
-        this.addState(BossAnimations.SPAWN, new Spawn(this,this.owner))
+        this.addState(BossStates.SPAWN, new Spawn(this,this.owner))
         this.addState(BossStates.STATUE, new Statue(this, this.owner));
         
         // Start the enemy in the Idle state

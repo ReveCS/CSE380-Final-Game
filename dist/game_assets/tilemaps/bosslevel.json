@@ -255,7 +255,7 @@
                 {
                  "name":"Collidable",
                  "type":"bool",
-                 "value":false
+                 "value":true
                 }, 
                 {
                  "name":"Group",

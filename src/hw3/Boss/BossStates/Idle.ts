@@ -1,14 +1,14 @@
 import { BossStates, BossAnimations } from "../BossController";
 import BossState from "./BossState";
-
+import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
 export default class Idle extends BossState {
-
-	public onEnter(options: Record<string, any>): void {
-        this.owner.animation.queue(BossAnimations.IDLE,true);
-        
+    protected timer:number = 0;
+	public onEnter(options: Record<string, any>): void {        
+        this.owner.animation.queue(BossAnimations.IDLE);        
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
         this.parent.velocity.y = 0;
+
 	}
 
 	public update(deltaT: number): void {
@@ -18,6 +18,35 @@ export default class Idle extends BossState {
             }
          }
 		super.update(deltaT);
+        let dir = this.dirToSky;
+        if(Math.abs(this.sky.y-this.owner.position.y) <= 5){
+            this.parent.velocity.y = 0;
+            this.parent.velocity.x = 0;
+            this.owner.removePhysics();
+            this.owner.addPhysics(new AABB(this.owner.position.clone(), this.owner.boundary.getHalfSize().clone()),null, false);
+            this.owner.collisionShape.halfSize.set(this.owner.collisionShape.halfSize.x,this.owner.collisionShape.halfSize.y);
+        }else{
+            this.parent.velocity.y = dir.y * this.parent.speed; 
+            this.parent.velocity.x = dir.x * this.parent.speed;
+            this.owner.move(this.parent.velocity.scaled(deltaT));
+        }
+
+
+        this.timer += 1;
+        if(this.timer == 200){
+        //    let randomNum = Math.floor(Math.random() *3) + 1;
+        let randomNum = 1;
+           console.log(randomNum)
+           if(randomNum == 1){
+                
+                this.finished(BossStates.ATTACK_1);
+           }
+        //    } else if(randomNum == 2){
+        //         this.finished(BossStates.ATTACK_2);
+        //    } else if(randomNum == 3){
+        //         //this.finished(BossStates.ATTACK_3);
+        //    }
+        }
 
         // // Attack the player if they are near
         // if (this.playerInCombatRange()) {

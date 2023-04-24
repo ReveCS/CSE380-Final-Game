@@ -1,6 +1,7 @@
 import { BossStates, BossAnimations } from "../BossController";
 import BossState from "./BossState";
 
+
 export default class Statue extends BossState {
 
 	public onEnter(options: Record<string, any>): void {
@@ -15,7 +16,6 @@ export default class Statue extends BossState {
 		super.update(deltaT);
         // // Attack the player if they are near
         if (this.playerInRange()) {
-            
             this.finished(BossStates.SPAWN);
         }
         // If not, path to the player if they are in our aggro range

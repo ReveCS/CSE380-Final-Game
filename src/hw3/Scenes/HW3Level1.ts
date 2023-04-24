@@ -10,6 +10,10 @@ import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import Hub from "./Hub";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import { PortalAnimation } from "../Portal/Portal";
+import Level2 from "./HW3Level2";
+import Level3 from "./Level3";
+import Level4 from "./Level4";
+import Level5 from "./Level5";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
@@ -133,7 +137,7 @@ export default class Level1 extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Level1.JELLYHEART_PATH);
         // Load in Enemy sprites
         this.load.spritesheet(this.placeholderSpriteKey, Level1.PLACEHOLDER_SPRITE_PATH);
-        this.load.spritesheet(this.portalSpriteKey,Hub.PORTAL_PATH);
+        this.load.spritesheet(this.portalSpriteKey,Level1.PORTAL_PATH);
     }
 
     /**
@@ -163,6 +167,22 @@ export default class Level1 extends HW3Level {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
         this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(500, 1227), 10);
+    }
+
+    protected handleCheat1(): void {
+        this.sceneManager.changeToScene(Level1);
+    }
+    protected handleCheat2(): void {
+        this.sceneManager.changeToScene(Level2);
+    }
+    protected handleCheat3(): void {
+        this.sceneManager.changeToScene(Level3);
+    }
+    protected handleCheat4(): void {
+        this.sceneManager.changeToScene(Level4);
+    }
+    protected handleCheat5(): void {
+        this.sceneManager.changeToScene(Level5);
     }
 
     protected portalInitialize(){

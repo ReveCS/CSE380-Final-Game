@@ -9,6 +9,10 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import Hub from "./Hub";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
+import Level1 from "./HW3Level1";
+import Level2 from "./HW3Level2";
+import Level3 from "./Level3";
+import Level4 from "./Level4";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
@@ -142,6 +146,22 @@ export default class Level5 extends HW3Level {
     }
     protected initializeFinalBoss(){
         this.boss = this.initializeBoss(this.bossSpriteKey,this.bossSpawn,5);
+    }
+
+    protected handleCheat1(): void {
+        this.sceneManager.changeToScene(Level1);
+    }
+    protected handleCheat2(): void {
+        this.sceneManager.changeToScene(Level2);
+    }
+    protected handleCheat3(): void {
+        this.sceneManager.changeToScene(Level3);
+    }
+    protected handleCheat4(): void {
+        this.sceneManager.changeToScene(Level4);
+    }
+    protected handleCheat5(): void {
+        this.sceneManager.changeToScene(Level5);
     }
   
 

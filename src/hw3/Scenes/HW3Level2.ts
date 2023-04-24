@@ -10,6 +10,10 @@ import Hub from "./Hub";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import { PortalAnimation } from "../Portal/Portal";
+import Level1 from "./HW3Level1";
+import Level3 from "./Level3";
+import Level4 from "./Level4";
+import Level5 from "./Level5";
 
 /**
  * The second level for HW4. It should be the goose dungeon / cave.
@@ -18,16 +22,16 @@ export default class Level2 extends HW3Level {
 
     public static readonly PLAYER_SPAWN = new Vec2(32, 32);
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
-    public static readonly PLAYER_SPRITE_PATH = "hw4_assets/spritesheets/eye_of_cthulhu.json";
+    public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
 
     public static readonly TILEMAP_KEY = "LEVEL2";
-    public static readonly TILEMAP_PATH = "hw4_assets/tilemaps/HW4Level2.json";
+    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Hub.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
     public static readonly PLATFORM_LAYER_KEY = "Platform";
     public static readonly WALLS_LAYER_KEY = "Main";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
-    public static readonly LEVEL_MUSIC_PATH = "hw4_assets/music/level2.wav";
+    public static readonly LEVEL_MUSIC_PATH = "game_assets/music/level2.wav";
 
     public static readonly JUMP_AUDIO_KEY = "PLAYER_JUMP";
     public static readonly JUMP_AUDIO_PATH = "hw4_assets/sounds/jump.wav";
@@ -36,10 +40,10 @@ export default class Level2 extends HW3Level {
     public static readonly TILE_DESTROYED_PATH = "hw4_assets/sounds/switch.wav";
     
     public static readonly DEATH_KEY = "DEATH";
-    public static readonly DEATH_PATH = "hw4_assets/sounds/deathsound.mp3";
+    public static readonly DEATH_PATH = "game_assets/sounds/deathsound.mp3";
 
     public static readonly HIT_KEY = "HIT";
-    public static readonly HIT_PATH = "hw4_assets/sounds/gettinghit.wav";
+    public static readonly HIT_PATH = "game_assets/sounds/gettinghit.wav";
 
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
@@ -130,7 +134,7 @@ export default class Level2 extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Level2.JELLYHEART_PATH);
         // Load in Enemy sprites
         this.load.spritesheet(this.placeholderSpriteKey, Level2.PLACEHOLDER_SPRITE_PATH);
-        this.load.spritesheet(this.portalSpriteKey,Hub.PORTAL_PATH);
+        this.load.spritesheet(this.portalSpriteKey,Level2.PORTAL_PATH);
     }
 
     public unloadScene(): void {
@@ -150,6 +154,22 @@ export default class Level2 extends HW3Level {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
         this.placeholder = this.initializeEnemy(this.placeholderSpriteKey, new Vec2(500, 1227), 10);
+    }
+
+    protected handleCheat1(): void {
+        this.sceneManager.changeToScene(Level1);
+    }
+    protected handleCheat2(): void {
+        this.sceneManager.changeToScene(Level2);
+    }
+    protected handleCheat3(): void {
+        this.sceneManager.changeToScene(Level3);
+    }
+    protected handleCheat4(): void {
+        this.sceneManager.changeToScene(Level4);
+    }
+    protected handleCheat5(): void {
+        this.sceneManager.changeToScene(Level5);
     }
 
     protected portalInitialize(){

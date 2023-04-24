@@ -256,19 +256,19 @@ export default abstract class HW3Level extends Scene {
                 break;
             }
             case HW3Events.CHEAT2: {
-                //this.sceneManager.changeToScene(Level2);
+                this.handleCheat2();
                 break;
             }
             case HW3Events.CHEAT3: {
-                //this.sceneManager.changeToScene(Level3);
+                this.handleCheat3();
                 break;
             }
             case HW3Events.CHEAT4: {
-                //this.sceneManager.changeToScene(Level4);
+                this.handleCheat4();
                 break;
             }
             case HW3Events.CHEAT5: {
-                //this.sceneManager.changeToScene(Level5);
+                this.handleCheat5();
                 break;
             }
             case HW3Events.INVINCIBLE: {
@@ -436,6 +436,12 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.INVENTORY);
         this.receiver.subscribe(HW3Events.GAME_PAUSE);
         this.receiver.subscribe(HW3Events.ENEMY_KILLED);
+        this.receiver.subscribe(HW3Events.CHEAT1);
+        this.receiver.subscribe(HW3Events.CHEAT2);
+        this.receiver.subscribe(HW3Events.CHEAT3);
+        this.receiver.subscribe(HW3Events.CHEAT4);
+        this.receiver.subscribe(HW3Events.CHEAT5);
+        this.receiver.subscribe(HW3Events.INVINCIBLE);
         this.receiver.subscribe(NPCEvents.TALKING_TO_NPC);
     }
     /**
@@ -715,7 +721,18 @@ export default abstract class HW3Level extends Scene {
     protected handleCheat1(): void {
         throw new Error("handleCheat1 wasn't implemented");
     }
-
+    protected handleCheat2(): void {
+        throw new Error("handleCheat2 wasn't implemented");
+    }
+    protected handleCheat3(): void {
+        throw new Error("handleCheat3 wasn't implemented");
+    }
+    protected handleCheat4(): void {
+        throw new Error("handleCheat4 wasn't implemented");
+    }
+    protected handleCheat5(): void {
+        throw new Error("handleCheat5 wasn't implemented");
+    }
 
     // this method will be handled inside the hub subclass
     protected handleTalkingNPC(id: string): void {

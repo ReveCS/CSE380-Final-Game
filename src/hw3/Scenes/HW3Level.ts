@@ -96,7 +96,10 @@ export default abstract class HW3Level extends Scene {
      protected portalHalfSize: Vec2;
 
     // Keep track of how many of each enemy
-    protected enemiesKilled: number = 0;
+    protected goblinsKilled: number = 0;
+    protected jelliesKilled: number = 0;
+    protected swordsKilled: number = 0;
+
 
     protected invincibleTimer: Timer;
 
@@ -252,18 +255,28 @@ export default abstract class HW3Level extends Scene {
                 break;
             }
             case HW3Events.ENEMY_KILLED: {
-                this.enemiesKilled += 1;
-                console.log(this.enemiesKilled);
-                this.goblinCount.destroy;
-                this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.enemiesKilled});
-                this.goblinCount.visible = false;
-                this.jellyCount.destroy;
-                this.jellyCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.enemiesKilled});
-                this.jellyCount.visible = false;
-                this.swordCount.destroy;
-                this.swordCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.enemiesKilled});
-                this.swordCount.visible = false;
-                break;
+                console.log(event.data.get("enemyType"));
+                if (event.data.get("enemyType") == "goblin") {
+                    this.goblinsKilled += 1;
+                    this.goblinCount.destroy;
+                    this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.goblinsKilled});
+                    this.goblinCount.visible = false;
+                    break;
+                }
+                if (event.data.get("enemyType") == "Ocher Jelly") {
+                    this.jelliesKilled += 1;
+                    this.jellyCount.destroy;
+                    this.jellyCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(282, 167), text: "" + this.jelliesKilled});
+                    this.jellyCount.visible = false;
+                    break;
+                }
+                if (event.data.get("enemyType") == "Flying Sword") {
+                    this.swordsKilled += 1;
+                    this.swordCount.destroy;
+                    this.swordCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(343, 167), text: "" + this.swordsKilled});
+                    this.swordCount.visible = false;
+                    break;
+                }
             }
             case HW3Events.CHEAT1: {
                 this.handleCheat1();
@@ -500,7 +513,7 @@ export default abstract class HW3Level extends Scene {
         this.goblinSkullSprite.scale.set(1/2, 1/2);
         this.goblinSkullSprite.visible = false;
 
-        this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 165), text: "" + this.enemiesKilled});
+        this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 165), text: "" + this.goblinsKilled});
         this.goblinCount.textColor = Color.BLACK;
         this.goblinCount.font = "Hjet-Regular";
         this.goblinCount.scale.set(3/4, 3/4);
@@ -511,7 +524,7 @@ export default abstract class HW3Level extends Scene {
         this.jellyHeartSprite.scale.set(9/24, 9/24);
         this.jellyHeartSprite.visible = false;
 
-        this.jellyCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(282, 165), text: "" + this.enemiesKilled});
+        this.jellyCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(282, 165), text: "" + this.jelliesKilled});
         this.jellyCount.textColor = Color.BLACK;
         this.jellyCount.font = "Hjet-Regular";
         this.jellyCount.scale.set(3/4, 3/4);
@@ -522,7 +535,7 @@ export default abstract class HW3Level extends Scene {
         this.swordRubySprite.scale.set(11/24, 11/24);
         this.swordRubySprite.visible = false;
 
-        this.swordCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(343, 165), text: "" + this.enemiesKilled});
+        this.swordCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(343, 165), text: "" + this.swordsKilled});
         this.swordCount.textColor = Color.BLACK;
         this.swordCount.font = "Hjet-Regular";
         this.swordCount.scale.set(3/4, 3/4);

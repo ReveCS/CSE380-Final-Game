@@ -11,7 +11,7 @@ export default class Dead extends EnemyState {
     public update(deltaT: number): void {
         if (!this.owner.animation.isPlaying(EnemyAnimations.DYING)) {
             this.owner.destroy();
-            this.emitter.fireEvent(HW3Events.ENEMY_KILLED);
+            this.emitter.fireEvent(HW3Events.ENEMY_KILLED, {enemyType: this.owner.imageId});
         }
     }
 

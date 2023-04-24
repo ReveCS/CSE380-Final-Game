@@ -94,6 +94,8 @@ export default abstract class HW3Level extends Scene {
     // Keep track of how many of each enemy
     protected enemiesKilled: number = 0;
 
+    protected invincibleTimer: Timer;
+
     /** The end of level stuff */
 
     protected level1Complete: boolean;
@@ -247,6 +249,33 @@ export default abstract class HW3Level extends Scene {
                 this.goblinCount.destroy;
                 this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.enemiesKilled});
                 this.goblinCount.visible = false;
+                break;
+            }
+            case HW3Events.CHEAT1: {
+                //this.sceneManager.changeToScene(Level1);
+                break;
+            }
+            case HW3Events.CHEAT2: {
+                //this.sceneManager.changeToScene(Level2);
+                break;
+            }
+            case HW3Events.CHEAT3: {
+                //this.sceneManager.changeToScene(Level3);
+                break;
+            }
+            case HW3Events.CHEAT4: {
+                //this.sceneManager.changeToScene(Level4);
+                break;
+            }
+            case HW3Events.CHEAT5: {
+                //this.sceneManager.changeToScene(Level5);
+                break;
+            }
+            case HW3Events.INVINCIBLE: {
+                this.player.isCollidable = false;
+                this.invincibleTimer = new Timer(2, () => {
+                    this.player.isCollidable = true;
+                });
                 break;
             }
             case NPCEvents.TALKING_TO_NPC: {

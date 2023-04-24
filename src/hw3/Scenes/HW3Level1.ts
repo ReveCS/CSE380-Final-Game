@@ -15,7 +15,7 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
  */
 export default class Level1 extends HW3Level {
 
-    public static readonly PLAYER_SPAWN = new Vec2(64, 1225);;
+    public static readonly PLAYER_SPAWN = new Vec2(64, 1225);
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
     public static readonly TILEMAP_KEY = "LEVEL1";

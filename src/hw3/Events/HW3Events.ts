@@ -27,5 +27,14 @@ export const HW3Events = {
     GAME_PAUSE: "GAME_PAUSE",
 
     // The event sent when an enemy is killed
-    ENEMY_KILLED: "ENEMY_KILLED"
+    ENEMY_KILLED: "ENEMY_KILLED",
+
+    // CHEATS
+    CHEAT1: "CHEAT1",
+    CHEAT2: "CHEAT2",
+    CHEAT3: "CHEAT3",
+    CHEAT4: "CHEAT4",
+    CHEAT5: "CHEAT5",
+    INVINCIBLE: "INVINCIBLE"
+    
 } as const;

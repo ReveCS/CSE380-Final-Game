@@ -1,0 +1,304 @@
+{
+	"name": "boss",
+	"spriteSheetImage": "boss.png",
+	"spriteWidth": 128,
+	"spriteHeight": 128,
+	"leftBuffer": 0,
+	"rightBuffer": 0,
+	"topBuffer": 0,
+	"bottomBuffer": 0,
+	"columns": 8,
+	"rows": 8,
+	"animations": [
+		{
+			"name": "IDLE",
+			"repeat": true,
+			"frames": [
+				{
+					"index": 0,
+					"duration": 20
+				},
+				{
+					"index": 1,
+					"duration": 21
+				},
+				{
+					"index": 2,
+					"duration": 22
+				},
+				{
+					"index": 3,
+					"duration": 23
+				},
+				{
+					"index": 4,
+					"duration": 22
+				},
+				{
+					"index": 5,
+					"duration": 21
+				},
+				{
+					"index": 6,
+					"duration": 20
+				}
+			]
+		},		
+		{
+			"name": "ATTACK_1",
+			"repeat": true,
+			"frames": [
+				{
+					"index": 7,
+					"duration": 20
+				},
+				{
+					"index": 8,
+					"duration": 20
+				},
+				{
+					"index": 9,
+					"duration": 20
+				},
+				{
+					"index": 10,
+					"duration": 20
+				},
+				{
+					"index": 11,
+					"duration": 20
+				}
+			]
+		},
+		{
+			"name": "ATTACK_2",
+			"repeat": false,
+			"frames": [
+				{
+					"index": 12,
+					"duration": 20
+				},
+				{
+					"index": 13,
+					"duration": 20
+				},
+				{
+					"index": 14,
+					"duration": 20
+				},
+				{
+					"index": 15,
+					"duration": 20
+				},
+				{
+					"index": 16,
+					"duration": 20
+				},
+				{
+					"index": 17,
+					"duration": 5
+				},
+				{
+					"index": 18,
+					"duration": 5
+				},
+				{
+					"index": 19,
+					"duration": 5
+				},
+				{
+					"index": 20,
+					"duration": 5
+				},
+				{
+					"index": 21,
+					"duration": 5
+				},
+				{
+					"index": 22,
+					"duration": 5
+				},
+				{
+					"index": 23,
+					"duration": 5
+				},
+				{
+					"index": 24,
+					"duration": 5
+				}
+				
+			]
+		},
+		{
+			"name": "HURT",
+			"repeat": false,
+			"frames": [
+				{
+					"index": 25,
+					"duration": 10
+				},
+				{
+					"index": 26,
+					"duration": 10
+				},
+				{
+					"index": 27,
+					"duration": 10
+				}
+			]
+		},
+		{
+			"name": "DYING",
+			"repeat": false,
+			"frames": [
+				{
+					"index": 28,
+					"duration": 15
+				},
+				{
+					"index": 29,
+					"duration": 10
+				},
+				{
+					"index": 30,
+					"duration": 15
+				},
+				{
+					"index": 31,
+					"duration": 10
+				},
+				{
+					"index": 32,
+					"duration": 15
+				},
+				{
+					"index": 33,
+					"duration": 10
+				},
+				{
+					"index": 34,
+					"duration": 15
+				},
+				{
+					"index": 35,
+					"duration": 10
+				},
+				{
+					"index": 36,
+					"duration": 15
+				},
+				{
+					"index": 37,
+					"duration": 10
+				},
+				{
+					"index": 38,
+					"duration": 15
+				},
+				{
+					"index": 39,
+					"duration": 10
+				},
+				{
+					"index": 40,
+					"duration": 15
+				},
+				{
+					"index": 41,
+					"duration": 10
+				},
+				{
+					"index": 42,
+					"duration": 15
+				},
+				{
+					"index": 43,
+					"duration": 10
+				},
+				{
+					"index": 44,
+					"duration": 15
+				},
+				{
+					"index": 45,
+					"duration": 10
+				},
+				{
+					"index": 46,
+					"duration": 15
+				},
+				{
+					"index": 47,
+					"duration": 10
+				},
+				{
+					"index": 48,
+					"duration": 15
+				},
+				{
+					"index": 49,
+					"duration": 10
+				},
+				{
+					"index": 50,
+					"duration": 15
+				},
+				{
+					"index": 51,
+					"duration": 10
+				}
+				
+			]
+		},
+		{
+			"name": "DEATH",
+			"repeat": true,
+			"frames": [
+				{
+					"index": 52,
+					"duration": 15
+				}
+			]
+		},
+		{
+			"name":"STATUE",
+			"repeat":true,
+			"frames":[
+				{
+					"index":53,
+					"duration":15
+				}
+		]
+		},
+		{
+			"name":"SPAWN",
+			"repeat":false,
+			"frames": [
+				
+				{
+					"index":54,
+					"duration":125
+				},
+				{
+					"index":55,
+					"duration":125
+				},
+				{
+					"index":56,
+					"duration":125
+				},
+				{
+					"index":57,
+					"duration":125
+				},
+				{
+					"index":58,
+					"duration":125
+				}
+			]
+		}
+		
+
+
+	]
+}

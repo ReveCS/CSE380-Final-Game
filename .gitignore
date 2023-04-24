@@ -13,4 +13,5 @@ dist/*
 # Include the hw4 assets
 !dist/hw4_assets/
 
-
+# Include the game assets
+!dist/game_assets/

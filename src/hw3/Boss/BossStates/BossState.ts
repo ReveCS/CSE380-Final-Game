@@ -14,6 +14,12 @@ export default abstract class BossState extends State {
 	protected owner: HW3AnimatedSprite;
     protected aggroRadius: number;
     protected dirToPlayer: Vec2;
+    protected dirToSky: Vec2;
+    protected dirToPlayerRight: Vec2;
+    protected dirToPlayerLeft: Vec2;
+    protected sky: Vec2 = new Vec2(1200,1000)
+    protected playerRight:Vec2; 
+    protected playerLeft:Vec2;
 
 	public constructor(parent: BossController, owner: HW3AnimatedSprite){
 		super(parent);
@@ -38,8 +44,14 @@ export default abstract class BossState extends State {
 
 	public update(deltaT: number): void {
         
+        
+        this.playerRight = new Vec2(this.parent.playerPosition.clone().x+300,this.parent.playerPosition.clone().y)
+        this.playerLeft = new Vec2(this.parent.playerPosition.clone().x-300,this.parent.playerPosition.clone().y)
         // // This updates the direction the Player is in (left or right)
-        // this.dirToPlayer = this.owner.position.dirTo(this.parent.playerPosition);
+        this.dirToPlayer = this.owner.position.dirTo(this.parent.playerPosition);
+        this.dirToSky = this.owner.position.dirTo(this.sky);
+        this.dirToPlayerRight = this.owner.position.dirTo(this.playerRight);
+        this.dirToPlayerLeft = this.owner.position.dirTo(this.playerLeft);
         // // make sure were facing the player
         // if(this.dirToPlayer.x !== 0){
         //     this.owner.invertX = MathUtils.sign(this.dirToPlayer.x) < 0;

@@ -15,6 +15,7 @@ import Spawn from "./BossStates/Spawn";
 
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import MathUtils from "../../Wolfie2D/Utils/MathUtils";
+import Attack_1 from "./BossStates/Attack_1";
 // import { CombatEvents } from "../Events/CombatEvents";
 
 /**
@@ -99,7 +100,7 @@ export default class BossController extends StateMachineAI {
 
         // Add the different states the enemy can be in to the EnemyController 
 		this.addState(BossStates.IDLE, new Idle(this, this.owner));
-        // this.addState(BossStates.ATTACK_1, new Pathing(this, this.owner));
+        this.addState(BossStates.ATTACK_1, new Attack_1(this, this.owner));
         // this.addState(BossStates.ATTACK_2, new Returning(this, this.owner));
         // this.addState(BossStates.HURT, new Hurt(this, this.owner));
         // this.addState(BossStates.DEATH, new Dead(this, this.owner));

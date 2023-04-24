@@ -129,6 +129,7 @@ export default abstract class HW3Level extends Scene {
     /** Sound and music */
     protected levelMusicKey: string;
     protected jumpAudioKey: string;
+    protected spawnAudioKey:string;
     protected tileDestroyedAudioKey: string;
     protected deathSoundKey:string;
     protected hitKey:string;
@@ -137,8 +138,11 @@ export default abstract class HW3Level extends Scene {
         super(viewport, sceneManager, renderingManager, {...options, physics: {
             
             // TODO configure the collision groups and collision map
-           groupNames:["GROUND","PLAYER","WEAPON","BOSS"],
-           collisions: [[0,1,1,0],[1,0,0,1],[1,0,0,1],[0,1,1,0]]
+           groupNames:[HW3PhysicsGroups.GROUND,HW3PhysicsGroups.PLAYER,HW3PhysicsGroups.PLATFORM,HW3PhysicsGroups.BOSS],
+           collisions: [[0,1,0,0],
+                        [1,0,1,0],
+                        [0,1,0,0],
+                        [0,0,0,0]]
 
          }});
         this.add = new HW3FactoryManager(this, this.tilemaps);
@@ -289,6 +293,7 @@ export default abstract class HW3Level extends Scene {
         }
     }
 
+    
     /* Handlers for the different events the scene is subscribed to */
 
     /**
@@ -307,8 +312,7 @@ export default abstract class HW3Level extends Scene {
     //         let max = new Vec2(particle.sweptRect.right, particle.sweptRect.bottom);
 
     //         // Convert the min/max x/y to the min and max row/col in the tilemap array
-    //         let minIndex = tilemap.getColRowAt(min);
-    //         let maxIndex = tilemap.getColRowAt(max);
+    
 
     //         // Loop over all possible tiles the particle could be colliding with 
     //         for(let col = minIndex.x; col <= maxIndex.x; col++){
@@ -416,12 +420,14 @@ export default abstract class HW3Level extends Scene {
         // Get the wall and destructible layers 
         
         this.walls = this.getTilemap(this.wallsLayerKey) as OrthogonalTilemap;
+        this.walls.setGroup(HW3PhysicsGroups.GROUND)
         this.platform = this.getTilemap(this.platformLayerKey) as OrthogonalTilemap;
+        this.platform.setGroup(HW3PhysicsGroups.PLATFORM);
 
         // Add physicss to the wall layer
         this.walls.addPhysics();
         // Add physics to the destructible layer of the tilemap
-        
+        this.platform.addPhysics();
         
      }
     /**
@@ -443,6 +449,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.CHEAT5);
         this.receiver.subscribe(HW3Events.INVINCIBLE);
         this.receiver.subscribe(NPCEvents.TALKING_TO_NPC);
+        
     }
     /**
      * Adds in any necessary UI to the game
@@ -585,7 +592,7 @@ export default abstract class HW3Level extends Scene {
         this.player.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
         this.player.collisionShape.halfSize.set(20,this.player.collisionShape.halfSize.y-7);
         console.log(this.player.collisionShape.halfSize.x,this.player.collisionShape.halfSize.y);
-        this.player.setGroup("PLAYER");
+        this.player.setGroup(HW3PhysicsGroups.PLAYER);
         
        
         
@@ -617,10 +624,10 @@ export default abstract class HW3Level extends Scene {
         
         
         // Give the player physics
-        boss.addPhysics(new AABB(boss.position.clone(), boss.boundary.getHalfSize().clone()));
-        boss.isCollidable = false;
-        boss.collisionShape.halfSize.set(boss.collisionShape.halfSize.x,boss.collisionShape.halfSize.y);
-        boss.setGroup("BOSS");
+        boss.addPhysics(new AABB(boss.position.clone()));
+        // boss.addPhysics(new AABB(boss.position.clone(), boss.boundary.getHalfSize().clone()),null,false);
+        // boss.collisionShape.halfSize.set(boss.collisionShape.halfSize.x,boss.collisionShape.halfSize.y);
+        boss.setGroup(HW3PhysicsGroups.BOSS);
         
         boss.addAI(BossController, { player: this.player, radius: AggroRadius,spawn: spawn });
         
@@ -708,6 +715,9 @@ export default abstract class HW3Level extends Scene {
     /* Misc methods */
 
     // Get the key of the player's jump audio file
+    public getSpawnAudioKey():string{
+        return this.spawnAudioKey;
+    }
     public getJumpAudioKey(): string {
         return this.jumpAudioKey
     }

@@ -35,6 +35,9 @@ export default class Level5 extends HW3Level {
     public static readonly JUMP_AUDIO_KEY = "PLAYER_JUMP";
     public static readonly JUMP_AUDIO_PATH = "game_assets/sounds/jump.wav";
 
+    public static readonly SPAWN_AUDIO_KEY = "SPAWN";
+    public static readonly SPAWN_AUDIO_PATH = "game_assets/sounds/spawn.wav";
+
     public static readonly TILE_DESTROYED_KEY = "TILE_DESTROYED";
     public static readonly TILE_DESTROYED_PATH = "hw4_assets/sounds/switch.wav";
 
@@ -54,7 +57,7 @@ export default class Level5 extends HW3Level {
 
     // Enemy Sprites
 
-    public static readonly BOSS_SPAWN = new Vec2(500,1275)
+    public static readonly BOSS_SPAWN = new Vec2(1200,1275)
     public static readonly BOSS_SPRITE_KEY = "BOSS_SPRITE_KEY";
     public static readonly BOSS_SPRITE_PATH = "game_assets/spritesheets/boss.json";
     protected bossSpawn: Vec2;
@@ -83,6 +86,7 @@ export default class Level5 extends HW3Level {
         // Music and sound
         this.levelMusicKey = Level5.LEVEL_MUSIC_KEY
         this.jumpAudioKey = Level5.JUMP_AUDIO_KEY;
+        this.spawnAudioKey = Level5.SPAWN_AUDIO_KEY;
         this.tileDestroyedAudioKey = Level5.TILE_DESTROYED_KEY;
         this.deathSoundKey = Level5.DEATH_KEY;
         this.hitKey = Level5.HIT_KEY;
@@ -111,6 +115,7 @@ export default class Level5 extends HW3Level {
         // Audio and music
         this.load.audio(this.levelMusicKey, Level5.LEVEL_MUSIC_PATH);
         this.load.audio(this.jumpAudioKey, Level5.JUMP_AUDIO_PATH);
+        this.load.audio(this.spawnAudioKey,Level5.SPAWN_AUDIO_PATH);
         this.load.audio(this.tileDestroyedAudioKey, Level5.TILE_DESTROYED_PATH);
         this.load.audio(this.deathSoundKey,Level5.DEATH_PATH);
         this.load.audio(this.hitKey,Level5.HIT_PATH);

@@ -68,7 +68,7 @@ export default class Level4 extends HW3Level {
     protected portalSpawn: Vec2;
 
     public static readonly PLACEHOLDER_SPRITE_KEY = "PLACEHOLDER_SPRITE_KEY";
-    public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/ocher_jelly.json";
+    public static readonly PLACEHOLDER_SPRITE_PATH = "game_assets/spritesheets/charonadaemon.json";
     protected placeholder: HW3AnimatedSprite
     protected placeholderSpriteKey: string;
 

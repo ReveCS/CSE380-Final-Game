@@ -1,5 +1,6 @@
 import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
+import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
 // import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 
@@ -24,13 +25,13 @@ export const EnemyAnimations = {
     IDLE: "IDLE",
     WALK: "WALK",
     ATTACK_1: "ATTACK_1",
-    ATTACK_2: "ATTACK_2",
     TAKE_DAMAGE: "TAKE_DAMAGE",
     DYING: "DYING",
     DEATH: "DEATH",
-    JUMP: "JUMP",
-    FALL: "FALL",
-    LAND: "LAND"
+    // ATTACK_2: "ATTACK_2",
+    // JUMP: "JUMP",
+    // FALL: "FALL",
+    // LAND: "LAND"
 } as const
 
 /**
@@ -141,6 +142,7 @@ export default class EnemyController extends StateMachineAI {
     public set spawn(spawn: Vec2) {this._spawn = spawn; } 
 
     public get playerPosition(): Vec2 { return this._player.position; }
+    public get playerBoundary(): AABB { return this._player.boundary; }
     public get playerDamage(): number { return this._playerDamage }
 
     public get velocity(): Vec2 { return this._velocity; }

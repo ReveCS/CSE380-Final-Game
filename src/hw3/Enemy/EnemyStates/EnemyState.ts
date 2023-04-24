@@ -59,7 +59,8 @@ export default abstract class EnemyState extends State {
 
     // returns if the player is in range to be attacked
     protected playerInCombatRange(): Boolean {
-        return this.owner.boundary.containsPoint(this.parent.playerPosition);
+        // return this.owner.boundary.containsPoint(this.parent.playerPosition);
+        return this.parent.playerBoundary.containsPoint(this.owner.position);
     }
 
     // returns if we are at our spawn

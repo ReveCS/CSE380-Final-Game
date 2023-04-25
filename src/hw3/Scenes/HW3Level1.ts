@@ -67,6 +67,7 @@ export default class Level1 extends HW3Level {
     // Enemy Sprites
     public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1216);
     protected defaultSpawn: Vec2;
+
     public static readonly GOBLIN_SPRITE_KEY = "GOBLIN_SPRITE_KEY";
     public static readonly GOBLIN_SPRITE_PATH = "game_assets/spritesheets/goblin.json";
     protected goblinSpriteKey: string;
@@ -173,8 +174,11 @@ export default class Level1 extends HW3Level {
         // can use this.defaultSpawn or define your own spawn
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(500, 1216), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(600, 1216), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(700, 1216), 10);
 
         this.initializeEnemy(this.swordSpriteKey, new Vec2(800, 1216), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(900, 1216), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(1000, 1216), 10);
 
     }
 

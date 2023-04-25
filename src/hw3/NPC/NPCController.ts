@@ -62,7 +62,7 @@ export default class NPCController extends ControllerAI {
         // if we're waiting to give a quest
         if (this.isWaiting) {
             let playerWantsToTalk = Input.isJustPressed(HW3Controls.INTERACT);
-            let playerNear = this.owner.boundary.containsPoint(this.player.position);
+            let playerNear = this.player.boundary.containsPoint(this.owner.position);
 
             if (playerWantsToTalk && playerNear) {
                 console.log("Talking to NPC.")

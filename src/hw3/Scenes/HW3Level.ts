@@ -77,6 +77,7 @@ export default abstract class HW3Level extends Scene {
     private jellyCount: Label;
     private swordRubySprite: Sprite;
     private swordCount: Label;
+    protected QuestSprite: Sprite;
 
 
     // The key and path to the sprites
@@ -90,6 +91,8 @@ export default abstract class HW3Level extends Scene {
     protected JELLYHEART_PATH: string;
     protected SWORDRUBY_KEY: string;
     protected SWORDRUBY_PATH: string;
+    protected QUEST_KEY: string;
+    protected QUEST_PATH: string;
 
      /* Portal */
      protected portalPosition: Vec2;
@@ -538,6 +541,12 @@ export default abstract class HW3Level extends Scene {
         this.swordCount.font = "Hjet-Regular";
         this.swordCount.scale.set(3/4, 3/4);
         this.swordCount.visible = false;
+
+        // Quest UI
+        this.QuestSprite = this.add.sprite(this.QUEST_KEY, HW3Layers.UI);
+        this.QuestSprite.position.copy(new Vec2(490, 200));
+        this.QuestSprite.scale.set(1, 1);
+        this.QuestSprite.visible = false;
 
          // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, { position: new Vec2(-300, 100), text: "Level Complete" });

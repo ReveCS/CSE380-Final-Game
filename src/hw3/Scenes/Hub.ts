@@ -65,6 +65,8 @@ export default class Hub extends HW3Level {
     public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
     public static readonly SWORDRUBY_KEY = "SWORDRUBY_SPRITE_KEY";
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
+    public static readonly QUEST_KEY = "QUEST_KEY";
+    public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
 
     // NPC Sprites
     public static readonly NPC_1_SPAWN = new Vec2(200, 1243);
@@ -151,6 +153,7 @@ export default class Hub extends HW3Level {
         this.GOBLINSKULL_KEY = Hub.GOBLINSKULL_KEY;
         this.JELLYHEART_KEY = Hub.JELLYHEART_KEY;
         this.SWORDRUBY_KEY = Hub.SWORDRUBY_KEY;
+        this.QUEST_KEY = Hub.QUEST_KEY;
 
          // Set Portal sprite and spawn
         this.portalSpriteKey = Hub.PORTAL_KEY;
@@ -201,6 +204,7 @@ export default class Hub extends HW3Level {
         this.load.image(this.GOBLINSKULL_KEY, Hub.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Hub.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Hub.SWORDRUBY_PATH);
+        this.load.image(this.QUEST_KEY, Hub.QUEST_PATH);
 
         // Load in NPC sprites
         this.load.spritesheet(this.NPC_1_SpriteKey, Hub.NPC_1_SPRITE_PATH);

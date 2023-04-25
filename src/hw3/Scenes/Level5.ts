@@ -58,6 +58,8 @@ export default class Level5 extends HW3Level {
     public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
     public static readonly SWORDRUBY_KEY = "SWORDRUBY_SPRITE_KEY";
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
+    public static readonly QUEST_KEY = "QUEST_KEY";
+    public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
 
     // Enemy Sprites
 
@@ -104,6 +106,9 @@ export default class Level5 extends HW3Level {
         this.JELLYHEART_KEY = Level5.JELLYHEART_KEY;
         this.SWORDRUBY_KEY = Level5.SWORDRUBY_KEY;
 
+        // Quest
+        this.QUEST_KEY = Level5.QUEST_KEY;
+
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
@@ -133,6 +138,7 @@ export default class Level5 extends HW3Level {
         this.load.image(this.GOBLINSKULL_KEY, Level5.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Level5.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Level5.SWORDRUBY_PATH);
+        this.load.image(this.QUEST_KEY, Level5.QUEST_PATH);
 
         // Load in Enemy sprites
     }

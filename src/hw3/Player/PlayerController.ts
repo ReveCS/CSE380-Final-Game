@@ -205,7 +205,7 @@ export default class PlayerController extends StateMachineAI {
             this.invincible = false;
             this.timer = 0;
         }
-        console.log(this.health);
+        // console.log(this.health);
        
 	}
 

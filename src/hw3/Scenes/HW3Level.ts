@@ -310,6 +310,15 @@ export default abstract class HW3Level extends Scene {
                 this.handleTalkingNPC(event.data.get("id"));
                 break;
             }
+            case NPCEvents.ACCEPT_QUEST: {
+                this.clearQuestUI();
+                // this.handleAcceptQuest();
+                break;
+            }
+            case NPCEvents.DECLINE_QUEST: {
+                this.clearQuestUI();
+                break;
+            }
             // Default: Throw an error! No unhandled events allowed.
             default: {
                 throw new Error(`Unhandled event caught in scene with type ${event.type}`)
@@ -477,7 +486,8 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.CHEAT5);
         this.receiver.subscribe(HW3Events.INVINCIBLE);
         this.receiver.subscribe(NPCEvents.TALKING_TO_NPC);
-        
+        this.receiver.subscribe(NPCEvents.ACCEPT_QUEST);
+        this.receiver.subscribe(NPCEvents.DECLINE_QUEST);
     }
     /**
      * Adds in any necessary UI to the game
@@ -784,8 +794,10 @@ export default abstract class HW3Level extends Scene {
         throw new Error("handleCheat5 wasn't implemented");
     }
 
-    // this method will be handled inside the hub subclass
     protected handleTalkingNPC(id: string): void {
         throw new Error("handleTalkingNPC wasn't implemented in Hub.ts");
+    }
+    protected clearQuestUI(): void {
+        throw new Error("clearQuestUI wasn't implemented in Hub.ts");
     }
 }

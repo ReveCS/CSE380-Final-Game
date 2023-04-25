@@ -33,7 +33,9 @@ export default class NPCController extends ControllerAI {
         this.doneTalking = false;
         this.quests = options.quests;
 
-        this.receiver.subscribe(NPCEvents.DONE_TALKING_TO_NPC);
+        // this.receiver.subscribe(NPCEvents.DONE_TALKING_TO_NPC);
+        this.receiver.subscribe(NPCEvents.ACCEPT_QUEST);
+        this.receiver.subscribe(NPCEvents.DECLINE_QUEST);
         this.owner.animation.playIfNotAlready(NPCAnimations.IDLE);
     }
 
@@ -43,8 +45,18 @@ export default class NPCController extends ControllerAI {
 
     handleEvent(event: GameEvent): void {
         switch(event.type) {
-            case (NPCEvents.DONE_TALKING_TO_NPC): {
-                this.doneTalking = true;
+            // case (NPCEvents.DONE_TALKING_TO_NPC): {
+            //     this.doneTalking = true;
+            //     break;
+            // }
+            case (NPCEvents.ACCEPT_QUEST): {
+                this.doneTalking = false;
+                this.isWaiting = true;
+                break;
+            }
+            case (NPCEvents.DECLINE_QUEST): {
+                this.doneTalking = false;
+                this.isWaiting = true;
                 break;
             }
             // Default - throw an error
@@ -70,19 +82,6 @@ export default class NPCController extends ControllerAI {
                 if (this.quests.length === 0) throw new Error("NPC ran out of quests!");
                 let currentQuest = this.quests[this.quests.length - 1];
                 this.emitter.fireEvent(NPCEvents.TALKING_TO_NPC, {id: currentQuest});
-            }
-        }
-        // wait for player to accept/decline the quest
-        else if (this.doneTalking) {
-            if (Input.isJustPressed(HW3Controls.ACCEPT_QUEST)) {
-                this.emitter.fireEvent(NPCEvents.ACCEPT_QUEST);
-                this.isWaiting = true;
-                this.doneTalking = false;
-            }
-            else if (Input.isJustPressed(HW3Controls.DECLINE_QUEST)) {
-                this.emitter.fireEvent(NPCEvents.DECLINE_QUEST);
-                this.isWaiting = true;
-                this.doneTalking = false;
             }
         }
     }

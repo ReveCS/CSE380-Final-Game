@@ -14,12 +14,16 @@ import { NPCEvents } from "../Events/NPCEvents";
 
 // imports for quest displaying
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import UIElement from "../../Wolfie2D/Nodes/UIElement";
+import Color from "../../Wolfie2D/Utils/Color";
 import Timer from "../../Wolfie2D/Timing/Timer";
 import { Quests } from "../Text/Quests"
 import { PortalAnimation } from "../Portal/Portal";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
+
+// Levels
 import Level1 from "./HW3Level1";
 import Level2 from "./HW3Level2";
 import Level3 from "./Level3";
@@ -124,7 +128,8 @@ export default class Hub extends HW3Level {
     private isDisplayingText: Boolean;
     private displayTimer: Timer;
     private textBuffer: Array<string>;
-    private prevText: UIElement
+    private questUI: Array<UIElement>;
+    private textPosition: Vec2;
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
         super(viewport, sceneManager, renderingManager, options);
@@ -182,7 +187,8 @@ export default class Hub extends HW3Level {
         // Set variables for displaying text
         this.isDisplayingText = false;
         this.displayTimer = new Timer(500);
-
+        this.textBuffer = [];
+        this.questUI = [];
     }
     /**
      * Load in resources for level 4.
@@ -233,37 +239,127 @@ export default class Hub extends HW3Level {
         if (this.isDisplayingText) {
             // display each sentence of the quest in a regular interval
             if (this.displayTimer.isStopped()) {
-                this.prevText.destroy();
-
+                // display text until buffer is empty
                 if (this.textBuffer.length > 0) {
-                    this.prevText = this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {
-                        position: new Vec2(150, 100),
+                    const label = <Label> this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {
+                        position: this.textPosition.clone(),
                         text: this.textBuffer.pop()
-                    })
+                    });
+                    label.font = "Hjet-Regular";
+                    label.fontSize = 28;
+                    this.questUI.push(label);
                     this.displayTimer.reset();
-                    this.displayTimer.start(2500);
+                    this.displayTimer.start(250);
+                    this.textPosition.inc(0, 30);
                 }
-                else {
-                    this.isDisplayingText = false;
-                    this.emitter.fireEvent(NPCEvents.DONE_TALKING_TO_NPC);
+                else { // when buffer is empty
+                    // Draw accept/decline buttons
+                    const yes = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+                        position: new Vec2(450, 350),
+                        text: "Accept"
+                    });
+                    yes.size.set(140, 40);
+                    yes.borderWidth = 4;
+                    yes.borderColor = new Color(118, 91, 53);
+                    yes.backgroundColor = Color.TRANSPARENT;
+                    yes.font = "Hjet-Regular";
+                    yes.textColor = Color.BLACK;
+                    yes.fontSize = 28;
+                    yes.onClickEventId = NPCEvents.ACCEPT_QUEST;
+                    this.questUI.push(yes);
+
+                    // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
+                    const yesDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+                        position: new Vec2(900, 700),
+                        text: "Accept"
+                    });
+                    yesDummy.size.set(140, 40);
+                    yesDummy.borderWidth = 4;
+                    yesDummy.borderColor = new Color(118, 91, 53);
+                    yesDummy.backgroundColor = Color.TRANSPARENT;
+                    yesDummy.font = "Hjet-Regular";
+                    yesDummy.textColor = Color.BLACK;
+                    yesDummy.fontSize = 28;
+                    yesDummy.onClickEventId = NPCEvents.ACCEPT_QUEST;
+                    this.questUI.push(yesDummy);
+
+                    const no = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+                        position: new Vec2(530, 350),
+                        text: "Decline"
+                    });
+                    no.size.set(140, 40);
+                    no.borderWidth = 4;
+                    no.borderColor = new Color(118, 91, 53);
+                    no.backgroundColor = Color.TRANSPARENT;
+                    no.font = "Hjet-Regular";
+                    no.textColor = Color.BLACK;
+                    no.fontSize = 28;
+                    no.onClickEventId = NPCEvents.DECLINE_QUEST;
+                    this.questUI.push(no);
+
+                    // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
+                    const noDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+                        position: new Vec2(1060, 700),
+                        text: "Accept"
+                    });
+                    noDummy.size.set(140, 40);
+                    noDummy.borderWidth = 4;
+                    noDummy.borderColor = new Color(118, 91, 53);
+                    noDummy.backgroundColor = Color.TRANSPARENT;
+                    noDummy.font = "Hjet-Regular";
+                    noDummy.textColor = Color.BLACK;
+                    noDummy.fontSize = 28;
+                    noDummy.onClickEventId = NPCEvents.ACCEPT_QUEST;
+                    this.questUI.push(noDummy);
+
+                    this.isDisplayingText = false; // don't draw
+                    // this.emitter.fireEvent(NPCEvents.DONE_TALKING_TO_NPC);
                 }
             }
         }
     }
-
+    
+    protected clearQuestUI(): void {
+        while (this.questUI.length > 0) {
+            this.questUI.pop().destroy();
+        }
+        this.QuestSprite.visible = false;
+    }
 
     // handle HW3Events.TALKING_TO_NPC
     protected handleTalkingNPC(id: string): void {
         // split the string into individual sentences.
         let re = /.*?[\.?!]/g;
         // replace newlines with space, then spaces that are more than 1 with a single space
-        // then split and remove trailing whitespace, then reverse so we can pop easily
-        this.textBuffer = Quests[id].replace(/\n/g, " ").replace(/ +/g, " ").match(re).map(x => x.trim()).reverse();
-        this.textBuffer.splice(0, 0, "Will you accept my quest adventurer? (y) or (n)");
+        // then split and remove trailing whitespace
+        let sentences = Quests[id].replace(/\n/g, " ").replace(/ +/g, " ").match(re).map(x => x.trim())
+        // sentences.splice(0, 0, "Will you accept my quest adventurer? (y) or (n)");
+        let words:Array<string> = [];
+        for (let i = 0; i < sentences.length; i++) {
+            words = words.concat(sentences[i].split(' '));
+        }
+        words = words.reverse(); // cause pop goes from last -> first
 
-        this.prevText = this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(1, 1),text: ""});
+        // add the words to buffer to form sentences that don't overflow
+        let text = "";
+        let charLimit = 25;
+        while (words.length > 0) {
+            let w = words.pop();
+            if (text.length + w.length > charLimit) {
+                this.textBuffer.push(text);
+                text = w + ' ';
+            }
+            else {
+                text += w + ' ';
+            }
+        }
+        this.textBuffer.push(text); // add for last iteration
+
+        this.textBuffer = this.textBuffer.reverse(); // cause pop again
         this.isDisplayingText = true;
         this.displayTimer.start();
+        this.QuestSprite.visible = true;
+        this.textPosition = new Vec2(492, 50);
     }
 
     // Quests should be in order from last -> first

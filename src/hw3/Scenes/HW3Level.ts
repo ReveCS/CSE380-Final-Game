@@ -100,7 +100,6 @@ export default abstract class HW3Level extends Scene {
     protected jelliesKilled: number = 0;
     protected swordsKilled: number = 0;
 
-
     protected invincibleTimer: Timer;
 
     /** The end of level stuff */

@@ -83,6 +83,10 @@ export default class Hub extends HW3Level {
     public static readonly NPC_4_SPRITE_KEY = "NPC_4_KEY";
     public static readonly NPC_4_SPRITE_PATH = "game_assets/spritesheets/NPC_4.json";
 
+    //public static readonly NPC_Shop_SPAWN = new Vec2(2100, 1243);
+    //public static readonly NPC_Shop_SPRITE_KEY = "NPC_Shop_KEY";
+    //public static readonly NPC_Shop_SPRITE_PATH = "game_assets/spritesheets/NPC_Shop.json";
+
      //Portal
     public static readonly PORTAL_SPAWN = new Vec2(2300, 1210);
     public static readonly PORTAL_KEY = "PORTAL_KEY";
@@ -103,6 +107,10 @@ export default class Hub extends HW3Level {
     protected NPC_4: HW3AnimatedSprite
     protected NPC_4_SpriteKey: string;
     protected NPC_4_Spawn: Vec2;
+
+    //protected NPC_Shop: HW3AnimatedSprite
+    //protected NPC_Shop_SpriteKey: string;
+    //protected NPC_Shop_Spawn: Vec2;
 
     protected portal: HW3AnimatedSprite;
     protected portalSpriteKey:string;
@@ -161,6 +169,9 @@ export default class Hub extends HW3Level {
         this.NPC_4_SpriteKey = Hub.NPC_4_SPRITE_KEY;
         this.NPC_4_Spawn = Hub.NPC_4_SPAWN
 
+        //this.NPC_Shop_SpriteKey = Hub.NPC_Shop_SPRITE_KEY;
+        //this.NPC_Shop_Spawn = Hub.NPC_Shop_SPAWN;
+
         // Level end size and position
         this.levelEndPosition = new Vec2(32, 216).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
@@ -196,6 +207,7 @@ export default class Hub extends HW3Level {
         this.load.spritesheet(this.NPC_2_SpriteKey, Hub.NPC_2_SPRITE_PATH);
         this.load.spritesheet(this.NPC_3_SpriteKey, Hub.NPC_3_SPRITE_PATH);
         this.load.spritesheet(this.NPC_4_SpriteKey, Hub.NPC_4_SPRITE_PATH);
+        //this.load.spritesheet(this.NPC_Shop_SpriteKey, Hub.NPC_Shop_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey,Hub.PORTAL_PATH);
     }
 
@@ -263,6 +275,7 @@ export default class Hub extends HW3Level {
        
         this.initializeNPC(this.NPC_4,this.NPC_4_SpriteKey, this.NPC_4_Spawn, placeholderQuests);
         
+        //this.initializeNPC(this.NPC_Shop,this.NPC_Shop_SpriteKey, this.NPC_Shop_Spawn, placeholderQuests);
 
     }
 

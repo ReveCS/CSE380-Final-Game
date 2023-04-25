@@ -168,13 +168,11 @@ export default abstract class HW3Level extends Scene {
 
         // Initialize the player 
         this.initializePlayer(this.playerSpriteKey);
-        
 
         // Initialize the viewport - this must come after the player has been initialized
         this.initializeViewport();
         this.subscribeToEvents();
-        
-
+    
         // Initialize the ends of the levels - must be initialized after the primary layer has been added
         // this.initializeLevelEnds();
 
@@ -225,6 +223,7 @@ export default abstract class HW3Level extends Scene {
             }
             // When the level ends, change the scene to the next level
             case HW3Events.LEVEL_END: {
+
                 this.sceneManager.changeToScene(this.nextLevel);
                 break;
             }

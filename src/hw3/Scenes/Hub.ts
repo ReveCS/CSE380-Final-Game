@@ -108,9 +108,9 @@ export default class Hub extends HW3Level {
     protected NPC_4_SpriteKey: string;
     protected NPC_4_Spawn: Vec2;
 
-    //protected NPC_Shop: HW3AnimatedSprite
-    //protected NPC_Shop_SpriteKey: string;
-    //protected NPC_Shop_Spawn: Vec2;
+    protected NPC_Shop: HW3AnimatedSprite
+    protected NPC_Shop_SpriteKey: string;
+    protected NPC_Shop_Spawn: Vec2;
 
     protected portal: HW3AnimatedSprite;
     protected portalSpriteKey:string;
@@ -275,7 +275,7 @@ export default class Hub extends HW3Level {
        
         this.initializeNPC(this.NPC_4,this.NPC_4_SpriteKey, this.NPC_4_Spawn, placeholderQuests);
         
-        //this.initializeNPC(this.NPC_Shop,this.NPC_Shop_SpriteKey, this.NPC_Shop_Spawn, placeholderQuests);
+        //this.initializeNPC(this.NPC_Shop, this.NPC_Shop_SpriteKey, this.NPC_Shop_Spawn, placeholderQuests);
 
     }
 

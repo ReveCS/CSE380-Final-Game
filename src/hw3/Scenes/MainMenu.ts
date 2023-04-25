@@ -371,17 +371,14 @@ export default class MainMenu extends Scene {
 
         const creditText1 = "Game, artwork, and music developed by";
         const creditText2 = "Avery Chan, Justin Chen, Nelson Yang";
-        //const creditText3 = "Joe Weaver and Richard McKenna.";
 
         const creditLine1 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CREDIT, {position: new Vec2(center.x, center.y - 50), text: creditText1});
         creditLine1.font = "Hjet-Regular";
         const creditLine2 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CREDIT, {position: new Vec2(center.x, center.y), text: creditText2});
         creditLine2.font = "Hjet-Regular";
-        //const creditLine3 = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CREDIT, {position: new Vec2(center.x, center.y + 50), text: creditText3});
 
         creditLine1.textColor = Color.WHITE;
         creditLine2.textColor = Color.WHITE;
-        //creditLine3.textColor = Color.WHITE;
 
         const creditBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.CREDIT, {position: new Vec2(center.x, center.y + 300), text: "Back"});
         creditBack.size.set(200, 50);

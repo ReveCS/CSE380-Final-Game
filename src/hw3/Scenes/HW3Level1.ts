@@ -57,7 +57,7 @@ export default class Level1 extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
 
     //Portal
-    public static readonly PORTAL_SPAWN = new Vec2(2300, 800);
+    public static readonly PORTAL_SPAWN = new Vec2(2300, 1177);
     public static readonly PORTAL_KEY = "PORTAL_KEY";
     public static readonly PORTAL_PATH = "game_assets/spritesheets/portal.json";
     protected portal: HW3AnimatedSprite;
@@ -111,8 +111,8 @@ export default class Level1 extends HW3Level {
         this.defaultSpawn = Level1.ENEMY_DEFAULT_SPAWN;
 
         // Set Portal sprite and spawn
-        this.portalSpriteKey = Hub.PORTAL_KEY;
-        this.portalSpawn = Hub.PORTAL_SPAWN;
+        this.portalSpriteKey = Level1.PORTAL_KEY;
+        this.portalSpawn = Level1.PORTAL_SPAWN;
 
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);

@@ -20,15 +20,15 @@ import Level5 from "./Level5";
  */
 export default class Level2 extends HW3Level {
 
-    public static readonly PLAYER_SPAWN = new Vec2(32, 32);
+    public static readonly PLAYER_SPAWN = new Vec2(32, 1350);
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
 
     public static readonly TILEMAP_KEY = "LEVEL2";
-    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Hub.json";
+    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Level2.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
     public static readonly PLATFORM_LAYER_KEY = "Platform";
-    public static readonly WALLS_LAYER_KEY = "Main";
+    public static readonly WALLS_LAYER_KEY = "Ground";
 
     public static readonly LEVEL_MUSIC_KEY = "LEVEL_MUSIC";
     public static readonly LEVEL_MUSIC_PATH = "game_assets/music/level2.wav";
@@ -57,7 +57,7 @@ export default class Level2 extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
 
     //Portal
-    public static readonly PORTAL_SPAWN = new Vec2(2300, 1210);
+    public static readonly PORTAL_SPAWN = new Vec2(2300, 1369);
     public static readonly PORTAL_KEY = "PORTAL_KEY";
     public static readonly PORTAL_PATH = "game_assets/spritesheets/portal.json";
     protected portal: HW3AnimatedSprite;
@@ -107,8 +107,8 @@ export default class Level2 extends HW3Level {
         this.defaultSpawn = Level2.ENEMY_DEFAULT_SPAWN
 
         // Set Portal sprite and spawn
-        this.portalSpriteKey = Hub.PORTAL_KEY;
-        this.portalSpawn = Hub.PORTAL_SPAWN;
+        this.portalSpriteKey = Level2.PORTAL_KEY;
+        this.portalSpawn = Level2.PORTAL_SPAWN;
 
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
@@ -156,7 +156,7 @@ export default class Level2 extends HW3Level {
     protected initializeEnemies() {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
-        this.initializeEnemy(this.placeholderSpriteKey, new Vec2(500, 1227), 10);
+        this.initializeEnemy(this.placeholderSpriteKey, new Vec2(500, 1408), 10);
     }
 
     protected handleCheat1(): void {

@@ -265,7 +265,6 @@ export default class Hub extends HW3Level {
                     yes.font = "Hjet-Regular";
                     yes.textColor = Color.BLACK;
                     yes.fontSize = 28;
-                    yes.onClickEventId = NPCEvents.ACCEPT_QUEST;
                     this.questUI.push(yes);
 
                     // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
@@ -294,7 +293,6 @@ export default class Hub extends HW3Level {
                     no.font = "Hjet-Regular";
                     no.textColor = Color.BLACK;
                     no.fontSize = 28;
-                    no.onClickEventId = NPCEvents.DECLINE_QUEST;
                     this.questUI.push(no);
 
                     // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
@@ -309,7 +307,7 @@ export default class Hub extends HW3Level {
                     noDummy.font = "Hjet-Regular";
                     noDummy.textColor = Color.BLACK;
                     noDummy.fontSize = 28;
-                    noDummy.onClickEventId = NPCEvents.ACCEPT_QUEST;
+                    noDummy.onClickEventId = NPCEvents.DECLINE_QUEST;
                     this.questUI.push(noDummy);
 
                     this.isDisplayingText = false; // don't draw

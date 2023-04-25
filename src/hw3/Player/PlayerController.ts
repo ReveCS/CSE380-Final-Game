@@ -85,7 +85,8 @@ export default class PlayerController extends StateMachineAI {
 
     protected isAttacking: Boolean;
     protected _enemyDamage: number;
-
+    protected invincible:boolean;
+    protected timer:number = 0;
     
     public initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>){
         this.owner = owner;
@@ -124,11 +125,15 @@ export default class PlayerController extends StateMachineAI {
     // Override
     handleEvent(event: GameEvent): void {
         if(this.active){
-            if (this.health > 0 && event.type === CombatEvents.ENEMY_ATTACK_PHYSICAL) {
-                this._enemyDamage = event.data.get("dmg");
-                this.changeState(PlayerStates.HURT);
+            if(!this.invincible){
+                
+                if (this.health > 0 && event.type === CombatEvents.ENEMY_ATTACK_PHYSICAL) {
+                    this._enemyDamage = event.data.get("dmg");
+                    this.changeState(PlayerStates.HURT);
+                }
+                else this.currentState.handleInput(event); 
+                this.invincible = true;
             }
-            else this.currentState.handleInput(event); 
         }
     }
 
@@ -193,6 +198,15 @@ export default class PlayerController extends StateMachineAI {
         if (Input.isPressed(HW3Controls.INVINCIBLE)) {
             this.emitter.fireEvent(HW3Events.INVINCIBLE);
         }
+        if(this.invincible){
+            this.timer += 1;
+        }
+        if(this.timer == 50){
+            this.invincible = false;
+            this.timer = 0;
+        }
+        console.log(this.health);
+       
 	}
 
     public get enemyDamage(): number { return this._enemyDamage; }
@@ -218,6 +232,8 @@ export default class PlayerController extends StateMachineAI {
         this._health = MathUtils.clamp(health, 0, this.maxHealth);
         // When the health changes, fire an event up to the scene.
         this.emitter.fireEvent(HW3Events.HEALTH_CHANGE, {curhp: this.health, maxhp: this.maxHealth});
+            
+        
         // If the health hit 0, change the state of the player
         if (this.health === 0) { 
             this.changeState(PlayerStates.DEAD);

@@ -656,14 +656,10 @@ export default abstract class HW3Level extends Scene {
         }
         let boss = this.add.animatedSprite(key, HW3Layers.PRIMARY);
         // Add the player to the scene
+        boss.addPhysics(new AABB(boss.position.clone(), boss.boundary.getHalfSize().clone()));
+        boss.collisionShape.halfSize.set(boss.collisionShape.halfSize.x-20,boss.collisionShape.halfSize.y-20);
         boss.scale.set(1, 1);
         boss.position.copy(spawn);
-        
-        
-        // Give the player physics
-        boss.addPhysics(new AABB(boss.position.clone()));
-        // boss.addPhysics(new AABB(boss.position.clone(), boss.boundary.getHalfSize().clone()),null,false);
-        // boss.collisionShape.halfSize.set(boss.collisionShape.halfSize.x,boss.collisionShape.halfSize.y);
         boss.setGroup(HW3PhysicsGroups.BOSS);
         
         boss.addAI(BossController, { player: this.player, radius: AggroRadius,spawn: spawn });
@@ -748,7 +744,6 @@ export default abstract class HW3Level extends Scene {
         
         
     // }
-
     /* Misc methods */
 
     // Get the key of the player's jump audio file

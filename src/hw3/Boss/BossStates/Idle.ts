@@ -24,10 +24,6 @@ export default class Idle extends BossState {
         if(Math.abs(this.sky.y-this.owner.position.y) <= 5){
             this.parent.velocity.y = 0;
             this.parent.velocity.x = 0;
-            this.owner.removePhysics();
-            this.owner.addPhysics(new AABB(this.owner.position.clone(), this.owner.boundary.getHalfSize().clone()),null, false);
-            this.owner.setGroup(HW3PhysicsGroups.BOSS);
-            this.owner.collisionShape.halfSize.set(this.owner.collisionShape.halfSize.x,this.owner.collisionShape.halfSize.y);
         }else{
             this.parent.velocity.y = dir.y * this.parent.speed; 
             this.parent.velocity.x = dir.x * this.parent.speed;

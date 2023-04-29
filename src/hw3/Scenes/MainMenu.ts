@@ -14,7 +14,8 @@ import Level1 from "./HW3Level1";
 import Level2 from "./HW3Level2";
 import Level3 from "./Level3";
 import Level4 from "./Level4";
-import Level5 from "./Level5"
+import Level5 from "./Level5";
+import Tutorial from "./Tutorial";
 
 // Layers for the main menu scene
 export const MenuLayers = {
@@ -33,6 +34,7 @@ const MainMenuEvent = {
 	ABOUT: "ABOUT",
     CREDIT: "CREDIT",
 	MENU: "MENU",
+    PLAY: "PLAY",
 } as const;
 
 export default class MainMenu extends Scene {
@@ -59,6 +61,7 @@ export default class MainMenu extends Scene {
     private level3Sprite: Sprite;
     private level4Sprite: Sprite;
     private bossSprite: Sprite;
+    private  playSprite: Sprite;
 
     
     // Music
@@ -148,19 +151,40 @@ export default class MainMenu extends Scene {
         title.font = "Hjet-Regular";  
         title.fontSize = 90;
 
-        // Add levels button, and give it an event to emit on press
-        const levels = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y + 250), text: "Levels"});
-        this.levelsSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
-        this.levelsSprite.position.copy(levels.position);
+        // Set flag for the tutorial
+        // Only show levels if tutorial is done, otherwise show play button => tutorial
+        if (sessionStorage.getItem("tutorialPlayed") === "true") {
+            // Add levels button, and give it an event to emit on press
+            const levels = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y + 250), text: "Levels"});
+            this.levelsSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
+            this.levelsSprite.position.copy(levels.position);
 
-        levels.size.set(this.levelsSprite.size.x, this.levelsSprite.size.y);
-        //levels.size.set(200, 50);
-        //levels.borderWidth = 2;
-        //levels.borderColor = Color.WHITE;
-        levels.borderColor = Color.TRANSPARENT;
-        levels.backgroundColor = Color.TRANSPARENT;
-        levels.onClickEventId = MainMenuEvent.SELECTION;
-        levels.font = "Hjet-Regular";
+            levels.size.set(this.levelsSprite.size.x, this.levelsSprite.size.y);
+            //levels.size.set(200, 50);
+            //levels.borderWidth = 2;
+            //levels.borderColor = Color.WHITE;
+            levels.borderColor = Color.TRANSPARENT;
+            levels.backgroundColor = Color.TRANSPARENT;
+            levels.onClickEventId = MainMenuEvent.SELECTION;
+            levels.font = "Hjet-Regular";
+        }
+        else {
+            // Add play button to send us to tutorial
+            const play = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, center.y + 250), text: "Play"});
+            this.playSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.MAIN);
+            this.playSprite.position.copy(play.position);
+
+            play.size.set(this.playSprite.size.x, this.playSprite.size.y);
+            //levels.size.set(200, 50);
+            //levels.borderWidth = 2;
+            //levels.borderColor = Color.WHITE;
+            play.borderColor = Color.TRANSPARENT;
+            play.backgroundColor = Color.TRANSPARENT;
+            play.font = "Hjet-Regular";
+            play.onClick = () => {
+                this.sceneManager.changeToScene(Tutorial);
+            }
+        }
 
         // Add controls button
         const controls = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.MAIN, {position: new Vec2(center.x, 750), text: "Controls"});
@@ -438,6 +462,9 @@ export default class MainMenu extends Scene {
                 this.controls.setHidden(true);
                 this.about.setHidden(true);
                 this.credit.setHidden(true);
+                break;
+            }
+            case MainMenuEvent.PLAY: {
                 break;
             }
             default: {

@@ -157,6 +157,8 @@ export default class Tutorial extends HW3Level {
     public unloadScene(): void {
         // // TODO decide which resources to keep/cull 
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
+        // set tutorial flag to true
+        sessionStorage.setItem("tutorialPlayed", "true");
     }
 
     public startScene(): void {

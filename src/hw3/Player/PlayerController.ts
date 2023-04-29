@@ -166,7 +166,7 @@ export default class PlayerController extends StateMachineAI {
         }
         // if (Input.isPressed(HW3Controls.ATTACK)) this.changeState(PlayerStates.COMBAT);
         
-        if (Input.isPressed(HW3Controls.INVENTORY)) {
+        if (Input.isJustPressed(HW3Controls.INVENTORY)) {
             console.log("visible");
             this.emitter.fireEvent(HW3Events.INVENTORY);
         }

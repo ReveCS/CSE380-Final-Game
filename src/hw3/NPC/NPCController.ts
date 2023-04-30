@@ -71,15 +71,15 @@ export default class NPCController extends ControllerAI {
             this.handleEvent(this.receiver.getNextEvent());
         }
 
-        // if we're waiting to give a quest
-        if (this.isWaiting) {
-            let playerWantsToTalk = Input.isJustPressed(HW3Controls.INTERACT);
-            let playerNear = this.player.boundary.containsPoint(this.owner.position);
+        let playerWantsToTalk = Input.isJustPressed(HW3Controls.INTERACT);
+        let playerNear = this.player.boundary.containsPoint(this.owner.position);
 
-            if (playerWantsToTalk && playerNear) {
-                console.log("Talking to NPC.")
+        if (playerWantsToTalk && playerNear && this.isWaiting) {
+            if (this.quests.length === 0) {
+                this.emitter.fireEvent(NPCEvents.SMALL_TALK, {pos: this.owner.position});
+            }
+            else {
                 this.isWaiting = false;
-                if (this.quests.length === 0) throw new Error("NPC ran out of quests!");
                 let currentQuest = this.quests[this.quests.length - 1];
                 this.emitter.fireEvent(NPCEvents.TALKING_TO_NPC, {id: currentQuest});
             }

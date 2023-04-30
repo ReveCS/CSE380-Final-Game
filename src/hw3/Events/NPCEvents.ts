@@ -19,5 +19,12 @@ export const NPCEvents = {
     */
     ACCEPT_QUEST: "ACCEPT_QUEST",
     DECLINE_QUEST: "DECLINE_QUEST",
+
+    /*
+     * The event sent when NPC is out of quets and player tries to talk
+     *
+     * Has data: { pos: Vec2 } pos is position of NPC
+    */
+    SMALL_TALK: "SMALL_TALK",
     
 } as const;

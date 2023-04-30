@@ -5,6 +5,13 @@ import HW3Level from "./HW3Level";
 import RenderingManager from "../../Wolfie2D/Rendering/RenderingManager";
 import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
+import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import { HW3Layers } from "./HW3Level";
+import Color from "../../Wolfie2D/Utils/Color";
+import Timer from "../../Wolfie2D/Timing/Timer";
+
+import { NPCPhrases } from "../Text/NPCPhrases";
 
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import Hub from "./Hub";
@@ -59,6 +66,14 @@ export default class Tutorial extends HW3Level {
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
 
+    // NPC Sprites
+    public static readonly NPC_SPAWN = new Vec2(1500, 1243);
+    public static readonly NPC_SPRITE_KEY = "NPC_KEY";
+    public static readonly NPC_SPRITE_PATH = "game_assets/spritesheets/NPC_1.json";
+    protected NPC: HW3AnimatedSprite
+    protected NPCSpriteKey: string;
+    protected NPCSpawn: Vec2;
+
     //Portal
     public static readonly PORTAL_SPAWN = new Vec2(2300, 1177);
     public static readonly PORTAL_KEY = "PORTAL_KEY";
@@ -78,6 +93,15 @@ export default class Tutorial extends HW3Level {
     public static readonly SWORD_SPRITE_KEY = "DEMON_SPRITE_KEY";
     public static readonly SWORD_SPRITE_PATH = "game_assets/spritesheets/flying_sword.json";
     protected swordSpriteKey: string;
+
+    // Tutorial text
+    private isActiveText: Array<boolean>;
+    private talkTimer: Timer;
+    private talkBuffer: Array<Label>;
+
+    // NPC talk
+    private isDisplayingText: Boolean;
+    private talkPosition: Vec2;
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
@@ -115,6 +139,18 @@ export default class Tutorial extends HW3Level {
         this.swordSpriteKey = Tutorial.SWORD_SPRITE_KEY;
         this.defaultSpawn = Tutorial.ENEMY_DEFAULT_SPAWN;
 
+        // Set NPC sprites and spawns
+        this.NPCSpriteKey = Tutorial.NPC_SPRITE_KEY;
+        this.NPCSpawn = Tutorial.NPC_SPAWN
+
+        // Tutorial text
+        this.isActiveText = [false];
+
+        // NPC text
+        this.isDisplayingText = false;
+        this.talkTimer = new Timer(1000);
+        this.talkBuffer = [];
+
         // Set Portal sprite and spawn
         this.portalSpriteKey = Tutorial.PORTAL_KEY;
         this.portalSpawn = Tutorial.PORTAL_SPAWN;
@@ -149,6 +185,9 @@ export default class Tutorial extends HW3Level {
         this.load.spritesheet(this.goblinSpriteKey, Tutorial.GOBLIN_SPRITE_PATH);
         this.load.spritesheet(this.swordSpriteKey, Tutorial.SWORD_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey,Tutorial.PORTAL_PATH);
+        // Load in NPC sprites
+        this.load.spritesheet(this.NPCSpriteKey, Tutorial.NPC_SPRITE_PATH);
+        this.load.spritesheet(this.portalSpriteKey, Tutorial.PORTAL_PATH);
     }
 
     /**
@@ -166,21 +205,79 @@ export default class Tutorial extends HW3Level {
         // Set the next level to be Level2
         this.nextLevel = Hub;
 
-        this.initializeEnemies();
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(1000, 1243), 10);
+        this.initializeNPC(this.NPC,this.NPCSpriteKey, this.NPCSpawn, []);
         this.portalInitialize();
     }
 
-    protected initializeEnemies() {
-        // initialize placeholder
-        // can use this.defaultSpawn or define your own spawn
-        this.initializeEnemy(this.goblinSpriteKey, new Vec2(500, 1216), 10);
-        this.initializeEnemy(this.goblinSpriteKey, new Vec2(600, 1216), 10);
-        this.initializeEnemy(this.goblinSpriteKey, new Vec2(700, 1216), 10);
+    public updateScene(deltaT: number) {
+        super.updateScene(deltaT);
+        this.updatePrompt();
+        if (this.isDisplayingText && this.talkTimer.isStopped()) {
+            if (this.talkTimer.hasRun()) this.clearTalk();
+            else this.displayTalk();
+        }
+    }
 
-        this.initializeEnemy(this.swordSpriteKey, new Vec2(800, 1216), 10);
-        this.initializeEnemy(this.swordSpriteKey, new Vec2(900, 1216), 10);
-        this.initializeEnemy(this.swordSpriteKey, new Vec2(1000, 1216), 10);
+    private updatePrompt(): void {
+        let promptY:number = 1350;
+        let x1 = 450;
+        let x2 = 750;
+        let x3 = 1050;
 
+        if (!this.isActiveText[0]) {
+            let prompt:string = "AD to move left and right."
+            this.addPrompt(150, promptY, prompt);
+        }
+        else if (!this.isActiveText[1] && this.playerNearX(x1)) {
+            let prompt:string = "W or space to jump"
+            this.addPrompt(x1, promptY, prompt);
+        }
+        else if (!this.isActiveText[2] && this.playerNearX(x2)) {
+            let prompt:string = "J to attack."
+            this.addPrompt(x2, promptY, prompt);
+        }
+        else if (!this.isActiveText[3] && this.playerNearX(x3)) {
+            let prompt:string = "E to interact."
+            this.addPrompt(x3, promptY, prompt);
+        }
+    }
+    private addPrompt(x:number, y:number, prompt:string):void {
+        const label = <Label> this.add.uiElement(UIElementType.LABEL, HW3Layers.PRIMARY, {
+            position: new Vec2(x,y),
+            text: prompt
+        });
+        label.font = "Hjet-Regular";
+        label.fontSize = 28;
+        label.textColor = Color.WHITE;
+        this.isActiveText[this.isActiveText.length - 1] = true;
+        this.isActiveText.push(false);
+    }
+
+    // handle NPCEvents.SMALL_TALK
+    protected handleSmallTalkNPC(position: Vec2): void {
+        this.talkPosition = position;
+        this.isDisplayingText = true;
+    }
+    protected displayTalk(): void {
+        let key = Math.floor(Math.random() * Object.keys(NPCPhrases).length);
+        let phrase = NPCPhrases[key];
+        const label = <Label> this.add.uiElement(UIElementType.LABEL, HW3Layers.PRIMARY, {
+            position: this.talkPosition.clone().inc(0, -60),
+            text: phrase
+        });
+        label.font = "Hjet-Regular";
+        label.fontSize = 28;
+        this.talkBuffer.push(label);
+
+        this.talkTimer.start();
+    }
+    protected clearTalk(): void {
+        while (this.talkBuffer.length > 0) {
+            this.talkBuffer.pop().destroy();
+        }
+        this.talkTimer.reset();
+        this.isDisplayingText = false;
     }
 
     protected handleCheat1(): void {
@@ -202,6 +299,11 @@ export default class Tutorial extends HW3Level {
     protected portalInitialize(){
         this.portal = this.initializePortal(this.portalSpriteKey,this.portalSpawn)
         this.portal.animation.play(PortalAnimation.IDLE);
+    }
+
+    private playerNearX(x: number):boolean {
+        let pos = this.player.position;
+        return pos.distanceSqTo(new Vec2(x, pos.y)) < 4;
     }
 
     /**

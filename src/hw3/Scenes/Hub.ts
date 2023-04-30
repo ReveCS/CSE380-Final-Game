@@ -7,10 +7,10 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import RenderingManager from "../../Wolfie2D/Rendering/RenderingManager";
 import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 
-import NPCController from "../NPC/NPCController";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import {HW3Layers} from "./HW3Level";
 import { NPCEvents } from "../Events/NPCEvents";
+import { NPCPhrases } from "../Text/NPCPhrases";
 
 // imports for quest displaying
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
@@ -125,11 +125,15 @@ export default class Hub extends HW3Level {
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
     // Variables
-    private isDisplayingText: Boolean;
+    private isDisplayingQuestText: Boolean;
+    private isDisplayingTalkText:  Boolean;
     private displayTimer: Timer;
+    private talkTimer: Timer;
     private textBuffer: Array<string>;
     private questUI: Array<UIElement>;
+    private talkBuffer: Array<Label>;
     private textPosition: Vec2;
+    private talkPosition: Vec2;
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
         super(viewport, sceneManager, renderingManager, options);
@@ -166,16 +170,16 @@ export default class Hub extends HW3Level {
 
         // Set NPC sprites and spawns
         this.NPC_1_SpriteKey = Hub.NPC_1_SPRITE_KEY;
-        this.NPC_1_Spawn = Hub.NPC_1_SPAWN
+        this.NPC_1_Spawn = Hub.NPC_1_SPAWN;
 
         this.NPC_2_SpriteKey = Hub.NPC_2_SPRITE_KEY;
-        this.NPC_2_Spawn = Hub.NPC_2_SPAWN
+        this.NPC_2_Spawn = Hub.NPC_2_SPAWN;
 
         this.NPC_3_SpriteKey = Hub.NPC_3_SPRITE_KEY;
-        this.NPC_3_Spawn = Hub.NPC_3_SPAWN
+        this.NPC_3_Spawn = Hub.NPC_3_SPAWN;
 
         this.NPC_4_SpriteKey = Hub.NPC_4_SPRITE_KEY;
-        this.NPC_4_Spawn = Hub.NPC_4_SPAWN
+        this.NPC_4_Spawn = Hub.NPC_4_SPAWN;
 
         //this.NPC_Shop_SpriteKey = Hub.NPC_Shop_SPRITE_KEY;
         //this.NPC_Shop_Spawn = Hub.NPC_Shop_SPAWN;
@@ -185,10 +189,13 @@ export default class Hub extends HW3Level {
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
 
         // Set variables for displaying text
-        this.isDisplayingText = false;
+        this.isDisplayingQuestText = false;
+        this.isDisplayingTalkText = false;
         this.displayTimer = new Timer(500);
+        this.talkTimer = new Timer(1000);
         this.textBuffer = [];
         this.questUI = [];
+        this.talkBuffer = [];
     }
     /**
      * Load in resources for level 4.
@@ -235,84 +242,89 @@ export default class Hub extends HW3Level {
 
     public updateScene(deltaT: number) {
         super.updateScene(deltaT);
+        if (this.isDisplayingQuestText) this.displayQuestUI();
+        if (this.isDisplayingTalkText && this.talkTimer.isStopped()) {
+            if (this.talkTimer.hasRun()) this.clearTalk();
+            else this.displayTalk();
+        }
+    }
 
-        if (this.isDisplayingText) {
-            // display each sentence of the quest in a regular interval
-            if (this.displayTimer.isStopped()) {
-                // display text until buffer is empty
-                if (this.textBuffer.length > 0) {
-                    const label = <Label> this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {
-                        position: this.textPosition.clone(),
-                        text: this.textBuffer.pop()
-                    });
-                    label.font = "Hjet-Regular";
-                    label.fontSize = 28;
-                    this.questUI.push(label);
-                    this.displayTimer.reset();
-                    this.displayTimer.start(250);
-                    this.textPosition.inc(0, 30);
-                }
-                else { // when buffer is empty
-                    // Draw accept/decline buttons
-                    const yes = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
-                        position: new Vec2(450, 350),
-                        text: "Accept"
-                    });
-                    yes.size.set(140, 40);
-                    yes.borderWidth = 4;
-                    yes.borderColor = new Color(118, 91, 53);
-                    yes.backgroundColor = Color.TRANSPARENT;
-                    yes.font = "Hjet-Regular";
-                    yes.textColor = Color.BLACK;
-                    yes.fontSize = 28;
-                    this.questUI.push(yes);
+    protected displayQuestUI(): void {
+        // display each sentence of the quest in a regular interval
+        if (this.displayTimer.isStopped()) {
+            // display text until buffer is empty
+            if (this.textBuffer.length > 0) {
+                const label = <Label> this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {
+                    position: this.textPosition.clone(),
+                    text: this.textBuffer.pop()
+                });
+                label.font = "Hjet-Regular";
+                label.fontSize = 28;
+                this.questUI.push(label);
+                this.displayTimer.reset();
+                this.displayTimer.start(250);
+                this.textPosition.inc(0, 30);
+            }
+            else { // when buffer is empty
+                // Draw accept/decline buttons
+                const yes = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+                    position: new Vec2(450, 350),
+                    text: "Accept"
+                });
+                yes.size.set(140, 40);
+                yes.borderWidth = 4;
+                yes.borderColor = new Color(118, 91, 53);
+                yes.backgroundColor = Color.TRANSPARENT;
+                yes.font = "Hjet-Regular";
+                yes.textColor = Color.BLACK;
+                yes.fontSize = 28;
+                this.questUI.push(yes);
 
-                    // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
-                    const yesDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
-                        position: new Vec2(900, 700),
-                        text: "Accept"
-                    });
-                    yesDummy.size.set(140, 40);
-                    yesDummy.borderWidth = 4;
-                    yesDummy.borderColor = new Color(118, 91, 53);
-                    yesDummy.backgroundColor = Color.TRANSPARENT;
-                    yesDummy.font = "Hjet-Regular";
-                    yesDummy.textColor = Color.BLACK;
-                    yesDummy.fontSize = 28;
-                    yesDummy.onClickEventId = NPCEvents.ACCEPT_QUEST;
-                    this.questUI.push(yesDummy);
+                // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
+                const yesDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+                    position: new Vec2(900, 700),
+                    text: "Accept"
+                });
+                yesDummy.size.set(140, 40);
+                yesDummy.borderWidth = 4;
+                yesDummy.borderColor = new Color(118, 91, 53);
+                yesDummy.backgroundColor = Color.TRANSPARENT;
+                yesDummy.font = "Hjet-Regular";
+                yesDummy.textColor = Color.BLACK;
+                yesDummy.fontSize = 28;
+                yesDummy.onClickEventId = NPCEvents.ACCEPT_QUEST;
+                this.questUI.push(yesDummy);
 
-                    const no = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
-                        position: new Vec2(530, 350),
-                        text: "Decline"
-                    });
-                    no.size.set(140, 40);
-                    no.borderWidth = 4;
-                    no.borderColor = new Color(118, 91, 53);
-                    no.backgroundColor = Color.TRANSPARENT;
-                    no.font = "Hjet-Regular";
-                    no.textColor = Color.BLACK;
-                    no.fontSize = 28;
-                    this.questUI.push(no);
+                const no = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+                    position: new Vec2(530, 350),
+                    text: "Decline"
+                });
+                no.size.set(140, 40);
+                no.borderWidth = 4;
+                no.borderColor = new Color(118, 91, 53);
+                no.backgroundColor = Color.TRANSPARENT;
+                no.font = "Hjet-Regular";
+                no.textColor = Color.BLACK;
+                no.fontSize = 28;
+                this.questUI.push(no);
 
-                    // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
-                    const noDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
-                        position: new Vec2(1060, 700),
-                        text: "Accept"
-                    });
-                    noDummy.size.set(140, 40);
-                    noDummy.borderWidth = 4;
-                    noDummy.borderColor = new Color(118, 91, 53);
-                    noDummy.backgroundColor = Color.TRANSPARENT;
-                    noDummy.font = "Hjet-Regular";
-                    noDummy.textColor = Color.BLACK;
-                    noDummy.fontSize = 28;
-                    noDummy.onClickEventId = NPCEvents.DECLINE_QUEST;
-                    this.questUI.push(noDummy);
+                // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
+                const noDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+                    position: new Vec2(1060, 700),
+                    text: "Accept"
+                });
+                noDummy.size.set(140, 40);
+                noDummy.borderWidth = 4;
+                noDummy.borderColor = new Color(118, 91, 53);
+                noDummy.backgroundColor = Color.TRANSPARENT;
+                noDummy.font = "Hjet-Regular";
+                noDummy.textColor = Color.BLACK;
+                noDummy.fontSize = 28;
+                noDummy.onClickEventId = NPCEvents.DECLINE_QUEST;
+                this.questUI.push(noDummy);
 
-                    this.isDisplayingText = false; // don't draw
-                    // this.emitter.fireEvent(NPCEvents.DONE_TALKING_TO_NPC);
-                }
+                this.isDisplayingQuestText = false; // don't draw
+                // this.emitter.fireEvent(NPCEvents.DONE_TALKING_TO_NPC);
             }
         }
     }
@@ -324,7 +336,7 @@ export default class Hub extends HW3Level {
         this.QuestSprite.visible = false;
     }
 
-    // handle HW3Events.TALKING_TO_NPC
+    // handle NPCEvents.TALKING_TO_NPC
     protected handleTalkingNPC(id: string): void {
         // split the string into individual sentences.
         let re = /.*?[\.?!]/g;
@@ -354,20 +366,46 @@ export default class Hub extends HW3Level {
         this.textBuffer.push(text); // add for last iteration
 
         this.textBuffer = this.textBuffer.reverse(); // cause pop again
-        this.isDisplayingText = true;
+        this.isDisplayingQuestText = true;
         this.displayTimer.start();
         this.QuestSprite.visible = true;
         this.textPosition = new Vec2(492, 50);
     }
 
+    // handle NPCEvents.SMALL_TALK
+    protected handleSmallTalkNPC(position: Vec2): void {
+        this.talkPosition = position;
+        this.isDisplayingTalkText = true;
+    }
+    protected displayTalk(): void {
+        let key = Math.floor(Math.random() * Object.keys(NPCPhrases).length);
+        let phrase = NPCPhrases[key];
+        const label = <Label> this.add.uiElement(UIElementType.LABEL, HW3Layers.PRIMARY, {
+            position: this.talkPosition.clone().inc(0, -60),
+            text: phrase
+        });
+        label.font = "Hjet-Regular";
+        label.fontSize = 28;
+        this.talkBuffer.push(label);
+
+        this.talkTimer.start();
+    }
+    protected clearTalk(): void {
+        while (this.talkBuffer.length > 0) {
+            this.talkBuffer.pop().destroy();
+        }
+        this.talkTimer.reset();
+        this.isDisplayingTalkText = false;
+    }
+
     // Quests should be in order from last -> first
-    // ex: ["A", "B", "C"] will give out quests in order C -> B -> A
+    // ex: ["A", "B", "C"] will give out quests in order 3 -> 2 -> 1
     protected initializeNPCs() {
         // initialize placeholder
-        let placeholderQuests = ["A"]
+        let placeholderQuests = ["1"];
         this.initializeNPC(this.NPC_1,this.NPC_1_SpriteKey, this.NPC_1_Spawn, placeholderQuests);
         
-        this.initializeNPC(this.NPC_2,this.NPC_2_SpriteKey, this.NPC_2_Spawn, placeholderQuests);
+        this.initializeNPC(this.NPC_2,this.NPC_2_SpriteKey, this.NPC_2_Spawn, []);
         
         this.initializeNPC(this.NPC_3,this.NPC_3_SpriteKey, this.NPC_3_Spawn, placeholderQuests);
        
@@ -375,22 +413,6 @@ export default class Hub extends HW3Level {
         
         //this.initializeNPC(this.NPC_Shop, this.NPC_Shop_SpriteKey, this.NPC_Shop_Spawn, placeholderQuests);
 
-    }
-
-    protected initializeNPC(npc:HW3AnimatedSprite, key:string, spawn:Vec2, quests:Array<string>): void {
-        if (spawn === undefined) {
-            throw new Error("NPC spawn must be set before initializing!");
-        }
-
-        // Add the NPC to the scene
-        npc = this.add.animatedSprite(key, HW3Layers.PRIMARY);
-        npc.scale.set(1/2, 1/2);
-        npc.position.copy(spawn);
-        npc.disablePhysics();
-
-        // Give the NPC it's AI
-        npc.addAI(NPCController, {player: this.player, quests: quests});
-        
     }
 
     protected handleCheat1(): void {

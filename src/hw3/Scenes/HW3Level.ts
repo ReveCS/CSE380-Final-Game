@@ -19,6 +19,7 @@ import Color from "../../Wolfie2D/Utils/Color";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import PlayerController, { PlayerTweens } from "../Player/PlayerController";
 import PlayerWeapon from "../Player/PlayerWeapon";
+import NPCController from "../NPC/NPCController";
 
 import { HW3Events } from "../Events/HW3Events";
 import { HW3PhysicsGroups } from "../HW3PhysicsGroups";
@@ -319,6 +320,10 @@ export default abstract class HW3Level extends Scene {
                 this.clearQuestUI();
                 break;
             }
+            case NPCEvents.SMALL_TALK: {
+                this.handleSmallTalkNPC(event.data.get("pos"));
+                break;
+            }
             // Default: Throw an error! No unhandled events allowed.
             default: {
                 throw new Error(`Unhandled event caught in scene with type ${event.type}`)
@@ -488,6 +493,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(NPCEvents.TALKING_TO_NPC);
         this.receiver.subscribe(NPCEvents.ACCEPT_QUEST);
         this.receiver.subscribe(NPCEvents.DECLINE_QUEST);
+        this.receiver.subscribe(NPCEvents.SMALL_TALK);
     }
     /**
      * Adds in any necessary UI to the game
@@ -700,6 +706,23 @@ export default abstract class HW3Level extends Scene {
         //     tilemap: "Destructable" 
         // });
     }
+
+    protected initializeNPC(npc:HW3AnimatedSprite, key:string, spawn:Vec2, quests:Array<string>): void {
+        if (spawn === undefined) {
+            throw new Error("NPC spawn must be set before initializing!");
+        }
+
+        // Add the NPC to the scene
+        npc = this.add.animatedSprite(key, HW3Layers.PRIMARY);
+        npc.scale.set(1/2, 1/2);
+        npc.position.copy(spawn);
+        npc.disablePhysics();
+
+        // Give the NPC it's AI
+        npc.addAI(NPCController, {player: this.player, quests: quests});
+        
+    }
+
     protected initializeEnemy(key:string, spawn:Vec2, AggroRadius:number): HW3AnimatedSprite {
         if (spawn === undefined) {
             throw new Error("Enemy spawn must be set before initializing!");
@@ -799,5 +822,8 @@ export default abstract class HW3Level extends Scene {
     }
     protected clearQuestUI(): void {
         throw new Error("clearQuestUI wasn't implemented in Hub.ts");
+    }
+    protected handleSmallTalkNPC(position: Vec2): void {
+        throw new Error("handleSmallTalkNPC wasn't implemented");
     }
 }

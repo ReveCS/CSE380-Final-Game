@@ -1,6 +1,6 @@
 /**
- * A set of strings of what an NPC should say
+ * A set of strings of NPC quests
  */
 export const Quests: { [id: string]: string } = {
-    A: `The lands of Atnis have been plagued with theiving Goblins. Bring me back 10 Goblin skulls.`,
+    1: `The lands of Atnis have been plagued with theiving Goblins. Bring me back 10 Goblin skulls.`,
 } as const;

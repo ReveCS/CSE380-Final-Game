@@ -9,12 +9,17 @@
     "redirects": [
       {
         "source": "./benchmark1",
-        "destination": "./benchmark1/index.html",
+        "destination": "./index.html",
         "type": 301
       },
       {
         "source": "./benchmark2",
-        "destination": "./benchmark2/index.html",
+        "destination": "./index.html",
+        "type": 301
+      },
+      {
+        "source": "./benchmark3",
+        "destination": "./index.html",
         "type": 301
       }
     ]

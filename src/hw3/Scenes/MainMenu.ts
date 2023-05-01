@@ -52,6 +52,12 @@ export default class MainMenu extends Scene {
     private backgroundSprite: Sprite;
     private backgroundSprite2: Sprite;
     private levelsSprite: Sprite;
+    private hubLevelSprite: Sprite;
+    private level1LevelSprite: Sprite;
+    private level2LevelSprite: Sprite;
+    private level3LevelSprite: Sprite;
+    private level4LevelSprite: Sprite;
+    private level5LevelSprite: Sprite;
     private controlsSprite: Sprite;
     private aboutSprite: Sprite;
     private creditSprite: Sprite;
@@ -78,6 +84,8 @@ export default class MainMenu extends Scene {
     public static BACKGROUND1_PATH = "game_assets/backgrounds/Last Delivery Background Still.png";
     public static BACKGROUND2_KEY = "BACKGROUND2";
     public static BACKGROUND2_PATH = "game_assets/backgrounds/Last Delivery Background Still2.png";
+    public static BACKGROUND3_KEY = "BACKGROUND3";
+    public static BACKGROUND3_PATH = "game_assets/backgrounds/Last Delivery Background Still3.png";
 
     // The key and path to the sprites
     public static BUTTON_KEY = "LEVELS";
@@ -90,6 +98,18 @@ export default class MainMenu extends Scene {
     public static CREDIT_PATH = "game_assets/sprites/Button_cropped.png"
     public static HUB_KEY = "LEVELS";
     public static HUB_PATH = "game_assets/sprites/Button_cropped.png"
+    public static HUB_LEVEL_KEY = "HUB";
+    public static HUB_LEVEL_PATH = "game_assets/sprites/Hub Level.png";
+    public static LEVEL1_LEVEL_KEY = "LEVEL1";
+    public static LEVEL1_LEVEL_PATH = "game_assets/sprites/Level1.png";
+    public static LEVEL2_LEVEL_KEY = "LEVEL2";
+    public static LEVEL2_LEVEL_PATH = "game_assets/sprites/Level2.png";
+    public static LEVEL3_LEVEL_KEY = "LEVEL3";
+    public static LEVEL3_LEVEL_PATH = "game_assets/sprites/Level3.png";
+    public static LEVEL4_LEVEL_KEY = "LEVEL4";
+    public static LEVEL4_LEVEL_PATH = "game_assets/sprites/Level1.png";
+    public static LEVEL5_LEVEL_KEY = "LEVEL5";
+    public static LEVEL5_LEVEL_PATH = "game_assets/sprites/Level5.png";
 
 
     public loadScene(): void {
@@ -102,7 +122,14 @@ export default class MainMenu extends Scene {
 		//this.load.tilemap(MainMenu.BACKGROUND_KEY, MainMenu.BACKGROUND_PATH);
         this.load.image(MainMenu.BACKGROUND1_KEY, MainMenu.BACKGROUND1_PATH);
         this.load.image(MainMenu.BACKGROUND2_KEY, MainMenu.BACKGROUND2_PATH);
+        this.load.image(MainMenu.BACKGROUND3_KEY, MainMenu.BACKGROUND3_PATH);
         this.load.image(MainMenu.BUTTON_KEY, MainMenu.BUTTON_PATH);
+        this.load.image(MainMenu.HUB_LEVEL_KEY, MainMenu.HUB_LEVEL_PATH);
+        this.load.image(MainMenu.LEVEL1_LEVEL_KEY, MainMenu.LEVEL1_LEVEL_PATH);
+        this.load.image(MainMenu.LEVEL2_LEVEL_KEY, MainMenu.LEVEL2_LEVEL_PATH);
+        this.load.image(MainMenu.LEVEL3_LEVEL_KEY, MainMenu.LEVEL3_LEVEL_PATH);
+        this.load.image(MainMenu.LEVEL4_LEVEL_KEY, MainMenu.LEVEL4_LEVEL_PATH);
+        this.load.image(MainMenu.LEVEL5_LEVEL_KEY, MainMenu.LEVEL5_LEVEL_PATH);
     }
 
     public startScene(): void {
@@ -137,7 +164,7 @@ export default class MainMenu extends Scene {
         //this.bg.position.copy(new Vec2(center.x, center.y)); 
         this.backgroundSprite = this.add.sprite(MainMenu.BACKGROUND1_KEY, MenuLayers.MAIN);
         this.backgroundSprite.position.copy(new Vec2(center.x, center.y));
-        this.backgroundSprite2 = this.add.sprite(MainMenu.BACKGROUND2_KEY, MenuLayers.SELECTION);
+        this.backgroundSprite2 = this.add.sprite(MainMenu.BACKGROUND3_KEY, MenuLayers.SELECTION);
         this.backgroundSprite2.position.copy(new Vec2(center.x, center.y));
         this.backgroundSprite2 = this.add.sprite(MainMenu.BACKGROUND2_KEY, MenuLayers.CONTROLS);
         this.backgroundSprite2.position.copy(new Vec2(center.x, center.y));
@@ -224,9 +251,9 @@ export default class MainMenu extends Scene {
         credit.font = "Hjet-Regular";
 
         // Selection screen
-        const hub = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y), text: "Hub"});
+        const hub = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 23), text: "Hub"});
         this.hubSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
-        this.hubSprite.position.copy(hub.position);
+        this.hubSprite.position.copy(hub.position)
 
         hub.size.set(200, 50);
         hub.borderColor = Color.TRANSPARENT;
@@ -236,9 +263,15 @@ export default class MainMenu extends Scene {
             this.sceneManager.changeToScene(Hub);
         }
 
-        const level1 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 200, center.y - 200), text: "Level 1"});
+        this.hubLevelSprite = this.add.sprite(MainMenu.HUB_LEVEL_KEY, MenuLayers.SELECTION);
+        this.hubLevelSprite.position.copy(new Vec2(center.x - 12, center.y - 95));
+
+        const level1 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 200, center.y - 185), text: "Level 1"});
         this.level1Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
         this.level1Sprite.position.copy(level1.position);
+
+        this.level1LevelSprite = this.add.sprite(MainMenu.LEVEL1_LEVEL_KEY, MenuLayers.SELECTION);
+        this.level1LevelSprite.position.copy(new Vec2(center.x - 200, center.y - 323)); 
         
         level1.size.set(200, 50);
         level1.borderColor = Color.TRANSPARENT;
@@ -248,9 +281,12 @@ export default class MainMenu extends Scene {
            this.sceneManager.changeToScene(Level1);
         }
 
-        const level2 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 200, center.y - 200), text: "Level 2"});
+        const level2 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 200, center.y - 185), text: "Level 2"});
         this.level2Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
         this.level2Sprite.position.copy(level2.position);
+
+        this.level2LevelSprite = this.add.sprite(MainMenu.LEVEL2_LEVEL_KEY, MenuLayers.SELECTION);
+        this.level2LevelSprite.position.copy(new Vec2(center.x + 200, center.y - 320));
         
         level2.size.set(200, 50);
         level2.borderColor = Color.TRANSPARENT;
@@ -260,9 +296,12 @@ export default class MainMenu extends Scene {
             this.sceneManager.changeToScene(Level2);
         }
         
-        const level3 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 300, center.y + 200), text: "Level 3"});
+        const level3 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 300, center.y + 250), text: "Level 3"});
         this.level3Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
         this.level3Sprite.position.copy(level3.position);
+
+        this.level3LevelSprite = this.add.sprite(MainMenu.LEVEL3_LEVEL_KEY, MenuLayers.SELECTION);
+        this.level3LevelSprite.position.copy(new Vec2(center.x - 300, center.y + 120));
         
         level3.size.set(200, 50);
         level3.borderColor = Color.TRANSPARENT;
@@ -272,7 +311,7 @@ export default class MainMenu extends Scene {
             this.sceneManager.changeToScene(Level3);
         }
 
-        const level4 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 200), text: "Level 4"});
+        const level4 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 250), text: "Level 4"});
         this.level4Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
         this.level4Sprite.position.copy(level4.position);
         
@@ -284,21 +323,23 @@ export default class MainMenu extends Scene {
             this.sceneManager.changeToScene(Level4);
         }
 
-        const boss = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 300, center.y + 200), text: "Level 5"});
+        const boss = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x + 300, center.y + 250), text: "Level 5"});
         this.bossSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
         this.bossSprite.position.copy(boss.position);
-        
+
+        this.level5LevelSprite = this.add.sprite(MainMenu.LEVEL5_LEVEL_KEY, MenuLayers.SELECTION);
+        this.level5LevelSprite.position.copy(new Vec2(center.x + 300, center.y + 125));
         
         boss.size.set(200, 50);
         boss.borderWidth = 2;
-        boss.borderColor = Color.WHITE;
+        boss.borderColor = Color.TRANSPARENT;
         boss.backgroundColor = Color.TRANSPARENT;
         boss.font = "Hjet-Regular";
         boss.onClick = () => {
            this.sceneManager.changeToScene(Level5)
         }
 
-        const selectionBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 475, center.y + 300), text: "Back"});
+        const selectionBack = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 475, center.y + 350), text: "Back"});
         selectionBack.size.set(200, 50);
         selectionBack.borderWidth = 2;
         selectionBack.borderColor = Color.WHITE;

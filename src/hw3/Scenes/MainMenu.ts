@@ -93,6 +93,7 @@ export default class MainMenu extends Scene {
 
 
     public loadScene(): void {
+        super.loadScene();
         // Load the menu song
         // this.load.audio(MainMenu.MUSIC_KEY, MainMenu.MUSIC_PATH);
 
@@ -424,6 +425,7 @@ export default class MainMenu extends Scene {
     }
 
     public unloadScene(): void {
+        super.unloadScene();
         // The scene is being destroyed, so we can stop playing the song
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: MainMenu.MUSIC_KEY});
     }

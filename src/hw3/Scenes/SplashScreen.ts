@@ -46,6 +46,7 @@ export default class SplashScreen extends Scene {
     public static LOGO_PATH = "game_assets/sprites/Logo.png";
 	
     public loadScene(): void {
+        super.loadScene();
         // Load the menu song
         //this.load.audio(SplashScreen.MUSIC_KEY, SplashScreen.MUSIC_PATH);
 
@@ -84,6 +85,7 @@ export default class SplashScreen extends Scene {
     }
 
     public unloadScene(): void {
+        super.unloadScene();
         // The scene is being destroyed, so we can stop playing the song
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: SplashScreen.MUSIC_KEY});
     }

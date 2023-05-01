@@ -130,6 +130,7 @@ export default class Level4 extends HW3Level {
      * Load in our resources for level 3
      */
     public loadScene(): void {
+        super.loadScene();
         // Load in the tilemap
         this.load.tilemap(this.tilemapKey, Level4.TILEMAP_PATH);
         // Load in the player's sprite
@@ -159,6 +160,7 @@ export default class Level4 extends HW3Level {
      * Unload resources for level 3
      */
     public unloadScene(): void {
+        super.unloadScene();
         // // TODO decide which resources to keep/cull 
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
         // this.load.spritesheet(this.playerSpriteKey, Level4.PLAYER_SPRITE_PATH);

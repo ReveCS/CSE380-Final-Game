@@ -201,6 +201,7 @@ export default class Hub extends HW3Level {
      * Load in resources for level 4.
      */
     public loadScene(): void {
+        super.loadScene();
         // Load in the tilemap
         this.load.tilemap(this.tilemapKey, Hub.TILEMAP_PATH);
         // Load in the player's sprite
@@ -229,6 +230,7 @@ export default class Hub extends HW3Level {
     }
 
     public unloadScene(): void {
+        super.unloadScene();
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
     }
 

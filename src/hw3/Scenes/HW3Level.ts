@@ -100,9 +100,9 @@ export default abstract class HW3Level extends Scene {
      protected portalHalfSize: Vec2;
 
     // Keep track of how many of each enemy
-    protected goblinsKilled: number = 0;
-    protected jelliesKilled: number = 0;
-    protected swordsKilled: number = 0;
+    protected goblinsKilled: number;
+    protected jelliesKilled: number;
+    protected swordsKilled: number;
 
     protected invincibleTimer: Timer;
 
@@ -781,10 +781,27 @@ export default abstract class HW3Level extends Scene {
     //     this.levelEndArea.addPhysics(this.levelEndArea.collisionShape,undefined, false,true);
     //     this.levelEndArea.setTrigger(HW3PhysicsGroups.PLAYER, HW3Events.PLAYER_ENTERED_LEVEL_END, null);
     //     this.levelEndArea.color = new Color(255, 0, 255, .20);
-
-        
-        
     // }
+
+    public loadScene(): void {
+        // get data from sessionStorage
+        // if it's Nan, then init the count, otherwise load in the count
+        let goblinKillcount = parseInt(sessionStorage.getItem("goblinsKilled"));
+        this.goblinsKilled = isNaN(goblinKillcount) ? 0 : goblinKillcount;
+
+        let jellyKillcount = parseInt(sessionStorage.getItem("jelliesKilled"));
+        this.jelliesKilled = isNaN(jellyKillcount) ? 0 : jellyKillcount;
+
+        let swordKillcount = parseInt(sessionStorage.getItem("swordsKilled"));
+        this.swordsKilled = isNaN(swordKillcount) ? 0 : swordKillcount;
+    }
+    public unloadScene(): void {
+        // save kill counts into storage
+        sessionStorage.setItem("goblinsKilled", this.goblinsKilled.toString());
+        sessionStorage.setItem("jelliesKilled", this.jelliesKilled.toString());
+        sessionStorage.setItem("swordsKilled", this.swordsKilled.toString());
+    }
+
     /* Misc methods */
 
     // Get the key of the player's jump audio file

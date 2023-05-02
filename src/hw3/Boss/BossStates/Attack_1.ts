@@ -11,6 +11,7 @@ export default class Attack_1 extends BossState {
     protected left: boolean = false;
     protected flag: boolean = true;
     protected flag2: boolean = true;
+    protected done: boolean = false;
     protected rightFinished = false;
     protected direct:Vec2;
     protected rightToLeft:Vec2;
@@ -42,14 +43,6 @@ export default class Attack_1 extends BossState {
             }
 
         }
-       
-        //     // this.owner.removePhysics();
-        //     // this.owner.addPhysics(new AABB(this.owner.position.clone(), this.owner.boundary.getHalfSize().clone()),null, false);
-        //     // this.owner.collisionShape.halfSize.set(this.owner.collisionShape.halfSize.x,this.owner.collisionShape.halfSize.y);
-        // }else{
-        //     // this.parent.velocity.y = dir.y * this.parent.speed; 
-        //     // this.parent.velocity.x = dir.x * this.parent.speed;
-        //     // this.owner.move(this.parent.velocity.scaled(deltaT));
         
         if(this.right){
             if(this.dirToPlayer.x !== 0){
@@ -93,10 +86,8 @@ export default class Attack_1 extends BossState {
                  }
                 
                 if(Math.abs(this.leftToRight.x-this.owner.position.x) <= 5){
-                    this.parent.velocity.y = 0;
-                    this.parent.velocity.x = 0;
-                    this.up = true;
-                    this.finished(BossStates.IDLE)
+                    this.done = true;
+                    
                     
                 }else{
                     this.parent.velocity.y = 0;
@@ -108,20 +99,20 @@ export default class Attack_1 extends BossState {
         if(this.playerInCombatRange()){
             this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: this.parent.damage });
         }
-        if(this.up){
-            let dir = this.dirToSky;
         
-            this.parent.velocity.y = dir.y * 700;
-            this.parent.velocity.x = dir.x * 700;      
-            
-            
-            this.owner.move(this.parent.velocity.scaled(deltaT)); 
-    
-    
-            if(Math.abs(this.sky.y-this.owner.position.y) <= 5){
-                // this.finished(BossStates.IDLE);
-            }
-
+        if(this.done){
+            this.timer = 0;
+            this.parent.velocity.y = 0;
+            this.parent.velocity.x = 0;
+            this.right = false;
+            this.down = false;
+            this.up = false;
+            this.left = false;
+            this.flag = true;
+            this.flag2 = true;
+            this.done = false;
+            this.rightFinished = false;
+            this.finished(BossStates.IDLE)
         }
 
         // // Attack the player if they are near

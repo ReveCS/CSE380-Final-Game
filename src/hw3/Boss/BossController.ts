@@ -16,6 +16,7 @@ import Spawn from "./BossStates/Spawn";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import MathUtils from "../../Wolfie2D/Utils/MathUtils";
 import Attack_1 from "./BossStates/Attack_1";
+import Attack_2 from "./BossStates/Attack_2";
 // import { CombatEvents } from "../Events/CombatEvents";
 
 /**
@@ -64,14 +65,16 @@ export default class BossController extends StateMachineAI {
 
     /** The enemy's game node */
     protected owner: HW3AnimatedSprite;
+    protected bossLaser: HW3AnimatedSprite;
 
     protected _velocity: Vec2;
 	protected _speed: number;
 
     protected _aggroRadius: number;
     protected _spawn: Vec2;
-    private _player: HW3AnimatedSprite;
+    protected _player: HW3AnimatedSprite;
     protected _playerDamage: number;
+
 
     // protected tilemap: OrthogonalTilemap;
     // protected cannon: Sprite;
@@ -80,7 +83,7 @@ export default class BossController extends StateMachineAI {
     
     public initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>){
         this.owner = owner;
-
+        this.bossLaser = options.laser;
         // this.weapon = options.weaponSystem;
 
         // this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
@@ -97,15 +100,14 @@ export default class BossController extends StateMachineAI {
         this.aggroRadius = options.radius;
         this.spawn = options.spawn;
         this._player = options.player;
-
         // Add the different states the enemy can be in to the EnemyController 
-		this.addState(BossStates.IDLE, new Idle(this, this.owner));
-        this.addState(BossStates.ATTACK_1, new Attack_1(this, this.owner));
-        // this.addState(BossStates.ATTACK_2, new Returning(this, this.owner));
+		this.addState(BossStates.IDLE, new Idle(this, this.owner,this.bossLaser));
+        this.addState(BossStates.ATTACK_1, new Attack_1(this, this.owner,this.bossLaser));
+        this.addState(BossStates.ATTACK_2, new Attack_2(this, this.owner,this.bossLaser));
         // this.addState(BossStates.HURT, new Hurt(this, this.owner));
         // this.addState(BossStates.DEATH, new Dead(this, this.owner));
-        this.addState(BossStates.SPAWN, new Spawn(this,this.owner))
-        this.addState(BossStates.STATUE, new Statue(this, this.owner));
+        this.addState(BossStates.SPAWN, new Spawn(this,this.owner,this.bossLaser))
+        this.addState(BossStates.STATUE, new Statue(this, this.owner,this.bossLaser));
         
         // Start the enemy in the Idle state
         this.initialize(BossStates.STATUE);
@@ -140,6 +142,8 @@ export default class BossController extends StateMachineAI {
     public get playerPosition(): Vec2 { return this._player.position; }
     public get playerDamage(): number { return this._playerDamage }
 
+    public get laserPosition(): Vec2 { return this.bossLaser.position}
+    public set laserPosition(position: Vec2){ this.bossLaser.position = position}
     public get velocity(): Vec2 { return this._velocity; }
     public set velocity(velocity: Vec2) { this._velocity = velocity; }
 

@@ -13,13 +13,16 @@ import Level1 from "./HW3Level1";
 import Level2 from "./HW3Level2";
 import Level3 from "./Level3";
 import Level4 from "./Level4";
+import { LaserAnimation } from "../Laser/Laser";
+import BossController from "../Boss/BossController";
+import { HW3PhysicsGroups } from "../HW3PhysicsGroups";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
  */
 export default class Level5 extends HW3Level {
 
-    public static readonly PLAYER_SPAWN = new Vec2(64, 1225);;
+    public static readonly PLAYER_SPAWN = new Vec2(64, 1330);;
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
 
@@ -47,6 +50,10 @@ export default class Level5 extends HW3Level {
     public static readonly HIT_KEY = "HIT";
     public static readonly HIT_PATH = "game_assets/sounds/gettinghit.wav";
 
+    public static readonly LASER_SPRITE_KEY = "LASER_SPRITE_KEY";
+    public static readonly LASER_SPRITE_PATH = "game_assets/spritesheets/Attack2.json";
+
+
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
@@ -70,7 +77,9 @@ export default class Level5 extends HW3Level {
     protected boss:HW3AnimatedSprite;
     protected bossSpriteKey: string;
 
-
+    protected laser: HW3AnimatedSprite;
+    protected laserSpriteKey:string;
+    protected laserSpawn: Vec2;
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
@@ -112,6 +121,9 @@ export default class Level5 extends HW3Level {
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
+
+        this.laserSpriteKey = Level5.LASER_SPRITE_KEY
+        
   
     }
 
@@ -140,6 +152,7 @@ export default class Level5 extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Level5.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Level5.SWORDRUBY_PATH);
         this.load.image(this.QUEST_KEY, Level5.QUEST_PATH);
+        this.load.spritesheet(this.laserSpriteKey,Level5.LASER_SPRITE_PATH);
 
         // Load in Enemy sprites
     }
@@ -165,6 +178,7 @@ export default class Level5 extends HW3Level {
         super.startScene();
         // Set the next level to be Level2
         this.initializeFinalBoss();
+        this.laserInitialize();
         this.nextLevel = Hub;
 
     }
@@ -187,7 +201,14 @@ export default class Level5 extends HW3Level {
     protected handleCheat5(): void {
         this.sceneManager.changeToScene(Level5);
     }
-  
+    protected laserInitialize(){
+        this.laser = this.initializeLaser(this.laserSpriteKey,new Vec2(this.bossSpawn.x,this.bossSpawn.y+125))
+        this.laser.addPhysics(new AABB(new Vec2(this.bossSpawn.x,this.bossSpawn.y+125),this.laser.boundary.getHalfSize().clone()));
+        this.laser.setGroup(HW3PhysicsGroups.BOSS);
+        this.laser.visible = false;
+        this.boss.addAI(BossController, { player: this.player, radius: 5,spawn:this.bossSpawn, laser:this.laser });
+
+    }
 
     /**
      * I had to override this method to adjust the viewport for the first level. I screwed up 

@@ -2,7 +2,7 @@
 	"name": "Attack_2",
 	"spriteSheetImage": "Attack2.png",
 	"spriteWidth": 128,
-	"spriteHeight": 256,
+	"spriteHeight": 240,
 	"leftBuffer": 0,
 	"rightBuffer": 0,
 	"topBuffer": 0,

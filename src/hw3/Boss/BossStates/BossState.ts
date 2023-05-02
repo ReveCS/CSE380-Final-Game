@@ -12,6 +12,7 @@ export default abstract class BossState extends State {
 
     protected parent: BossController;
 	protected owner: HW3AnimatedSprite;
+    protected bossLaser:HW3AnimatedSprite;
     protected aggroRadius: number;
     protected dirToPlayer: Vec2;
     protected dirToSky: Vec2;
@@ -21,10 +22,11 @@ export default abstract class BossState extends State {
     protected playerRight:Vec2; 
     protected playerLeft:Vec2;
 
-	public constructor(parent: BossController, owner: HW3AnimatedSprite){
+	public constructor(parent: BossController, owner: HW3AnimatedSprite, laser:HW3AnimatedSprite){
 		super(parent);
 		this.owner = owner;
         this.aggroRadius = this.parent.aggroRadius;
+        this.bossLaser = laser;
 	}
 
     public abstract onEnter(options: Record<string, any>): void;
@@ -73,6 +75,9 @@ export default abstract class BossState extends State {
         return this.owner.boundary.containsPoint(this.parent.playerPosition);
     }
 
+    protected playerInLaserRange(): Boolean{
+        return this.bossLaser.boundary.containsPoint(this.parent.playerPosition);
+    }
     // returns if we are at our spawn
     // protected atSpawn(): Boolean {
     //     let threshold = 2.6; // 2.5 but do 2.6 for rounding errors

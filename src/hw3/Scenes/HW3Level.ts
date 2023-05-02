@@ -99,6 +99,10 @@ export default abstract class HW3Level extends Scene {
      protected portalPosition: Vec2;
      protected portalHalfSize: Vec2;
 
+     /* Laser */
+     protected laserPosition: Vec2;
+     protected laserHalfSize: Vec2;
+
     // Keep track of how many of each enemy
     protected goblinsKilled: number;
     protected jelliesKilled: number;
@@ -646,7 +650,7 @@ export default abstract class HW3Level extends Scene {
         this.player = this.add.animatedSprite(key, HW3Layers.PRIMARY);
         this.player.scale.set(1, 1);
         this.player.position.copy(this.playerSpawn);
-        this.player.visible = false;
+        // this.player.visible = false;
         
         
         // Give the player physics
@@ -745,7 +749,16 @@ export default abstract class HW3Level extends Scene {
 
         return enemy
     }
-    
+    protected initializeLaser(key:string, spawn:Vec2): HW3AnimatedSprite{
+        if(spawn == undefined){
+            throw new Error("Portal must be set before initialiing!");
+        }
+        let laser = this.add.animatedSprite(key,HW3Layers.PRIMARY);
+        laser.scale.set(1,1);
+        laser.position.copy(spawn);
+        // laser.visible = false;
+        return laser;
+    }
     protected initializePortal(key:string,spawn:Vec2): HW3AnimatedSprite{
         if(spawn == undefined){
             throw new Error("Portal must be set before initialiing!");

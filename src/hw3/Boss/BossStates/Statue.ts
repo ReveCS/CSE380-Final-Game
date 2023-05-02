@@ -6,7 +6,6 @@ export default class Statue extends BossState {
 
 	public onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready(BossAnimations.STATUE,true);
-        
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
         this.parent.velocity.y = 0;

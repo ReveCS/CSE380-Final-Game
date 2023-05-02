@@ -5,6 +5,7 @@ import { HW3PhysicsGroups } from "../../HW3PhysicsGroups";
 
 export default class Idle extends BossState {
     protected timer:number = 0;
+    protected index: number = 0;
 	public onEnter(options: Record<string, any>): void {        
         this.owner.animation.queue(BossAnimations.IDLE);        
 		this.parent.speed = this.parent.MIN_SPEED;
@@ -32,16 +33,20 @@ export default class Idle extends BossState {
 
 
         this.timer += 1;
+        console.log(this.timer);
         if(this.timer == 200){
-        //    let randomNum = Math.floor(Math.random() *3) + 1;
-        let randomNum = 1;
-           console.log(randomNum)
-           if(randomNum == 1){
-                
+            let attackArray = [1,1,2,1];
+            let nextAttack = attackArray[this.index];
+            if(nextAttack == 1){
                 this.finished(BossStates.ATTACK_1);
-           }
-        //    } else if(randomNum == 2){
-        //         this.finished(BossStates.ATTACK_2);
+                this.index = (this.index + 1) % attackArray.length;
+                this.timer = 0;
+            }else if(nextAttack == 2){
+                this.finished(BossStates.ATTACK_2);
+                this.index = (this.index + 1) % attackArray.length;
+                this.timer = 0;
+            }
+        
         //    } else if(randomNum == 3){
         //         //this.finished(BossStates.ATTACK_3);
         //    }

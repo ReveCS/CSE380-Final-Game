@@ -20,6 +20,7 @@ import MathUtils from "../../Wolfie2D/Utils/MathUtils";
 import { HW3Events } from "../Events/HW3Events";
 import { CombatEvents } from "../Events/CombatEvents";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 // TODO play your heros animations
 
@@ -157,6 +158,8 @@ export default class PlayerController extends StateMachineAI {
         // If the player hits the attack button and the weapon system isn't running, restart the system and fire!
         // wait for animation to reset before we can attack again
         if (Input.isPressed(HW3Controls.ATTACK) && !this.isAttacking) {
+            let swingAudio = this.owner.getScene().getSwingSoundKey();
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: swingAudio, loop: false, holdReference: false});
             this.owner.animation.play(PlayerAnimations.ATTACK_1);
             this.isAttacking = true;
         }

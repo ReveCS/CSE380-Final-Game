@@ -7,7 +7,7 @@ import Idle from "./BossStates/Idle";
 import Statue from "./BossStates/Statue";
 import Spawn from "./BossStates/Spawn";
 // import Returning from "./EnemyStates/Returning";
-// import Hurt from "./EnemyStates/Hurt";
+import Hurt from "./BossStates/Hurt";
 // import Dead from "./EnemyStates/Dead";
 // import Combat from "./EnemyStates/Combat";
 
@@ -17,6 +17,7 @@ import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import MathUtils from "../../Wolfie2D/Utils/MathUtils";
 import Attack_1 from "./BossStates/Attack_1";
 import Attack_2 from "./BossStates/Attack_2";
+import { CombatEvents } from "../Events/CombatEvents";
 // import { CombatEvents } from "../Events/CombatEvents";
 
 /**
@@ -74,6 +75,8 @@ export default class BossController extends StateMachineAI {
     protected _spawn: Vec2;
     protected _player: HW3AnimatedSprite;
     protected _playerDamage: number;
+    protected invincible: boolean;
+    protected timer: number = 0;
 
 
     // protected tilemap: OrthogonalTilemap;
@@ -104,33 +107,44 @@ export default class BossController extends StateMachineAI {
 		this.addState(BossStates.IDLE, new Idle(this, this.owner,this.bossLaser));
         this.addState(BossStates.ATTACK_1, new Attack_1(this, this.owner,this.bossLaser));
         this.addState(BossStates.ATTACK_2, new Attack_2(this, this.owner,this.bossLaser));
-        // this.addState(BossStates.HURT, new Hurt(this, this.owner));
+        this.addState(BossStates.HURT, new Hurt(this, this.owner,this.bossLaser));
         // this.addState(BossStates.DEATH, new Dead(this, this.owner));
-        this.addState(BossStates.SPAWN, new Spawn(this,this.owner,this.bossLaser))
+        this.addState(BossStates.SPAWN, new Spawn(this,this.owner,this.bossLaser));
         this.addState(BossStates.STATUE, new Statue(this, this.owner,this.bossLaser));
         
         // Start the enemy in the Idle state
         this.initialize(BossStates.STATUE);
 
-        // this.receiver.subscribe(CombatEvents.PLAYER_ATTACK_PHYSICAL);
+
+        this.receiver.subscribe(CombatEvents.PLAYER_ATTACK_PHYSICAL);
     }
 
     // Override
     handleEvent(event: GameEvent): void {
-        // if(this.active){
-        //     if (event.type === CombatEvents.PLAYER_ATTACK_PHYSICAL) {
-        //         // make sure we are in the range of player's attack
-        //         if (this._player.boundary.containsPoint(this.owner.position)) {
-        //             this._playerDamage = event.data.get("dmg");
-        //             // this.changeState(EnemyStates.HURT);
-        //         }
-        //     }
-        //     else this.currentState.handleInput(event);
-        // }
+        if(!this.invincible){
+            if(this.active){
+                if (event.type === CombatEvents.PLAYER_ATTACK_PHYSICAL) {
+                    // make sure we are in the range of player's attack
+                    if (this._player.boundary.containsPoint(this.owner.position)) {
+                        this._playerDamage = event.data.get("dmg");
+                        this.changeState(BossStates.HURT);
+                    }
+                }
+                else this.currentState.handleInput(event);
+                this.invincible = true;
+            }
+        }
     }
 
     public update(deltaT: number): void {
 		super.update(deltaT);
+        if(this.invincible){
+            this.timer += 1;
+        }
+        if(this.timer == 50){
+            this.invincible = false;
+            this.timer = 0;
+        }
 	}
 
     public get aggroRadius(): number { return this._aggroRadius; }
@@ -146,7 +160,8 @@ export default class BossController extends StateMachineAI {
     public set laserPosition(position: Vec2){ this.bossLaser.position = position}
     public get velocity(): Vec2 { return this._velocity; }
     public set velocity(velocity: Vec2) { this._velocity = velocity; }
-
+    public get isInvincible():boolean{return this.invincible}
+    public set isInvincible(invincible:boolean){this.invincible = invincible}
     public get speed(): number { return this._speed; }
     public set speed(speed: number) { this._speed = speed; }
 

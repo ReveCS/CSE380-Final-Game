@@ -1,4 +1,5 @@
 export const LaserAnimation = {
-    FIRE: "FIRE"
+    FIRE: "FIRE",
+    INDICATOR: "INDICATOR"
     
 } as const

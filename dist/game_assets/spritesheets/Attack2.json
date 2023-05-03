@@ -72,6 +72,17 @@
 				}
 				
 			]
+		},
+		{
+			"name": "INDICATOR",
+			"repeat": false,
+			"frames": [
+				{
+					"index": 14,
+					"duration": 25
+				}
+			]
+
 		}
 		
 

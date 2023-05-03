@@ -33,10 +33,10 @@ export default class Idle extends BossState {
 
 
         this.timer += 1;
-        console.log(this.timer);
         if(this.timer == 200){
             let attackArray = [1,1,2,1];
-            let nextAttack = attackArray[this.index];
+            // let nextAttack = attackArray[this.index];
+            let nextAttack = 2;
             if(nextAttack == 1){
                 this.finished(BossStates.ATTACK_1);
                 this.index = (this.index + 1) % attackArray.length;

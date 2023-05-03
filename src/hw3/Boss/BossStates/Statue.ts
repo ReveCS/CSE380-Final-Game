@@ -5,6 +5,7 @@ import BossState from "./BossState";
 export default class Statue extends BossState {
 
 	public onEnter(options: Record<string, any>): void {
+        this.parent.isInvincible = true;
         this.owner.animation.playIfNotAlready(BossAnimations.STATUE,true);
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;

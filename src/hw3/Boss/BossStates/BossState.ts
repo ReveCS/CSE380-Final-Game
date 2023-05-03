@@ -45,8 +45,7 @@ export default abstract class BossState extends State {
 	}
 
 	public update(deltaT: number): void {
-        
-        
+        console.log(this.parent.health);
         this.playerRight = new Vec2(this.parent.playerPosition.clone().x+300,this.parent.playerPosition.clone().y)
         this.playerLeft = new Vec2(this.parent.playerPosition.clone().x-300,this.parent.playerPosition.clone().y)
         // // This updates the direction the Player is in (left or right)
@@ -76,7 +75,7 @@ export default abstract class BossState extends State {
     }
 
     protected playerInLaserRange(): Boolean{
-        return this.bossLaser.boundary.containsPoint(this.parent.playerPosition);
+        return Math.abs(this.bossLaser.position.x - this.parent.playerPosition.x) <= 25;
     }
     // returns if we are at our spawn
     // protected atSpawn(): Boolean {

@@ -53,6 +53,9 @@ export default class Level5 extends HW3Level {
     public static readonly LASER_SPRITE_KEY = "LASER_SPRITE_KEY";
     public static readonly LASER_SPRITE_PATH = "game_assets/spritesheets/Attack2.json";
 
+    public static readonly SWING_KEY = "SWING";
+    public static readonly SWING_PATH = "game_assets/sounds/swing.wav";
+
 
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
@@ -105,6 +108,7 @@ export default class Level5 extends HW3Level {
         this.tileDestroyedAudioKey = Level5.TILE_DESTROYED_KEY;
         this.deathSoundKey = Level5.DEATH_KEY;
         this.hitKey = Level5.HIT_KEY;
+        this.swingKey = Level5.SWING_KEY;
 
         // Sprites
         this.HP_KEY = Level5.HP_KEY;
@@ -145,6 +149,7 @@ export default class Level5 extends HW3Level {
         this.load.audio(this.tileDestroyedAudioKey, Level5.TILE_DESTROYED_PATH);
         this.load.audio(this.deathSoundKey,Level5.DEATH_PATH);
         this.load.audio(this.hitKey,Level5.HIT_PATH);
+        this.load.audio(this.swingKey,Level5.SWING_PATH);
         // Game UI sprites
         this.load.image(this.HP_KEY, Level5.HP_PATH);
         this.load.image(this.INV_KEY, Level5.INV_PATH);
@@ -203,6 +208,7 @@ export default class Level5 extends HW3Level {
     }
     protected laserInitialize(){
         this.laser = this.initializeLaser(this.laserSpriteKey,new Vec2(this.bossSpawn.x,this.bossSpawn.y+125))
+        this.laser.boundary.setHalfSize(new Vec2(20,120));
         this.laser.addPhysics(new AABB(new Vec2(this.bossSpawn.x,this.bossSpawn.y+125),this.laser.boundary.getHalfSize().clone()));
         this.laser.setGroup(HW3PhysicsGroups.BOSS);
         this.laser.visible = false;

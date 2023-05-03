@@ -147,6 +147,7 @@ export default abstract class HW3Level extends Scene {
     protected tileDestroyedAudioKey: string;
     protected deathSoundKey:string;
     protected hitKey:string;
+    protected swingKey:string;
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
         super(viewport, sceneManager, renderingManager, {...options, physics: {
@@ -830,6 +831,9 @@ export default abstract class HW3Level extends Scene {
     }
     public getHitSoundKey():string{
         return this.hitKey
+    }
+    public getSwingSoundKey():string{
+        return this.swingKey;
     }
     
     protected handleCheat1(): void {

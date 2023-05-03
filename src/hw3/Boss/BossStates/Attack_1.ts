@@ -18,7 +18,8 @@ export default class Attack_1 extends BossState {
     protected leftToRight:Vec2;
     
 	public onEnter(options: Record<string, any>): void {
-        
+        this.parent.isInvincible = true;
+
 	}
 
 	public update(deltaT: number): void {

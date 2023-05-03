@@ -19,6 +19,7 @@ export default class Spawn extends BossState {
            
          }
         if(this.count == 220){
+            this.parent.isInvincible = false;
             this.finished(BossStates.IDLE)
         }
         super.update(deltaT);

@@ -13,6 +13,8 @@ export default class Attack_2 extends BossState {
     protected up: boolean = false;
     
 	public onEnter(options: Record<string, any>): void {
+        this.parent.isInvincible = true;
+
 	}
 
 	public update(deltaT: number): void {
@@ -21,7 +23,7 @@ export default class Attack_2 extends BossState {
        
         if(!this.goToPlayer){
             let dir = this.owner.position.dirTo(new Vec2(this.parent.playerPosition.x, this.parent.playerPosition.y-175))
-            this.parent.velocity.y = dir.y * 300;
+            this.parent.velocity.y = 0
             this.parent.velocity.x = dir.x * 300;
             
            
@@ -32,18 +34,24 @@ export default class Attack_2 extends BossState {
                 this.parent.velocity.y = 0;
                 this.parent.velocity.x = 0;
                 this.owner.animation.play(BossAnimations.ATTACK_2);
+                
+                this.bossLaser.visible = true;
+                this.bossLaser.alpha = 0.5;
                 this.goToPlayer = true;
             }
 
         }else{
-            if(this.timer == 25){
-                this.parent.laserPosition = new Vec2(this.owner.position.x, this.owner.position.y+105)
-                this.bossLaser.visible = true;
-                this.bossLaser.animation.play(LaserAnimation.FIRE);
-                console.log(this.laserTimer)
+            if(this.timer >= 25){
+                this.bossLaser.animation.queue(LaserAnimation.FIRE);
+                this.bossLaser.alpha = 1;
+                
+                
                 this.pew = true;
                 
                 
+            }else{
+                this.parent.laserPosition = new Vec2(this.owner.position.x, this.owner.position.y+105)
+                this.bossLaser.animation.play(LaserAnimation.INDICATOR);
             }
             this.timer+=1;
         }
@@ -56,7 +64,7 @@ export default class Attack_2 extends BossState {
             this.laserTimer += 1;
         }
        
-        if(this.playerInLaserRange() && this.bossLaser.visible){
+        if(this.playerInLaserRange() && this.bossLaser.visible && this.bossLaser.animation.isPlaying(LaserAnimation.FIRE)){
             this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: this.parent.damage });
         }
         if(this.done){

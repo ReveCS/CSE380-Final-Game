@@ -35,6 +35,9 @@ export const HW3Events = {
     CHEAT3: "CHEAT3",
     CHEAT4: "CHEAT4",
     CHEAT5: "CHEAT5",
-    INVINCIBLE: "INVINCIBLE"
+    INVINCIBLE: "INVINCIBLE",
+    BOSS_HEALTH_CHANGE: "BOSS_HEALTH_CHANGE",
+    BOSS_SPAWN: "BOSS_SPAWN",
+    
     
 } as const;

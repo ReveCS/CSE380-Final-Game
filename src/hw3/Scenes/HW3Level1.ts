@@ -47,6 +47,8 @@ export default class Level1 extends HW3Level {
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
+    public static readonly BOSS_HP_KEY = "BOSS_HEALTH";
+    public static readonly BOSS_HP_PATH = "game_assets/sprites/Boss_HP_Bar.png"
     public static readonly INV_KEY = "INVENTORY";
     public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
     public static readonly GOBLINSKULL_KEY = "GOBLINSKULL_SPRITE_KEY";
@@ -57,6 +59,8 @@ export default class Level1 extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
+    public static readonly BOSS_ATTACK1_KEY = "BOSS_ATTACK1";
+    public static readonly BOSS_ATTACK1_PATH = "game_assets/sprites/attack_indicator.png";
 
     //Portal
     public static readonly PORTAL_SPAWN = new Vec2(2300, 1177);
@@ -103,6 +107,7 @@ export default class Level1 extends HW3Level {
 
         // Sprites
         this.HP_KEY = Level1.HP_KEY;
+        this.BOSS_HP_KEY = Level1.BOSS_HP_KEY;
         this.INV_KEY = Level1.INV_KEY;
         this.GOBLINSKULL_KEY = Level1.GOBLINSKULL_KEY;
         this.JELLYHEART_KEY = Level1.JELLYHEART_KEY;
@@ -121,6 +126,8 @@ export default class Level1 extends HW3Level {
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
+
+        this.BOSS_ATTACK_KEY = Level1.BOSS_ATTACK1_KEY;
     }
 
     /**
@@ -140,6 +147,7 @@ export default class Level1 extends HW3Level {
         this.load.audio(this.hitKey,Level1.HIT_PATH);
         // Game UI sprites
         this.load.image(this.HP_KEY, Level1.HP_PATH);
+        this.load.image(this.BOSS_HP_KEY,Level1.BOSS_HP_PATH);
         this.load.image(this.INV_KEY, Level1.INV_PATH);
         this.load.image(this.GOBLINSKULL_KEY, Level1.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Level1.JELLYHEART_PATH);
@@ -149,6 +157,7 @@ export default class Level1 extends HW3Level {
         this.load.spritesheet(this.goblinSpriteKey, Level1.GOBLIN_SPRITE_PATH);
         this.load.spritesheet(this.swordSpriteKey, Level1.SWORD_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey,Level1.PORTAL_PATH);
+        this.load.image(this.BOSS_ATTACK_KEY,Level1.BOSS_ATTACK1_PATH);
     }
 
     /**

@@ -68,6 +68,8 @@ export default abstract class HW3Level extends Scene {
 	private healthBar: Label;
 	private healthBarBg: Label;
 
+    private bossHealthBar: Label;
+    private bossHealthBarBg: Label;
     // Spites for UI
     private HPSprite: Sprite;
     private INVSprite: Sprite;
@@ -79,7 +81,9 @@ export default abstract class HW3Level extends Scene {
     private swordRubySprite: Sprite;
     private swordCount: Label;
     protected QuestSprite: Sprite;
-
+    protected bossHPSprite: Sprite;
+    protected attack1: Sprite;
+    protected attack3: Sprite;
 
     // The key and path to the sprites
     protected HP_KEY: string;
@@ -94,6 +98,10 @@ export default abstract class HW3Level extends Scene {
     protected SWORDRUBY_PATH: string;
     protected QUEST_KEY: string;
     protected QUEST_PATH: string;
+    protected BOSS_HP_KEY:string;
+    protected BOSS_HP_PATH:string;
+    protected BOSS_ATTACK_KEY:string;
+    protected BOSS_ATTACK_PATH: string;
 
      /* Portal */
      protected portalPosition: Vec2;
@@ -181,6 +189,9 @@ export default abstract class HW3Level extends Scene {
         // Initialize the viewport - this must come after the player has been initialized
         this.initializeViewport();
         this.subscribeToEvents();
+        this.attack1 = this.initializeIndicator(this.BOSS_ATTACK_KEY,this.player.position);
+        this.attack1.scale.set(20,2.5);
+        this.attack1.visible = false;
     
         // Initialize the ends of the levels - must be initialized after the primary layer has been added
         // this.initializeLevelEnds();
@@ -240,6 +251,10 @@ export default abstract class HW3Level extends Scene {
                 this.handleHealthChange(event.data.get("curhp"), event.data.get("maxhp"));
                 break;
             }
+            case HW3Events.BOSS_HEALTH_CHANGE: {
+                this.handleBossHleathChange(event.data.get("curhp"), event.data.get("maxhp"));
+                break;
+            }
             case HW3Events.PLAYER_DEAD: {
                 this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey, loop: true, holdReference: true});
                 this.sceneManager.changeToScene(MainMenu);
@@ -284,6 +299,12 @@ export default abstract class HW3Level extends Scene {
                     this.swordCount.visible = false;
                     break;
                 }
+            }
+            case HW3Events.BOSS_SPAWN:{
+                this.bossHPSprite.visible = true;
+                this.bossHealthBar.visible = true;
+                this.bossHealthBarBg.visible = true;
+                break;
             }
             case HW3Events.CHEAT1: {
                 this.handleCheat1();
@@ -414,6 +435,12 @@ export default abstract class HW3Level extends Scene {
 		this.healthBar.backgroundColor = currentHealth < maxHealth * 1/4 ? Color.RED: currentHealth < maxHealth * 3/4 ? Color.RED : Color.RED;
 	}
 
+    protected handleBossHleathChange(currentHealth: number, maxHealth: number):void{
+        let unit = this.bossHealthBarBg.size.x/maxHealth;
+        this.bossHealthBar.size.set(this.bossHealthBarBg.size.x - unit * (maxHealth - currentHealth), this.bossHealthBarBg.size.y);
+        this.bossHealthBar.position.set(this.bossHealthBarBg.position.x - (unit/2/this.getViewScale())* (maxHealth-currentHealth), this.bossHealthBarBg.position.y);
+        this.bossHealthBar.backgroundColor = Color.YELLOW;
+    }
     protected handleInventory(): void {
         if (this.INVSprite.visible == false) {
             this.INVSprite.visible = true;
@@ -485,10 +512,12 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.LEVEL_START);
         this.receiver.subscribe(HW3Events.LEVEL_END);
         this.receiver.subscribe(HW3Events.HEALTH_CHANGE);
+        this.receiver.subscribe(HW3Events.BOSS_HEALTH_CHANGE);
         this.receiver.subscribe(HW3Events.PLAYER_DEAD);
         this.receiver.subscribe(HW3Events.INVENTORY);
         this.receiver.subscribe(HW3Events.GAME_PAUSE);
         this.receiver.subscribe(HW3Events.ENEMY_KILLED);
+        this.receiver.subscribe(HW3Events.BOSS_SPAWN);
         this.receiver.subscribe(HW3Events.CHEAT1);
         this.receiver.subscribe(HW3Events.CHEAT2);
         this.receiver.subscribe(HW3Events.CHEAT3);
@@ -499,6 +528,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(NPCEvents.ACCEPT_QUEST);
         this.receiver.subscribe(NPCEvents.DECLINE_QUEST);
         this.receiver.subscribe(NPCEvents.SMALL_TALK);
+        
     }
     /**
      * Adds in any necessary UI to the game
@@ -519,6 +549,25 @@ export default abstract class HW3Level extends Scene {
         this.healthBarBg.size.set(125, 20);
 		this.healthBarBg.borderColor = Color.TRANSPARENT;
 
+        // BossHealthBar Sprite
+        this.bossHPSprite = this.add.sprite(this.BOSS_HP_KEY,HW3Layers.UI);
+        this.bossHPSprite.position.copy(new Vec2(300,350));
+        this.bossHPSprite.scale.set(4,3);
+        this.bossHPSprite.visible = false;
+        
+
+        // BossHealthBar
+        this.bossHealthBar = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(300,348), text: ""});
+        this.bossHealthBar.size.set(645,32);
+        this.bossHealthBar.backgroundColor = Color.YELLOW;
+        this.bossHealthBar.visible = false;
+
+        // BossHealthBar Border
+        this.bossHealthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(300,348), text: ""});
+        this.bossHealthBarBg.size.set(645,32);
+        this.bossHealthBarBg.backgroundColor = Color.TRANSPARENT;
+        this.bossHealthBarBg.visible = false;
+        
         // Inventory screen and UI
         this.INVSprite = this.add.sprite(this.INV_KEY, HW3Layers.UI);
         this.INVSprite.position.copy(new Vec2(300, 200));
@@ -692,7 +741,6 @@ export default abstract class HW3Level extends Scene {
         boss.position.copy(spawn);
         boss.setGroup(HW3PhysicsGroups.BOSS);
         
-        boss.addAI(BossController, { player: this.player, radius: AggroRadius,spawn: spawn });
         
         return boss;
         
@@ -772,6 +820,19 @@ export default abstract class HW3Level extends Scene {
 
         return portal;
 
+    }
+    protected initializeIndicator(key:string, spawn: Vec2): Sprite{
+        if(spawn == undefined){
+            throw new Error("Indicator must be set before initialiing!");
+        }
+        let indicator = this.add.sprite(key,HW3Layers.PRIMARY);
+        
+        indicator.position.copy(spawn);
+        indicator.scale.set(1,1);
+        indicator.alpha = 0.5;
+        
+
+        return indicator;
     }
     /**
      * Initializes the viewport

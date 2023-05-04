@@ -6,7 +6,9 @@ import { HW3PhysicsGroups } from "../../HW3PhysicsGroups";
 export default class Idle extends BossState {
     protected timer:number = 0;
     protected index: number = 0;
-	public onEnter(options: Record<string, any>): void {        
+    protected spawn: boolean = true;
+    protected invinciblityTimer:number = 0;
+    	public onEnter(options: Record<string, any>): void {        
         this.owner.animation.queue(BossAnimations.IDLE);        
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
@@ -21,22 +23,41 @@ export default class Idle extends BossState {
             }
          }
 		super.update(deltaT);
-        let dir = this.dirToSky;
-        if(Math.abs(this.sky.y-this.owner.position.y) <= 5){
-            this.parent.velocity.y = 0;
-            this.parent.velocity.x = 0;
+        if(this.spawn){
+            let dir = this.dirToSky;
+            if(Math.abs(this.sky.y-this.owner.position.y) <= 5){
+                this.parent.velocity.y = 0;
+                this.parent.velocity.x = 0;
+                this.spawn = false;
+            }else{
+                this.parent.velocity.y = dir.y * this.parent.speed; 
+                this.parent.velocity.x = dir.x * this.parent.speed;
+                this.owner.move(this.parent.velocity.scaled(deltaT));
+            }
         }else{
-            this.parent.velocity.y = dir.y * this.parent.speed; 
-            this.parent.velocity.x = dir.x * this.parent.speed;
-            this.owner.move(this.parent.velocity.scaled(deltaT));
+            let dir = this.dirToAbovePlayer;
+            if(Math.abs(this.sky.y-this.owner.position.y) <= 5){
+                this.parent.velocity.y = 0;
+                this.parent.velocity.x = 0;
+            }else{
+                this.parent.velocity.y = dir.y * 350; 
+                this.parent.velocity.x = dir.x * 350;
+                this.owner.move(this.parent.velocity.scaled(deltaT));
+            }
         }
-
+        if(this.parent.isInvincible){
+            this.invinciblityTimer += 1;
+        }
+        if(this.invinciblityTimer == 25){
+            this.parent.isInvincible = false;
+            this.invinciblityTimer = 0;
+        }
 
         this.timer += 1;
         if(this.timer == 200){
             let attackArray = [1,1,2,1];
-            // let nextAttack = attackArray[this.index];
-            let nextAttack = 2;
+            let nextAttack = attackArray[this.index];
+            // let nextAttack = 1;
             if(nextAttack == 1){
                 this.finished(BossStates.ATTACK_1);
                 this.index = (this.index + 1) % attackArray.length;

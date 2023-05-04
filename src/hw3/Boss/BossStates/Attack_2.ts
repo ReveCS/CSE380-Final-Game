@@ -24,7 +24,7 @@ export default class Attack_2 extends BossState {
         if(!this.goToPlayer){
             let dir = this.owner.position.dirTo(new Vec2(this.parent.playerPosition.x, this.parent.playerPosition.y-175))
             this.parent.velocity.y = 0
-            this.parent.velocity.x = dir.x * 300;
+            this.parent.velocity.x = dir.x * 700;
             
            
             this.owner.move(this.parent.velocity.scaled(deltaT)); 
@@ -41,7 +41,7 @@ export default class Attack_2 extends BossState {
             }
 
         }else{
-            if(this.timer >= 25){
+            if(this.timer >= 1){
                 this.bossLaser.animation.queue(LaserAnimation.FIRE);
                 this.bossLaser.alpha = 1;
                 

@@ -60,6 +60,8 @@ export default class Level5 extends HW3Level {
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
+    public static readonly BOSS_HP_KEY = "BOSS_HEALTH";
+    public static readonly BOSS_HP_PATH = "game_assets/sprites/Boss_HP_Bar.png";
     public static readonly INV_KEY = "INVENTORY";
     public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
     public static readonly GOBLINSKULL_KEY = "GOBLINSKULL_SPRITE_KEY";
@@ -70,6 +72,8 @@ export default class Level5 extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
+    public static readonly BOSS_ATTACK1_KEY = "BOSS_ATTACK1";
+    public static readonly BOSS_ATTACK1_PATH = "game_assets/sprites/attack_indicator.png";
 
     // Enemy Sprites
 
@@ -112,6 +116,7 @@ export default class Level5 extends HW3Level {
 
         // Sprites
         this.HP_KEY = Level5.HP_KEY;
+        this.BOSS_HP_KEY = Level5.BOSS_HP_KEY;
 
         //Inventory
         this.INV_KEY = Level5.INV_KEY;
@@ -128,6 +133,7 @@ export default class Level5 extends HW3Level {
 
         this.laserSpriteKey = Level5.LASER_SPRITE_KEY
         
+        this.BOSS_ATTACK_KEY = Level5.BOSS_ATTACK1_KEY;
   
     }
 
@@ -157,7 +163,9 @@ export default class Level5 extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Level5.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Level5.SWORDRUBY_PATH);
         this.load.image(this.QUEST_KEY, Level5.QUEST_PATH);
+        this.load.image(this.BOSS_ATTACK_KEY,Level5.BOSS_ATTACK1_PATH);
         this.load.spritesheet(this.laserSpriteKey,Level5.LASER_SPRITE_PATH);
+        this.load.image(this.BOSS_HP_KEY, Level5.BOSS_HP_PATH);
 
         // Load in Enemy sprites
     }
@@ -212,7 +220,7 @@ export default class Level5 extends HW3Level {
         this.laser.addPhysics(new AABB(new Vec2(this.bossSpawn.x,this.bossSpawn.y+125),this.laser.boundary.getHalfSize().clone()));
         this.laser.setGroup(HW3PhysicsGroups.BOSS);
         this.laser.visible = false;
-        this.boss.addAI(BossController, { player: this.player, radius: 5,spawn:this.bossSpawn, laser:this.laser });
+        this.boss.addAI(BossController, { player: this.player, radius: 5,spawn:this.bossSpawn, laser:this.laser, attack1:this.attack1});
 
     }
 

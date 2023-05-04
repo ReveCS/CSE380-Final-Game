@@ -1,6 +1,7 @@
 import { BossStates, BossAnimations } from "../BossController";
 import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 import BossState from "./BossState";
+import { HW3Events } from "../../Events/HW3Events";
 
 export default class Spawn extends BossState {
     protected count:number = 0;
@@ -8,6 +9,7 @@ export default class Spawn extends BossState {
         let spawnAudio = this.owner.getScene().getSpawnAudioKey();
         this.owner.animation.queue(BossAnimations.SPAWN);
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: spawnAudio, loop: false, holdReference: false});
+        
         
 		
 	}
@@ -21,6 +23,8 @@ export default class Spawn extends BossState {
         if(this.count == 220){
             this.parent.isInvincible = false;
             this.finished(BossStates.IDLE)
+            
+            this.emitter.fireEvent(HW3Events.BOSS_SPAWN);
         }
         super.update(deltaT);
         this.count += 1;

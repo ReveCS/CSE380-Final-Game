@@ -18,6 +18,8 @@ import MathUtils from "../../Wolfie2D/Utils/MathUtils";
 import Attack_1 from "./BossStates/Attack_1";
 import Attack_2 from "./BossStates/Attack_2";
 import { CombatEvents } from "../Events/CombatEvents";
+import { HW3Events } from "../Events/HW3Events";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 // import { CombatEvents } from "../Events/CombatEvents";
 
 /**
@@ -67,6 +69,7 @@ export default class BossController extends StateMachineAI {
     /** The enemy's game node */
     protected owner: HW3AnimatedSprite;
     protected bossLaser: HW3AnimatedSprite;
+    protected attack1: Sprite;
 
     protected _velocity: Vec2;
 	protected _speed: number;
@@ -87,14 +90,15 @@ export default class BossController extends StateMachineAI {
     public initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>){
         this.owner = owner;
         this.bossLaser = options.laser;
+        this.attack1 = options.attack1;
         // this.weapon = options.weaponSystem;
 
         // this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
         this.speed = 200;
         this.velocity = Vec2.ZERO;
 
-        this.health = 5
-        this.maxHealth = 5;
+        this.health = 10
+        this.maxHealth = 10;
 
         this._damage = 1;
 
@@ -138,13 +142,7 @@ export default class BossController extends StateMachineAI {
 
     public update(deltaT: number): void {
 		super.update(deltaT);
-        if(this.invincible){
-            this.timer += 1;
-        }
-        if(this.timer == 50){
-            this.invincible = false;
-            this.timer = 0;
-        }
+       
 	}
 
     public get aggroRadius(): number { return this._aggroRadius; }
@@ -158,6 +156,7 @@ export default class BossController extends StateMachineAI {
 
     public get laserPosition(): Vec2 { return this.bossLaser.position}
     public set laserPosition(position: Vec2){ this.bossLaser.position = position}
+    public get bossAttack1(): Sprite { return this.attack1}
     public get velocity(): Vec2 { return this._velocity; }
     public set velocity(velocity: Vec2) { this._velocity = velocity; }
     public get isInvincible():boolean{return this.invincible}
@@ -170,16 +169,16 @@ export default class BossController extends StateMachineAI {
 
     public get maxHealth(): number { return this._maxHealth; }
     public set maxHealth(maxHealth: number) { 
-        this._maxHealth = maxHealth; 
+    this._maxHealth = maxHealth; 
         // When the health changes, fire an event up to the scene.
-        // this.emitter.fireEvent(HW3Events.HEALTH_CHANGE, {curhp: this.health, maxhp: this.maxHealth});
+        this.emitter.fireEvent(HW3Events.BOSS_HEALTH_CHANGE, {curhp: this.health, maxhp: this.maxHealth});
     }
 
     public get health(): number { return this._health; }
     public set health(health: number) { 
         this._health = MathUtils.clamp(health, 0, this.maxHealth);
-        // When the health changes, fire an event up to the scene.
-        // this.emitter.fireEvent(HW3Events.HEALTH_CHANGE, {curhp: this.health, maxhp: this.maxHealth});
+       
+        this.emitter.fireEvent(HW3Events.BOSS_HEALTH_CHANGE, {curhp: this.health, maxhp: this.maxHealth});
         // If the health hit 0, change the state of the player
         if (this.health === 0) { 
             this.changeState(BossAnimations.DYING);

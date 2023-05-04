@@ -3,6 +3,7 @@ import BossState from "./BossState";
 import MathUtils from "../../../Wolfie2D/Utils/MathUtils";
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import { CombatEvents } from "../../Events/CombatEvents";
+import { HW3Events } from "../../Events/HW3Events";
 export default class Attack_1 extends BossState {
     protected timer:number = 0;
     protected right:boolean = false;
@@ -19,7 +20,7 @@ export default class Attack_1 extends BossState {
     
 	public onEnter(options: Record<string, any>): void {
         this.parent.isInvincible = true;
-
+        
 	}
 
 	public update(deltaT: number): void {
@@ -28,23 +29,26 @@ export default class Attack_1 extends BossState {
        
         if(!this.down){
             let dir = this.dirToPlayerRight.clone();
-        
+            
             this.parent.velocity.y = dir.y * 700;
             this.parent.velocity.x = dir.x * 700;      
             
             
             this.owner.move(this.parent.velocity.scaled(deltaT)); 
-    
+            
     
             if(Math.abs(this.playerRight.y-this.owner.position.y) <= 5){
                 this.parent.velocity.y = 0;
                 this.parent.velocity.x = 0;
                 this.right = true;
                 this.down = true;
+                this.parent.bossAttack1.position = new Vec2(this.owner.position.clone().x-300,this.owner.position.clone().y);
+                this.parent.bossAttack1.visible = true;
+                
             }
 
         }
-        
+       
         if(this.right){
             if(this.dirToPlayer.x !== 0){
                 this.owner.invertX = MathUtils.sign(this.dirToPlayer.x) < 0;
@@ -67,11 +71,13 @@ export default class Attack_1 extends BossState {
                 this.right = false;
                 this.rightFinished = true;
                 this.leftToRight = new Vec2(this.parent.playerPosition.x+300,this.parent.playerPosition.y)
+                this.parent.bossAttack1.position = new Vec2(this.owner.position.clone().x+300,this.owner.position.clone().y);
+                
 
 
             }else{
                 this.parent.velocity.y = 0;
-                this.parent.velocity.x = this.direct.x * 400;
+                this.parent.velocity.x = this.direct.x * 500;
                 this.owner.move(this.parent.velocity.scaled(deltaT));
             }
             
@@ -80,6 +86,8 @@ export default class Attack_1 extends BossState {
             this.timer += 1;
         }
         if(this.timer >= 50){
+            
+
             if(!this.left){
                 if(this.flag2){
                     this.direct = this.owner.position.dirTo(this.leftToRight);
@@ -87,12 +95,13 @@ export default class Attack_1 extends BossState {
                  }
                 
                 if(Math.abs(this.leftToRight.x-this.owner.position.x) <= 5){
+                    this.parent.bossAttack1.visible = false;
                     this.done = true;
                     
                     
                 }else{
                     this.parent.velocity.y = 0;
-                    this.parent.velocity.x = this.direct.x * 400;
+                    this.parent.velocity.x = this.direct.x * 500;
                     this.owner.move(this.parent.velocity.scaled(deltaT));
                 }
             }

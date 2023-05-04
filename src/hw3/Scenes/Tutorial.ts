@@ -55,6 +55,8 @@ export default class Tutorial extends HW3Level {
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
+    public static readonly BOSS_HP_KEY = "BOSS_HEALTH";
+    public static readonly BOSS_HP_PATH = "game_assets/sprites/Boss_HP_Bar.png";
     public static readonly INV_KEY = "INVENTORY";
     public static readonly INV_PATH = "game_assets/sprites/Inventory.png";
     public static readonly GOBLINSKULL_KEY = "GOBLINSKULL_SPRITE_KEY";
@@ -128,6 +130,7 @@ export default class Tutorial extends HW3Level {
 
         // Sprites
         this.HP_KEY = Tutorial.HP_KEY;
+        this.BOSS_HP_KEY = Tutorial.BOSS_HP_KEY;
         this.INV_KEY = Tutorial.INV_KEY;
         this.GOBLINSKULL_KEY = Tutorial.GOBLINSKULL_KEY;
         this.JELLYHEART_KEY = Tutorial.JELLYHEART_KEY;
@@ -177,6 +180,7 @@ export default class Tutorial extends HW3Level {
         this.load.audio(this.hitKey,Tutorial.HIT_PATH);
         // Game UI sprites
         this.load.image(this.HP_KEY, Tutorial.HP_PATH);
+        this.load.image(this.BOSS_HP_KEY, Tutorial.BOSS_HP_PATH);
         this.load.image(this.INV_KEY, Tutorial.INV_PATH);
         this.load.image(this.GOBLINSKULL_KEY, Tutorial.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Tutorial.JELLYHEART_PATH);

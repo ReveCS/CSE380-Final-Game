@@ -51,6 +51,7 @@ export default class Tutorial extends HW3Level {
 
     public static readonly HIT_KEY = "HIT";
     public static readonly HIT_PATH = "game_assets/sounds/gettinghit.wav";
+    
 
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
@@ -161,6 +162,7 @@ export default class Tutorial extends HW3Level {
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
+
     }
 
     /**
@@ -186,6 +188,7 @@ export default class Tutorial extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Tutorial.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Tutorial.SWORDRUBY_PATH);
         this.load.image(this.QUEST_KEY, Tutorial.QUEST_PATH);
+        
         // Load in Enemy sprites
         this.load.spritesheet(this.goblinSpriteKey, Tutorial.GOBLIN_SPRITE_PATH);
         this.load.spritesheet(this.swordSpriteKey, Tutorial.SWORD_SPRITE_PATH);

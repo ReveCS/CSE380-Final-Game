@@ -82,8 +82,6 @@ export default abstract class HW3Level extends Scene {
     private swordCount: Label;
     protected QuestSprite: Sprite;
     protected bossHPSprite: Sprite;
-    protected attack1: Sprite;
-    protected attack3: Sprite;
 
     // The key and path to the sprites
     protected HP_KEY: string;
@@ -100,16 +98,13 @@ export default abstract class HW3Level extends Scene {
     protected QUEST_PATH: string;
     protected BOSS_HP_KEY:string;
     protected BOSS_HP_PATH:string;
-    protected BOSS_ATTACK_KEY:string;
-    protected BOSS_ATTACK_PATH: string;
+    
 
      /* Portal */
      protected portalPosition: Vec2;
      protected portalHalfSize: Vec2;
 
-     /* Laser */
-     protected laserPosition: Vec2;
-     protected laserHalfSize: Vec2;
+    
 
     // Keep track of how many of each enemy
     protected goblinsKilled: number;
@@ -189,9 +184,7 @@ export default abstract class HW3Level extends Scene {
         // Initialize the viewport - this must come after the player has been initialized
         this.initializeViewport();
         this.subscribeToEvents();
-        this.attack1 = this.initializeIndicator(this.BOSS_ATTACK_KEY,this.player.position);
-        this.attack1.scale.set(20,2.5);
-        this.attack1.visible = false;
+        
     
         // Initialize the ends of the levels - must be initialized after the primary layer has been added
         // this.initializeLevelEnds();
@@ -805,8 +798,16 @@ export default abstract class HW3Level extends Scene {
         let laser = this.add.animatedSprite(key,HW3Layers.PRIMARY);
         laser.scale.set(1,1);
         laser.position.copy(spawn);
-        // laser.visible = false;
         return laser;
+    }
+    protected initializeSpikes(key:string, spawn: Vec2): HW3AnimatedSprite{
+        if(spawn == undefined){
+            throw new Error("Portal must be set before initialiing!");
+        }
+        let spike = this.add.animatedSprite(key,HW3Layers.PRIMARY);
+        spike.scale.set(3,2);
+        spike.position.copy(spawn);
+        return spike;
     }
     protected initializePortal(key:string,spawn:Vec2): HW3AnimatedSprite{
         if(spawn == undefined){

@@ -320,6 +320,29 @@
 					"duration":125
 				}
 			]
+		},
+		{
+			"name":"ATTACK_3",
+			"repeat":true,
+			"frames": [
+				
+				{
+					"index":65,
+					"duration":25
+				},
+				{
+					"index":66,
+					"duration":25
+				},
+				{
+					"index":67,
+					"duration":25
+				},
+				{
+					"index":68,
+					"duration":25
+				}
+			]
 		}
 		
 

@@ -42,8 +42,8 @@ export default class Attack_1 extends BossState {
                 this.parent.velocity.x = 0;
                 this.right = true;
                 this.down = true;
-                this.parent.bossAttack1.position = new Vec2(this.owner.position.clone().x-300,this.owner.position.clone().y);
-                this.parent.bossAttack1.visible = true;
+                this.parent.indicatorAttack1.position = new Vec2(this.owner.position.clone().x-300,this.owner.position.clone().y);
+                this.parent.indicatorAttack1.visible = true;
                 
             }
 
@@ -71,7 +71,7 @@ export default class Attack_1 extends BossState {
                 this.right = false;
                 this.rightFinished = true;
                 this.leftToRight = new Vec2(this.parent.playerPosition.x+300,this.parent.playerPosition.y)
-                this.parent.bossAttack1.position = new Vec2(this.owner.position.clone().x+300,this.owner.position.clone().y);
+                this.parent.indicatorAttack1.position = new Vec2(this.owner.position.clone().x+300,this.owner.position.clone().y);
                 
 
 
@@ -95,7 +95,7 @@ export default class Attack_1 extends BossState {
                  }
                 
                 if(Math.abs(this.leftToRight.x-this.owner.position.x) <= 5){
-                    this.parent.bossAttack1.visible = false;
+                    this.parent.indicatorAttack1.visible = false;
                     this.done = true;
                     
                     

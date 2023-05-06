@@ -1,17 +1,17 @@
 {
-	"name": "Attack_2z",
-	"spriteSheetImage": "Attack2.png",
-	"spriteWidth": 128,
-	"spriteHeight": 240,
+	"name": "Attack_3",
+	"spriteSheetImage": "Attack3.png",
+	"spriteWidth": 121,
+	"spriteHeight": 45,
 	"leftBuffer": 0,
 	"rightBuffer": 0,
 	"topBuffer": 0,
 	"bottomBuffer": 0,
-	"columns": 5,
-	"rows": 3,
+	"columns": 1,
+	"rows": 5,
 	"animations": [
 		{
-			"name": "FIRE",
+			"name": "ATTACK",
 			"repeat": false,
 			"frames": [
 				{
@@ -33,57 +33,47 @@
 				{
 					"index": 4,
 					"duration": 25
-				},
-				{
-					"index": 5,
-					"duration": 25
-				},
-				{
-					"index": 6,
-					"duration": 25
-				},
-				{
-					"index": 7,
-					"duration": 25
-				},
-				{
-					"index": 8,
-					"duration": 25
-				},
-				{
-					"index": 9,
-					"duration": 25
-				},
-				{
-					"index": 10,
-					"duration": 25
-				},
-				{
-					"index": 11,
-					"duration": 25
-				},
-				{
-					"index": 12,
-					"duration": 25
-				},
-				{
-					"index": 13,
-					"duration": 25
 				}
 				
 			]
 		},
 		{
-			"name": "INDICATOR",
+			"name":"FINISHED",
 			"repeat": false,
-			"frames": [
+			"frames":[
 				{
-					"index": 14,
+					"index": 4,
 					"duration": 25
 				}
 			]
-
+		},
+		{
+			"name":"RETRACT",
+			"repeat": false,
+			"frames":[
+				{
+					"index": 4,
+					"duration": 25
+				},
+				{
+					"index": 3,
+					"duration": 25
+				},
+				{
+					"index": 2,
+					"duration": 25
+				},
+				{
+					"index": 1,
+					"duration": 25
+				},
+				{
+					"index": 0,
+					"duration": 25
+				}
+			]
 		}
+		
 		
 
 

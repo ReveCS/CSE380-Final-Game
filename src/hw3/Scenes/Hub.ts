@@ -73,8 +73,7 @@ export default class Hub extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
-    public static readonly BOSS_ATTACK1_KEY = "BOSS_ATTACK1";
-    public static readonly BOSS_ATTACK1_PATH = "game_assets/sprites/attack_indicator.png";
+
 
     // NPC Sprites
     public static readonly NPC_1_SPAWN = new Vec2(200, 1243);
@@ -202,7 +201,6 @@ export default class Hub extends HW3Level {
         this.questUI = [];
         this.talkBuffer = [];
 
-        this.BOSS_ATTACK_KEY = Hub.BOSS_ATTACK1_KEY;
     }
     /**
      * Load in resources for level 4.
@@ -227,7 +225,6 @@ export default class Hub extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Hub.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Hub.SWORDRUBY_PATH);
         this.load.image(this.QUEST_KEY, Hub.QUEST_PATH);
-        this.load.image(this.BOSS_ATTACK_KEY,Hub.BOSS_ATTACK1_PATH);
 
         // Load in NPC sprites
         this.load.spritesheet(this.NPC_1_SpriteKey, Hub.NPC_1_SPRITE_PATH);

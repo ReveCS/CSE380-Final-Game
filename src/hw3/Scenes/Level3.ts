@@ -60,8 +60,7 @@ export default class Level3 extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
-    public static readonly BOSS_ATTACK1_KEY = "BOSS_ATTACK1";
-    public static readonly BOSS_ATTACK1_PATH = "game_assets/sprites/attack_indicator.png";
+    
 
     // Enemy Sprites
     public static readonly ENEMY_DEFAULT_SPAWN = new Vec2(200, 1150);
@@ -124,7 +123,7 @@ export default class Level3 extends HW3Level {
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
 
-        this.BOSS_ATTACK_KEY = Level3.BOSS_ATTACK1_KEY;
+        
     }
 
     /**
@@ -150,7 +149,6 @@ export default class Level3 extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Level3.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Level3.SWORDRUBY_PATH);
         this.load.image(this.QUEST_KEY, Level3.QUEST_PATH);
-        this.load.image(this.BOSS_ATTACK_KEY,Level3.BOSS_ATTACK1_PATH);
 
 
         // Load in Enemy sprites

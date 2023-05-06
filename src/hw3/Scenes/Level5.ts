@@ -13,9 +13,9 @@ import Level1 from "./HW3Level1";
 import Level2 from "./HW3Level2";
 import Level3 from "./Level3";
 import Level4 from "./Level4";
-import { LaserAnimation } from "../Laser/Laser";
 import BossController from "../Boss/BossController";
 import { HW3PhysicsGroups } from "../HW3PhysicsGroups";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
@@ -56,6 +56,11 @@ export default class Level5 extends HW3Level {
     public static readonly SWING_KEY = "SWING";
     public static readonly SWING_PATH = "game_assets/sounds/swing.wav";
 
+    public static readonly INDICATOR_KEY = "INDICATOR_KEY";
+    public static readonly INDICATOR_PATH = "game_assets/sprites/attack_indicator.png";
+
+    public static readonly BOSS_ATTACK3_KEY = "BOSS_ATTACK3_KEY";
+    public static readonly BOSS_ATTACK3_PATH = "game_assets/spritesheets/Attack3.json";
 
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
@@ -72,8 +77,7 @@ export default class Level5 extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
-    public static readonly BOSS_ATTACK1_KEY = "BOSS_ATTACK1";
-    public static readonly BOSS_ATTACK1_PATH = "game_assets/sprites/attack_indicator.png";
+    
 
     // Enemy Sprites
 
@@ -84,9 +88,23 @@ export default class Level5 extends HW3Level {
     protected boss:HW3AnimatedSprite;
     protected bossSpriteKey: string;
 
+    protected indicator: Sprite;
+    protected indicator1: Sprite;
+    protected indicator2: Sprite;
+
+    protected attack3Spawn: Vec2;
+    protected attack3SpriteKey: string;
+    protected attack3: HW3AnimatedSprite;
+
+    protected attack3_2Spawn: Vec2;
+    protected attack3_2: HW3AnimatedSprite;
+
     protected laser: HW3AnimatedSprite;
     protected laserSpriteKey:string;
     protected laserSpawn: Vec2;
+
+    protected indicatorSpriteKey:string;
+
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
@@ -131,9 +149,12 @@ export default class Level5 extends HW3Level {
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
 
-        this.laserSpriteKey = Level5.LASER_SPRITE_KEY
+        this.laserSpriteKey = Level5.LASER_SPRITE_KEY;
+        this.attack3SpriteKey = Level5.BOSS_ATTACK3_KEY;
+        this.indicatorSpriteKey = Level5.INDICATOR_KEY;
+
         
-        this.BOSS_ATTACK_KEY = Level5.BOSS_ATTACK1_KEY;
+        
   
     }
 
@@ -163,8 +184,9 @@ export default class Level5 extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Level5.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Level5.SWORDRUBY_PATH);
         this.load.image(this.QUEST_KEY, Level5.QUEST_PATH);
-        this.load.image(this.BOSS_ATTACK_KEY,Level5.BOSS_ATTACK1_PATH);
+        this.load.image(this.indicatorSpriteKey,Level5.INDICATOR_PATH);
         this.load.spritesheet(this.laserSpriteKey,Level5.LASER_SPRITE_PATH);
+        this.load.spritesheet(this.attack3SpriteKey,Level5.BOSS_ATTACK3_PATH);
         this.load.image(this.BOSS_HP_KEY, Level5.BOSS_HP_PATH);
 
         // Load in Enemy sprites
@@ -190,13 +212,17 @@ export default class Level5 extends HW3Level {
     public startScene(): void {
         super.startScene();
         // Set the next level to be Level2
-        this.initializeFinalBoss();
         this.laserInitialize();
+        this.indicatorInitialize();
+        this.spikeInitialize();
+        this.initializeFinalBoss();
         this.nextLevel = Hub;
 
     }
     protected initializeFinalBoss(){
         this.boss = this.initializeBoss(this.bossSpriteKey,this.bossSpawn,5);
+        this.boss.addAI(BossController, { player: this.player, radius: 5,spawn:this.bossSpawn, laser:this.laser, indicator:this.indicator, indicator1: this.indicator1, indicator2: this.indicator2,attack3:this.attack3, attack3_2:this.attack3_2});
+
     }
 
     protected handleCheat1(): void {
@@ -214,15 +240,38 @@ export default class Level5 extends HW3Level {
     protected handleCheat5(): void {
         this.sceneManager.changeToScene(Level5);
     }
+    protected indicatorInitialize(){
+        this.indicator = this.initializeIndicator(this.indicatorSpriteKey,Level5.PLAYER_SPAWN);
+        this.indicator1 = this.initializeIndicator(this.indicatorSpriteKey,Level5.PLAYER_SPAWN);
+        this.indicator2 = this.initializeIndicator(this.indicatorSpriteKey,Level5.PLAYER_SPAWN);
+        this.indicator.scale.set(30,3);
+        this.indicator1.scale.set(10,3);
+        this.indicator2.scale.set(10,3);
+        
+        this.indicator.visible = false;
+        this.indicator1.visible = false;
+        this.indicator2.visible = false;
+    }
     protected laserInitialize(){
         this.laser = this.initializeLaser(this.laserSpriteKey,new Vec2(this.bossSpawn.x,this.bossSpawn.y+125))
         this.laser.boundary.setHalfSize(new Vec2(20,120));
         this.laser.addPhysics(new AABB(new Vec2(this.bossSpawn.x,this.bossSpawn.y+125),this.laser.boundary.getHalfSize().clone()));
         this.laser.setGroup(HW3PhysicsGroups.BOSS);
         this.laser.visible = false;
-        this.boss.addAI(BossController, { player: this.player, radius: 5,spawn:this.bossSpawn, laser:this.laser, attack1:this.attack1});
 
     }
+    protected spikeInitialize(){
+        this.attack3 = this.initializeSpikes(this.attack3SpriteKey, new Vec2(this.bossSpawn.x-200, this.bossSpawn.y+55));
+        this.attack3_2 = this.initializeSpikes(this.attack3SpriteKey, new Vec2(this.bossSpawn.x+200, this.bossSpawn.y+55)); 
+        this.attack3.addPhysics(new AABB( new Vec2(this.bossSpawn.x-200, 1200)), this.attack3.boundary.getHalfSize().clone());
+        this.attack3_2.addPhysics(new AABB( new Vec2(this.bossSpawn.x+200, 1200)), this.attack3_2.boundary.getHalfSize().clone());
+        this.attack3.setGroup(HW3PhysicsGroups.BOSS);
+        this.attack3_2.setGroup(HW3PhysicsGroups.BOSS);
+        this.attack3.visible = false;
+        this.attack3_2.visible = false;
+
+    }
+    
 
     /**
      * I had to override this method to adjust the viewport for the first level. I screwed up 

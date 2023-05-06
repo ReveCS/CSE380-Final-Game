@@ -1,7 +1,5 @@
 import { BossStates, BossAnimations } from "../BossController";
 import BossState from "./BossState";
-import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
-import { HW3PhysicsGroups } from "../../HW3PhysicsGroups";
 
 export default class Idle extends BossState {
     protected timer:number = 0;
@@ -55,15 +53,19 @@ export default class Idle extends BossState {
 
         this.timer += 1;
         if(this.timer == 200){
-            let attackArray = [1,1,2,1];
-            let nextAttack = attackArray[this.index];
-            // let nextAttack = 1;
+            let attackArray = [1,1,2,1,3];
+            // let nextAttack = attackArray[this.index];
+            let nextAttack = 2;
             if(nextAttack == 1){
                 this.finished(BossStates.ATTACK_1);
                 this.index = (this.index + 1) % attackArray.length;
                 this.timer = 0;
             }else if(nextAttack == 2){
                 this.finished(BossStates.ATTACK_2);
+                this.index = (this.index + 1) % attackArray.length;
+                this.timer = 0;
+            }else if(nextAttack == 3){
+                this.finished(BossStates.ATTACK_3);
                 this.index = (this.index + 1) % attackArray.length;
                 this.timer = 0;
             }

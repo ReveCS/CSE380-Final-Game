@@ -20,6 +20,7 @@ import Attack_2 from "./BossStates/Attack_2";
 import { CombatEvents } from "../Events/CombatEvents";
 import { HW3Events } from "../Events/HW3Events";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
+import Attack_3 from "./BossStates/Attack_3";
 // import { CombatEvents } from "../Events/CombatEvents";
 
 /**
@@ -33,7 +34,9 @@ export const BossAnimations = {
     DYING: "DYING",
     DEATH: "DEATH",
     STATUE: "STATUE",
-    SPAWN: "SPAWN"
+    SPAWN: "SPAWN",
+    ATTACK_3: "ATTACK_3"
+
     
 } as const
 
@@ -47,6 +50,7 @@ export const BossStates = {
     IDLE: "IDLE",
     ATTACK_1: "ATTACK_1",
     ATTACK_2: "ATTACK_2",
+    ATTACK_3: "ATTACK_3",
     HURT: "HURT",
     STATUE:"STATUE",
     DEATH: "DEATH",
@@ -69,8 +73,12 @@ export default class BossController extends StateMachineAI {
     /** The enemy's game node */
     protected owner: HW3AnimatedSprite;
     protected bossLaser: HW3AnimatedSprite;
-    protected attack1: Sprite;
-
+    protected spikes: HW3AnimatedSprite;
+    protected spikes2:HW3AnimatedSprite;
+    protected indicator: Sprite;
+    protected indicator1: Sprite;
+    protected indicator2: Sprite;
+    protected lessThan50percent = false;
     protected _velocity: Vec2;
 	protected _speed: number;
 
@@ -90,7 +98,13 @@ export default class BossController extends StateMachineAI {
     public initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>){
         this.owner = owner;
         this.bossLaser = options.laser;
-        this.attack1 = options.attack1;
+        this.indicator = options.indicator;
+        this.indicator1 = options.indicator1;
+        this.indicator2 = options.indicator2;
+        this.spikes = options.attack3;
+        this.spikes2 = options.attack3_2;
+        
+
         // this.weapon = options.weaponSystem;
 
         // this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
@@ -108,13 +122,14 @@ export default class BossController extends StateMachineAI {
         this.spawn = options.spawn;
         this._player = options.player;
         // Add the different states the enemy can be in to the EnemyController 
-		this.addState(BossStates.IDLE, new Idle(this, this.owner,this.bossLaser));
-        this.addState(BossStates.ATTACK_1, new Attack_1(this, this.owner,this.bossLaser));
-        this.addState(BossStates.ATTACK_2, new Attack_2(this, this.owner,this.bossLaser));
-        this.addState(BossStates.HURT, new Hurt(this, this.owner,this.bossLaser));
+		this.addState(BossStates.IDLE, new Idle(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
+        this.addState(BossStates.ATTACK_1, new Attack_1(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
+        this.addState(BossStates.ATTACK_2, new Attack_2(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
+        this.addState(BossStates.ATTACK_3, new Attack_3(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
+        this.addState(BossStates.HURT, new Hurt(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
         // this.addState(BossStates.DEATH, new Dead(this, this.owner));
-        this.addState(BossStates.SPAWN, new Spawn(this,this.owner,this.bossLaser));
-        this.addState(BossStates.STATUE, new Statue(this, this.owner,this.bossLaser));
+        this.addState(BossStates.SPAWN, new Spawn(this,this.owner,this.bossLaser, this.spikes, this.spikes2));
+        this.addState(BossStates.STATUE, new Statue(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
         
         // Start the enemy in the Idle state
         this.initialize(BossStates.STATUE);
@@ -156,11 +171,21 @@ export default class BossController extends StateMachineAI {
 
     public get laserPosition(): Vec2 { return this.bossLaser.position}
     public set laserPosition(position: Vec2){ this.bossLaser.position = position}
-    public get bossAttack1(): Sprite { return this.attack1}
+    public get indicatorAttack1(): Sprite { return this.indicator}
+    public get indicatorAttack3_1(): Sprite { return this.indicator1}
+    public get indicatorAttack3_2(): Sprite { return this.indicator2}
+    public get lessthan50(): boolean {return this.lessThan50percent}
+    public set lessthan50(less: boolean){this.lessThan50percent = less}
     public get velocity(): Vec2 { return this._velocity; }
     public set velocity(velocity: Vec2) { this._velocity = velocity; }
     public get isInvincible():boolean{return this.invincible}
     public set isInvincible(invincible:boolean){this.invincible = invincible}
+
+    public get spikesPosition(): Vec2 {return this.spikes.position}
+    public set spikesPosition(position: Vec2){ this.spikes.position = position}
+    public get spikes2Position(): Vec2 {return this.spikes2.position}
+    public set spikes2Position(position: Vec2){ this.spikes.position = position}
+
     public get speed(): number { return this._speed; }
     public set speed(speed: number) { this._speed = speed; }
 

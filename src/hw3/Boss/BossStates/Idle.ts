@@ -7,8 +7,13 @@ export default class Idle extends BossState {
     protected spawn: boolean = true;
     protected invinciblityTimer:number = 0;
     protected phase2Timer: number = 0;
-    	public onEnter(options: Record<string, any>): void {        
-        this.owner.animation.queue(BossAnimations.IDLE);        
+    public onEnter(options: Record<string, any>): void {     
+        console.log(this.parent.secondP);   
+        if(!this.parent.secondP){
+            this.owner.animation.queue(BossAnimations.IDLE);
+        }else{
+            this.owner.animation.queue(BossAnimations.PHASE_2_IDLE);
+        }
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
         this.parent.velocity.y = 0;
@@ -16,11 +21,19 @@ export default class Idle extends BossState {
 	}
 
 	public update(deltaT: number): void {
-        if(!this.owner.animation.isPlaying(BossAnimations.IDLE)){
-            if(!this.owner.animation.isPlaying(BossAnimations.SPAWN) && !this.owner.animation.isPlaying(BossAnimations.ATTACK_2)  && this.parent.health> 0 && !this.owner.animation.isPlaying(BossAnimations.HURT) && !this.owner.animation.isPlaying(BossAnimations.ATTACK_1)){
-                 this.owner.animation.play(BossAnimations.IDLE)
-            }
-         }
+        if(!this.parent.secondP){
+            if(!this.owner.animation.isPlaying(BossAnimations.IDLE)){
+                if(!this.owner.animation.isPlaying(BossAnimations.SPAWN) && !this.owner.animation.isPlaying(BossAnimations.ATTACK_2)  && this.parent.health> 0 && !this.owner.animation.isPlaying(BossAnimations.HURT) && !this.owner.animation.isPlaying(BossAnimations.ATTACK_1)){
+                     this.owner.animation.play(BossAnimations.IDLE)
+                }
+             }
+        }else{
+            if(!this.owner.animation.isPlaying(BossAnimations.PHASE_2_IDLE)){
+                if(!this.owner.animation.isPlaying(BossAnimations.PHASE_2_ATTACK_2)  && this.parent.health> 0 && !this.owner.animation.isPlaying(BossAnimations.PHASE_2_HURT) && !this.owner.animation.isPlaying(BossAnimations.PHASE_2_ATTACK_1)){
+                     this.owner.animation.play(BossAnimations.PHASE_2_IDLE)
+                }
+             }
+        }
 		super.update(deltaT);
         if(this.spawn){
             let dir = this.dirToSky;
@@ -72,7 +85,7 @@ export default class Idle extends BossState {
                 }
             }
         }else{
-            if(this.phase2Timer >= 200){
+            if(this.phase2Timer >= 150){
                 if(this.timer >= 150){
                     let attackArray = [2,1,3,2,1];
                     let nextAttack = attackArray[this.index];
@@ -91,13 +104,16 @@ export default class Idle extends BossState {
                     }
                 }
                 
+  
             }else{
-                this.parent.isInvincible = true;
-            }
-            if(this.phase2Timer >= 100){
                 if(this.parent.health <= this.parent.maxHealth*0.8){
                     this.parent.health += 0.1;
                 }
+                this.parent.isInvincible = true;
+                
+                
+                
+                
             }
             this.phase2Timer+=1;
         }

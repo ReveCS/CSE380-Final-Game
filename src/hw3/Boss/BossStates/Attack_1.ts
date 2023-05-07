@@ -130,9 +130,9 @@ export default class Attack_1 extends BossState {
                     if(this.dirToPlayer.x !== 0){
                         this.owner.invertX = MathUtils.sign(this.dirToPlayer.x) < 0;
                     }
-                    if(!this.owner.animation.isPlaying(BossAnimations.ATTACK_1)){
-                        if(!this.owner.animation.isPlaying(BossAnimations.ATTACK_2)  && this.parent.health> 0 && !this.owner.animation.isPlaying(BossAnimations.HURT)){
-                             this.owner.animation.play(BossAnimations.ATTACK_1)
+                    if(!this.owner.animation.isPlaying(BossAnimations.PHASE_2_ATTACK_1)){
+                        if(!this.owner.animation.isPlaying(BossAnimations.PHASE_2_ATTACK_2)  && this.parent.health> 0 && !this.owner.animation.isPlaying(BossAnimations.PHASE_2_HURT)){
+                             this.owner.animation.play(BossAnimations.PHASE_2_ATTACK_1)
                         }
                      }
                      if(this.flag){

@@ -89,7 +89,7 @@ export default class Attack_2 extends BossState {
                     if(Math.abs(this.parent.playerPosition.x-this.owner.position.x) <= 5){
                         this.parent.velocity.y = 0;
                         this.parent.velocity.x = 0;
-                        this.owner.animation.play(BossAnimations.ATTACK_2);
+                        this.owner.animation.play(BossAnimations.PHASE_2_ATTACK_2);
                         
                         this.bossLaser.visible = true;
                         this.bossLaser.alpha = 0.5;

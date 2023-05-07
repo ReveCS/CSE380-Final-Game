@@ -53,6 +53,9 @@ export default class SplashScreen extends Scene {
         // Load sprites
 		this.load.image(SplashScreen.BACKGROUND_KEY, SplashScreen.BACKGROUND_PATH);
         this.load.image(SplashScreen.LOGO_KEY, SplashScreen.LOGO_PATH);
+
+        // clear the session after every refresh
+        sessionStorage.clear();
     }
 
     public startScene(): void {

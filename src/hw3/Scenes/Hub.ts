@@ -137,6 +137,9 @@ export default class Hub extends HW3Level {
     private talkBuffer: Array<Label>;
     private textPosition: Vec2;
     private talkPosition: Vec2;
+    private talkText: string;
+    private npcID: number;
+    private isSubmitting: boolean;
 
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
         super(viewport, sceneManager, renderingManager, options);
@@ -253,7 +256,7 @@ export default class Hub extends HW3Level {
         if (this.isDisplayingQuestText) this.displayQuestUI();
         if (this.isDisplayingTalkText && this.talkTimer.isStopped()) {
             if (this.talkTimer.hasRun()) this.clearTalk();
-            else this.displayTalk();
+            else this.displayTalk(this.talkText);
         }
     }
 
@@ -273,7 +276,7 @@ export default class Hub extends HW3Level {
                 this.displayTimer.start(250);
                 this.textPosition.inc(0, 30);
             }
-            else { // when buffer is empty
+            else if (!this.isSubmitting) { // when buffer is empty and player isn't turning in quest
                 // Draw accept/decline buttons
                 const yes = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
                     position: new Vec2(450, 350),
@@ -301,6 +304,7 @@ export default class Hub extends HW3Level {
                 yesDummy.textColor = Color.BLACK;
                 yesDummy.fontSize = 28;
                 yesDummy.onClickEventId = NPCEvents.ACCEPT_QUEST;
+                yesDummy.onClickData = { npcID: this.npcID }
                 this.questUI.push(yesDummy);
 
                 const no = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
@@ -332,7 +336,39 @@ export default class Hub extends HW3Level {
                 this.questUI.push(noDummy);
 
                 this.isDisplayingQuestText = false; // don't draw
-                // this.emitter.fireEvent(NPCEvents.DONE_TALKING_TO_NPC);
+            }
+            else {
+                // Draw turn in button
+                const submit = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+                    position: new Vec2(490, 350),
+                    text: "Turn in"
+                });
+                submit.size.set(140, 40);
+                submit.borderWidth = 4;
+                submit.borderColor = new Color(118, 91, 53);
+                submit.backgroundColor = Color.TRANSPARENT;
+                submit.font = "Hjet-Regular";
+                submit.textColor = Color.BLACK;
+                submit.fontSize = 28;
+                this.questUI.push(submit);
+
+                // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
+                const submitDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+                    position: new Vec2(980, 700),
+                    text: "Turn in"
+                });
+                submitDummy.size.set(140, 40);
+                submitDummy.borderWidth = 4;
+                submitDummy.borderColor = new Color(118, 91, 53);
+                submitDummy.backgroundColor = Color.TRANSPARENT;
+                submitDummy.font = "Hjet-Regular";
+                submitDummy.textColor = Color.BLACK;
+                submitDummy.fontSize = 28;
+                submitDummy.onClickEventId = NPCEvents.SUBMIT_QUEST;
+                submitDummy.onClickData = { goblins: this.goblinsKilled, swords: this.swordsKilled, jellies: this.jelliesKilled }
+                this.questUI.push(submitDummy);
+
+                this.isDisplayingQuestText = false;
             }
         }
     }
@@ -345,12 +381,12 @@ export default class Hub extends HW3Level {
     }
 
     // handle NPCEvents.TALKING_TO_NPC
-    protected handleTalkingNPC(id: string): void {
+    protected handleTalkingNPC(questID: string, npcID: number, isSubmitting: boolean): void {
         // split the string into individual sentences.
         let re = /.*?[\.?!]/g;
         // replace newlines with space, then spaces that are more than 1 with a single space
         // then split and remove trailing whitespace
-        let sentences = Quests[id].replace(/\n/g, " ").replace(/ +/g, " ").match(re).map(x => x.trim())
+        let sentences = Quests[questID].replace(/\n/g, " ").replace(/ +/g, " ").match(re).map(x => x.trim());
         // sentences.splice(0, 0, "Will you accept my quest adventurer? (y) or (n)");
         let words:Array<string> = [];
         for (let i = 0; i < sentences.length; i++) {
@@ -378,16 +414,27 @@ export default class Hub extends HW3Level {
         this.displayTimer.start();
         this.QuestSprite.visible = true;
         this.textPosition = new Vec2(492, 50);
+
+        this.npcID = npcID;
+        this.isSubmitting = isSubmitting;
     }
 
     // handle NPCEvents.SMALL_TALK
-    protected handleSmallTalkNPC(position: Vec2): void {
+    protected handleSmallTalkNPC(position: Vec2, text: string): void {
         this.talkPosition = position;
         this.isDisplayingTalkText = true;
+        this.talkText = text !== undefined ? text : "";
     }
-    protected displayTalk(): void {
-        let key = Math.floor(Math.random() * Object.keys(NPCPhrases).length);
-        let phrase = NPCPhrases[key];
+    protected displayTalk(text:string = ""): void {
+        let phrase = "";
+        if (text.length > 0) {
+            phrase = text;
+        }
+        else {
+            let key = Math.floor(Math.random() * Object.keys(NPCPhrases).length);
+            phrase = NPCPhrases[key];
+        }
+
         const label = <Label> this.add.uiElement(UIElementType.LABEL, HW3Layers.PRIMARY, {
             position: this.talkPosition.clone().inc(0, -60),
             text: phrase
@@ -407,17 +454,19 @@ export default class Hub extends HW3Level {
     }
 
     // Quests should be in order from last -> first
-    // ex: ["A", "B", "C"] will give out quests in order 3 -> 2 -> 1
+    // ex: ["1", "2", "3"] will give out quests in order 3 -> 2 -> 1
     protected initializeNPCs() {
-        // initialize placeholder
-        let placeholderQuests = ["1"];
-        this.initializeNPC(this.NPC_1,this.NPC_1_SpriteKey, this.NPC_1_Spawn, placeholderQuests);
+        let oneQuests:Array<string> = ["2"];
+        this.NPC_1 = this.initializeNPC(this.NPC_1,this.NPC_1_SpriteKey, this.NPC_1_Spawn, oneQuests, 1);
         
-        this.initializeNPC(this.NPC_2,this.NPC_2_SpriteKey, this.NPC_2_Spawn, []);
+        let twoQuests:Array<string> = [];
+        this.NPC_2 = this.initializeNPC(this.NPC_2,this.NPC_2_SpriteKey, this.NPC_2_Spawn, twoQuests, 2);
         
-        this.initializeNPC(this.NPC_3,this.NPC_3_SpriteKey, this.NPC_3_Spawn, placeholderQuests);
-       
-        this.initializeNPC(this.NPC_4,this.NPC_4_SpriteKey, this.NPC_4_Spawn, placeholderQuests);
+        let threeQuests:Array<string> = ["1"];
+        this.NPC_3 = this.initializeNPC(this.NPC_3,this.NPC_3_SpriteKey, this.NPC_3_Spawn, threeQuests, 3);
+        
+        let fourQuests:Array<string> = ["1"];
+        this.NPC_4 = this.initializeNPC(this.NPC_4,this.NPC_4_SpriteKey, this.NPC_4_Spawn, fourQuests, 4);
         
         //this.initializeNPC(this.NPC_Shop, this.NPC_Shop_SpriteKey, this.NPC_Shop_Spawn, placeholderQuests);
 

@@ -328,7 +328,7 @@ export default abstract class HW3Level extends Scene {
                 break;
             }
             case NPCEvents.TALKING_TO_NPC: {
-                this.handleTalkingNPC(event.data.get("id"));
+                this.handleTalkingNPC(event.data.get("questID"), event.data.get("npcID"), event.data.get("isSubmitting"));
                 break;
             }
             case NPCEvents.ACCEPT_QUEST: {
@@ -340,8 +340,12 @@ export default abstract class HW3Level extends Scene {
                 this.clearQuestUI();
                 break;
             }
+            case NPCEvents.SUBMIT_QUEST: {
+                this.clearQuestUI();
+                break;
+            }
             case NPCEvents.SMALL_TALK: {
-                this.handleSmallTalkNPC(event.data.get("pos"));
+                this.handleSmallTalkNPC(event.data.get("pos"), event.data.get("text"));
                 break;
             }
             // Default: Throw an error! No unhandled events allowed.
@@ -520,6 +524,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(NPCEvents.TALKING_TO_NPC);
         this.receiver.subscribe(NPCEvents.ACCEPT_QUEST);
         this.receiver.subscribe(NPCEvents.DECLINE_QUEST);
+        this.receiver.subscribe(NPCEvents.SUBMIT_QUEST);
         this.receiver.subscribe(NPCEvents.SMALL_TALK);
         
     }
@@ -754,7 +759,7 @@ export default abstract class HW3Level extends Scene {
         // });
     }
 
-    protected initializeNPC(npc:HW3AnimatedSprite, key:string, spawn:Vec2, quests:Array<string>): void {
+    protected initializeNPC(npc:HW3AnimatedSprite, key:string, spawn:Vec2, quests:Array<string>, order: number): HW3AnimatedSprite {
         if (spawn === undefined) {
             throw new Error("NPC spawn must be set before initializing!");
         }
@@ -766,7 +771,9 @@ export default abstract class HW3Level extends Scene {
         npc.disablePhysics();
 
         // Give the NPC it's AI
-        npc.addAI(NPCController, {player: this.player, quests: quests});
+        npc.addAI(NPCController, {player: this.player, quests: quests, id: order});
+
+        return npc;
         
     }
 
@@ -914,13 +921,13 @@ export default abstract class HW3Level extends Scene {
         throw new Error("handleCheat5 wasn't implemented");
     }
 
-    protected handleTalkingNPC(id: string): void {
+    protected handleTalkingNPC(questID: string, npcID: number, isSubmitting: boolean): void {
         throw new Error("handleTalkingNPC wasn't implemented in Hub.ts");
     }
     protected clearQuestUI(): void {
         throw new Error("clearQuestUI wasn't implemented in Hub.ts");
     }
-    protected handleSmallTalkNPC(position: Vec2): void {
+    protected handleSmallTalkNPC(position: Vec2, text: string): void {
         throw new Error("handleSmallTalkNPC wasn't implemented");
     }
 }

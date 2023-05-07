@@ -17,6 +17,7 @@ export default class Talking extends PlayerState {
         this.receiver = new Receiver();
         this.receiver.subscribe(NPCEvents.ACCEPT_QUEST);
         this.receiver.subscribe(NPCEvents.DECLINE_QUEST);
+        this.receiver.subscribe(NPCEvents.SUBMIT_QUEST);
 	}
 
 	public onEnter(options: Record<string, any>): void {
@@ -25,17 +26,22 @@ export default class Talking extends PlayerState {
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
         this.parent.velocity.y = 0;
-
-        console.log("Talking.")
 	}
 
     public handleInput(event: GameEvent): void {
         switch(event.type) {
             case NPCEvents.ACCEPT_QUEST: {
+                this.parent.idOfQuestNPC = event.data.get("npcID");
+                sessionStorage.setItem("idOfQuestNPC", this.parent.idOfQuestNPC.toString());
+                this.emitter.fireEvent(NPCEvents.PROCESS_QUEST, { id: this.parent.idOfQuestNPC });
                 this.finished(PlayerStates.IDLE);
                 break;
             }
             case NPCEvents.DECLINE_QUEST: {
+                this.finished(PlayerStates.IDLE);
+                break;
+            }
+            case NPCEvents.SUBMIT_QUEST: {
                 this.finished(PlayerStates.IDLE);
                 break;
             }

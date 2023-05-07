@@ -24,6 +24,8 @@ export default abstract class UIElement extends CanvasNode {
 	onClick: Function;
 	/** The event propagated on click */
 	onClickEventId: string;
+	/** The data to send on event emitted */
+	onClickData: Record<string, any>;
 	/** The reaction to the release of a click */
 	onRelease: Function;
 	/** The event propagated on the release of a click */
@@ -54,6 +56,7 @@ export default abstract class UIElement extends CanvasNode {
 
 		this.onClick = null;
 		this.onClickEventId = null;
+		this.onClickData = null;
 		this.onRelease = null;
 		this.onReleaseEventId = null;
 
@@ -89,7 +92,7 @@ export default abstract class UIElement extends CanvasNode {
 					this.onClick();
 				}
 				if(this.onClickEventId !== null){
-					let data = {};
+					let data = this.onClickData === null ? {} : this.onClickData;
 					this.emitter.fireEvent(this.onClickEventId, data);
 				}
 			}

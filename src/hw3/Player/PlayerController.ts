@@ -21,6 +21,7 @@ import { HW3Events } from "../Events/HW3Events";
 import { CombatEvents } from "../Events/CombatEvents";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
+import { NPCEvents } from "../Events/NPCEvents";
 
 // TODO play your heros animations
 
@@ -88,6 +89,8 @@ export default class PlayerController extends StateMachineAI {
     protected _enemyDamage: number;
     protected invincible:boolean;
     protected timer:number = 0;
+
+    protected _idOfQuestNPC: number;
     
     public initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>){
         this.owner = owner;
@@ -106,6 +109,9 @@ export default class PlayerController extends StateMachineAI {
         this._enemyDamage = 0;
 
         this.isAttacking = false;
+
+        let id = parseInt(sessionStorage.getItem("idOfQuestNPC"));
+        this._idOfQuestNPC = isNaN(id) ? -1 : id;
 
         // Add the different states the player can be in to the PlayerController 
 		this.addState(PlayerStates.IDLE, new Idle(this, this.owner));
@@ -213,6 +219,9 @@ export default class PlayerController extends StateMachineAI {
 	}
 
     public get enemyDamage(): number { return this._enemyDamage; }
+
+    public get idOfQuestNPC(): number { return this._idOfQuestNPC; }
+    public set idOfQuestNPC(id: number) { this._idOfQuestNPC = id; }
 
     public get velocity(): Vec2 { return this._velocity; }
     public set velocity(velocity: Vec2) { this._velocity = velocity; }

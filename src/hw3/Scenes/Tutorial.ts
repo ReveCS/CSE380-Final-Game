@@ -215,7 +215,7 @@ export default class Tutorial extends HW3Level {
         this.nextLevel = Hub;
 
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(1000, 1243), 10);
-        this.initializeNPC(this.NPC,this.NPCSpriteKey, this.NPCSpawn, []);
+        this.initializeNPC(this.NPC,this.NPCSpriteKey, this.NPCSpawn, [], 0);
         this.portalInitialize();
     }
 

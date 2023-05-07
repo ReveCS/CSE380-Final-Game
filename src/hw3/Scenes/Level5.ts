@@ -77,6 +77,8 @@ export default class Level5 extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
+    public static readonly PAUSE_KEY = "PAUSE_KEY";
+    public static readonly PAUSE_PATH = "game_assets/sprites/PauseMenu.png";
     
 
     // Enemy Sprites
@@ -144,6 +146,8 @@ export default class Level5 extends HW3Level {
 
         // Quest
         this.QUEST_KEY = Level5.QUEST_KEY;
+        // Pause
+        this.PAUSE_KEY = Hub.PAUSE_KEY;
 
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
@@ -184,6 +188,8 @@ export default class Level5 extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Level5.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Level5.SWORDRUBY_PATH);
         this.load.image(this.QUEST_KEY, Level5.QUEST_PATH);
+        this.load.image(this.PAUSE_KEY, Level5.PAUSE_PATH);
+        // Boss UI sprites
         this.load.image(this.indicatorSpriteKey,Level5.INDICATOR_PATH);
         this.load.spritesheet(this.laserSpriteKey,Level5.LASER_SPRITE_PATH);
         this.load.spritesheet(this.attack3SpriteKey,Level5.BOSS_ATTACK3_PATH);

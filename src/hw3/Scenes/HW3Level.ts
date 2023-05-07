@@ -9,6 +9,7 @@ import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import RenderingManager from "../../Wolfie2D/Rendering/RenderingManager";
 import Scene from "../../Wolfie2D/Scene/Scene";
@@ -82,6 +83,11 @@ export default abstract class HW3Level extends Scene {
     private swordCount: Label;
     protected QuestSprite: Sprite;
     protected bossHPSprite: Sprite;
+    protected pauseSprite: Sprite;
+    protected menuButton: Button;
+    protected menuButtonDummy: Button;
+    protected resumeButton: Button;
+    protected resumeButtonDummy: Button;
 
     // The key and path to the sprites
     protected HP_KEY: string;
@@ -98,13 +104,15 @@ export default abstract class HW3Level extends Scene {
     protected QUEST_PATH: string;
     protected BOSS_HP_KEY:string;
     protected BOSS_HP_PATH:string;
-    
+    protected PAUSE_KEY: string;
+    protected PAUSE_PATH: string;
 
-     /* Portal */
-     protected portalPosition: Vec2;
-     protected portalHalfSize: Vec2;
+    /* Portal */
+    protected portalPosition: Vec2;
+    protected portalHalfSize: Vec2;
 
-    
+    // Pause Menu things
+    protected isPaused: boolean;
 
     // Keep track of how many of each enemy
     protected goblinsKilled: number;
@@ -593,6 +601,58 @@ export default abstract class HW3Level extends Scene {
         this.QuestSprite.scale.set(1, 1);
         this.QuestSprite.visible = false;
 
+        // Pause UI
+        this.pauseSprite = this.add.sprite(this.PAUSE_KEY, HW3Layers.UI);
+        this.pauseSprite.position.copy(new Vec2(300, 200));
+        this.pauseSprite.scale.set(1, 1);
+        this.pauseSprite.visible = false;
+
+        this.menuButton = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+            position: new Vec2(300, 180),
+            text: "Menu"
+        });
+        this.menuButton.size.set(140, 40);
+        this.menuButton.borderWidth = 4;
+        this.menuButton.borderColor = new Color(118, 91, 53);
+        this.menuButton.backgroundColor = Color.TRANSPARENT;
+        this.menuButton.font = "Hjet-Regular";
+        this.menuButton.textColor = Color.BLACK;
+        this.menuButton.fontSize = 28;
+        this.menuButton.visible = false;
+        // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
+        this.menuButtonDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+            position: new Vec2(600, 360),
+            text: ""
+        });
+        this.menuButtonDummy.size.set(140, 40);
+        this.menuButtonDummy.borderColor = Color.TRANSPARENT;
+        this.menuButtonDummy.backgroundColor = Color.TRANSPARENT;
+        this.menuButtonDummy.visible = false;
+        this.menuButtonDummy.onClickEventId = HW3Events.GAME_PAUSE;
+
+        this.resumeButton = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+            position: new Vec2(300, 220),
+            text: "Resume"
+        });
+        this.resumeButton.size.set(140, 40);
+        this.resumeButton.borderWidth = 4;
+        this.resumeButton.borderColor = new Color(118, 91, 53);
+        this.resumeButton.backgroundColor = Color.TRANSPARENT;
+        this.resumeButton.font = "Hjet-Regular";
+        this.resumeButton.textColor = Color.BLACK;
+        this.resumeButton.fontSize = 28;
+        this.resumeButton.visible = false;
+        // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
+        this.resumeButtonDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
+            position: new Vec2(600, 440),
+            text: ""
+        });
+        this.resumeButtonDummy.size.set(140, 40);
+        this.resumeButtonDummy.borderColor = Color.TRANSPARENT;
+        this.resumeButtonDummy.backgroundColor = Color.TRANSPARENT;
+        this.resumeButtonDummy.visible = false;
+        this.resumeButtonDummy.onClickEventId = HW3Events.GAME_PAUSE;
+
          // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, { position: new Vec2(-300, 100), text: "Level Complete" });
         this.levelEndLabel.size.set(1200, 60);
@@ -845,6 +905,9 @@ export default abstract class HW3Level extends Scene {
     // }
 
     public loadScene(): void {
+        // init
+        this.isPaused = false;
+
         // get data from sessionStorage
         // if it's Nan, then init the count, otherwise load in the count
         let goblinKillcount = parseInt(sessionStorage.getItem("goblinsKilled"));
@@ -948,18 +1011,45 @@ export default abstract class HW3Level extends Scene {
     }
 
     protected handleGamePause(): void {
-        console.log(this.isRunning());
-        if (this.isRunning() === true) {
-            this.setRunning(false);
+        // console.log(this.isRunning());
+        // if (this.isRunning() === true) {
+        //     this.setRunning(false);
+        // }
+        // else {
+        //     this.setRunning(true);
+        // }
+        // console.log(this.isRunning());
+
+        let nodes = this.getLayer(HW3Layers.PRIMARY).getItems();
+        if (this.isPaused) {
+            for (let node of nodes) {
+                node.unfreeze();
+                if (node instanceof HW3AnimatedSprite) {
+                    node.animation.resume();
+                }
+            }
+            Input.enableKeyboardInput();
+            this.pauseSprite.visible = false;
+            this.menuButton.visible = false;
+            this.menuButtonDummy.visible = false;
+            this.resumeButton.visible = false;
+            this.resumeButtonDummy.visible = false; 
         }
         else {
-            this.setRunning(true);
+            for (let node of nodes) {
+                node.freeze();
+                if (node instanceof HW3AnimatedSprite) {
+                    node.animation.pause();
+                }
+            }
+            Input.disableKeyboardInput();
+            this.pauseSprite.visible = true;
+            this.menuButton.visible = true;
+            this.menuButtonDummy.visible = true;
+            this.resumeButton.visible = true;
+            this.resumeButtonDummy.visible = true; 
         }
-        console.log(this.isRunning());
-
-        // let nodes = this.getLayer(HW3Layers.PRIMARY).getItems();
-        // for (let node of nodes) {
-        //     node.freeze();
-        // }
+   
+        this.isPaused = !this.isPaused;
     }
 }

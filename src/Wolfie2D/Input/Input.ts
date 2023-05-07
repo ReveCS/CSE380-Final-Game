@@ -331,4 +331,18 @@ export default class Input {
 		Input.keysDisabled = false;
 		Input.mouseDisabled = false;
 	}
+
+	/**
+	 * Disables all keypress inputs
+	 */
+	static disableKeyboardInput(): void {
+		Input.keysDisabled = true;
+	}
+
+	/**
+	 * Enables all keypress inputs
+	 */
+	static enableKeyboardInput(): void {
+		Input.keysDisabled = false;
+	}
 }

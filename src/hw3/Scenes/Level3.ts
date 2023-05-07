@@ -60,6 +60,8 @@ export default class Level3 extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
+    public static readonly PAUSE_KEY = "PAUSE_KEY";
+    public static readonly PAUSE_PATH = "game_assets/sprites/PauseMenu.png";
     
 
     // Enemy Sprites
@@ -110,6 +112,7 @@ export default class Level3 extends HW3Level {
         this.JELLYHEART_KEY = Level3.JELLYHEART_KEY;
         this.SWORDRUBY_KEY = Level3.SWORDRUBY_KEY;
         this.QUEST_KEY = Level3.QUEST_KEY;
+        this.PAUSE_KEY = Level3.PAUSE_KEY;
 
         // Set Enemy sprites and spawns
         this.jellySpriteKey = Level3.JELLY_SPRITE_KEY;
@@ -149,7 +152,7 @@ export default class Level3 extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Level3.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Level3.SWORDRUBY_PATH);
         this.load.image(this.QUEST_KEY, Level3.QUEST_PATH);
-
+        this.load.image(this.PAUSE_KEY, Level3.PAUSE_PATH);
 
         // Load in Enemy sprites
         this.load.spritesheet(this.jellySpriteKey, Level3.JELLY_SPRITE_PATH);

@@ -68,6 +68,8 @@ export default class Tutorial extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
+    public static readonly PAUSE_KEY = "PAUSE_KEY";
+    public static readonly PAUSE_PATH = "game_assets/sprites/PauseMenu.png";
 
     // NPC Sprites
     public static readonly NPC_SPAWN = new Vec2(1500, 1243);
@@ -137,6 +139,7 @@ export default class Tutorial extends HW3Level {
         this.JELLYHEART_KEY = Tutorial.JELLYHEART_KEY;
         this.SWORDRUBY_KEY = Tutorial.SWORDRUBY_KEY;
         this.QUEST_KEY = Tutorial.QUEST_KEY;
+        this.PAUSE_KEY = Hub.PAUSE_KEY;
 
         // Set Enemy sprites and spawns
         this.goblinSpriteKey = Tutorial.GOBLIN_SPRITE_KEY;
@@ -188,6 +191,7 @@ export default class Tutorial extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Tutorial.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Tutorial.SWORDRUBY_PATH);
         this.load.image(this.QUEST_KEY, Tutorial.QUEST_PATH);
+        this.load.image(this.PAUSE_KEY, Hub.PAUSE_PATH);
         
         // Load in Enemy sprites
         this.load.spritesheet(this.goblinSpriteKey, Tutorial.GOBLIN_SPRITE_PATH);

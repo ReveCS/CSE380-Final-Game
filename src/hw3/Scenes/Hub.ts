@@ -73,6 +73,8 @@ export default class Hub extends HW3Level {
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
+    public static readonly PAUSE_KEY = "PAUSE_KEY";
+    public static readonly PAUSE_PATH = "game_assets/sprites/PauseMenu.png";
 
 
     // NPC Sprites
@@ -170,6 +172,7 @@ export default class Hub extends HW3Level {
         this.JELLYHEART_KEY = Hub.JELLYHEART_KEY;
         this.SWORDRUBY_KEY = Hub.SWORDRUBY_KEY;
         this.QUEST_KEY = Hub.QUEST_KEY;
+        this.PAUSE_KEY = Hub.PAUSE_KEY;
 
          // Set Portal sprite and spawn
         this.portalSpriteKey = Hub.PORTAL_KEY;
@@ -228,6 +231,7 @@ export default class Hub extends HW3Level {
         this.load.image(this.JELLYHEART_KEY, Hub.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Hub.SWORDRUBY_PATH);
         this.load.image(this.QUEST_KEY, Hub.QUEST_PATH);
+        this.load.image(this.PAUSE_KEY, Hub.PAUSE_PATH);
 
         // Load in NPC sprites
         this.load.spritesheet(this.NPC_1_SpriteKey, Hub.NPC_1_SPRITE_PATH);
@@ -290,19 +294,14 @@ export default class Hub extends HW3Level {
                 yes.textColor = Color.BLACK;
                 yes.fontSize = 28;
                 this.questUI.push(yes);
-
                 // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
                 const yesDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
                     position: new Vec2(900, 700),
-                    text: "Accept"
+                    text: ""
                 });
                 yesDummy.size.set(140, 40);
-                yesDummy.borderWidth = 4;
-                yesDummy.borderColor = new Color(118, 91, 53);
+                yesDummy.borderColor = Color.TRANSPARENT;
                 yesDummy.backgroundColor = Color.TRANSPARENT;
-                yesDummy.font = "Hjet-Regular";
-                yesDummy.textColor = Color.BLACK;
-                yesDummy.fontSize = 28;
                 yesDummy.onClickEventId = NPCEvents.ACCEPT_QUEST;
                 yesDummy.onClickData = { npcID: this.npcID }
                 this.questUI.push(yesDummy);
@@ -319,19 +318,14 @@ export default class Hub extends HW3Level {
                 no.textColor = Color.BLACK;
                 no.fontSize = 28;
                 this.questUI.push(no);
-
                 // zoom is 2 which messes everything up in wolfie2d so ill make dummy buttons
                 const noDummy = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
                     position: new Vec2(1060, 700),
-                    text: "Accept"
+                    text: ""
                 });
                 noDummy.size.set(140, 40);
-                noDummy.borderWidth = 4;
-                noDummy.borderColor = new Color(118, 91, 53);
+                noDummy.borderColor = Color.TRANSPARENT;
                 noDummy.backgroundColor = Color.TRANSPARENT;
-                noDummy.font = "Hjet-Regular";
-                noDummy.textColor = Color.BLACK;
-                noDummy.fontSize = 28;
                 noDummy.onClickEventId = NPCEvents.DECLINE_QUEST;
                 this.questUI.push(noDummy);
 

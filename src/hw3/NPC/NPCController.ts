@@ -43,6 +43,7 @@ export default class NPCController extends ControllerAI {
         this.receiver.subscribe(NPCEvents.DECLINE_QUEST);
         this.receiver.subscribe(NPCEvents.PROCESS_QUEST);
         this.receiver.subscribe(NPCEvents.SUBMIT_QUEST);
+        this.receiver.subscribe(NPCEvents.SUBMIT_SUCCESS);
         this.owner.animation.playIfNotAlready(NPCAnimations.IDLE);
     }
 
@@ -75,6 +76,10 @@ export default class NPCController extends ControllerAI {
                     let jellies = event.data.get("jellies");
                     this.handleSubmit(goblins, swords, jellies);
                 }
+                break;
+            }
+            case (NPCEvents.SUBMIT_SUCCESS): {
+                this.playerHasQuest = false;
                 break;
             }
             // Default - throw an error
@@ -115,18 +120,14 @@ export default class NPCController extends ControllerAI {
     handleSubmit(goblins: number, swords: number, jellies: number): void {
         let currentQuest = this.quests[this.quests.length - 1];
         let requirements:Array<string> = QuestRequirements[currentQuest].split(' ');
-        let monsterType = requirements[0];
-        let killsRequired = parseInt(requirements[1]);
 
-        let req1 = (monsterType === "goblin" && goblins >= killsRequired);
-        let req2 = (monsterType === "sword" && swords >= killsRequired);
-        let req3 = (monsterType === "jelly" && jellies >= killsRequired);
-
-        if (req1 || req2 || req3) {
+        let goblinsMet = goblins >= parseInt(requirements[0]);
+        let swordsMet = swords >= parseInt(requirements[1]);
+        let jelliesMet = jellies >= parseInt(requirements[2])
+        if (goblinsMet && swordsMet && jelliesMet) {
             let reward = parseInt(QuestRewards[currentQuest])
-            this.emitter.fireEvent(NPCEvents.SUBMIT_SUCCESS, { gold: reward });
+            this.emitter.fireEvent(NPCEvents.SUBMIT_SUCCESS, { gold: reward, subtract: requirements });
             this.playerHasMyQuest = false;
-            this.playerHasQuest = false;
             this.quests.pop();
             console.log(reward);
         }

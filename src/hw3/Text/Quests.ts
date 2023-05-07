@@ -1,5 +1,6 @@
 /**
  * A set of strings of NPC quests
+ * Make sure to add punctuation at the end so it displays on quest UI.
  */
 export const Quests: { [id: string]: string } = {
     1: `The lands of Atnis have been plagued with theiving Goblins. Bring me back 10 Goblin skulls.`,
@@ -8,11 +9,12 @@ export const Quests: { [id: string]: string } = {
 
 /**
  * A set of strings to define the requirements for a corresponding quest
- * In the format: [goblin/sword/jelly] [number]
+ * In the format: [number] [number] [number]
+ * corresponding to: goblinsKilled swordsKilled jelliesKilled
  */
 export const QuestRequirements: { [id: string]: string } = {
-    1: `goblin 10`,
-    2: `goblin 1`
+    1: `10 0 0`,
+    2: `1 0 0`
 } as const;
 
 /**

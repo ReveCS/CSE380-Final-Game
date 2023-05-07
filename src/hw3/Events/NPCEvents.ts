@@ -34,7 +34,9 @@ export const NPCEvents = {
     /*
      * The event sent when player successfully turns in a quest
      *
-     * Has data: { gold: number }
+     * Has data: { gold: number, subtract: Array<string> }
+     * gold is how much gold to give the player
+     * subtract is an array telling us how many items to consume from the player
     */
    SUBMIT_SUCCESS: "SUBMIT_SUCCESS"
     

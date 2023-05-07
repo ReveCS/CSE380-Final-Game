@@ -348,6 +348,10 @@ export default abstract class HW3Level extends Scene {
                 this.handleSmallTalkNPC(event.data.get("pos"), event.data.get("text"));
                 break;
             }
+            case NPCEvents.SUBMIT_SUCCESS: {
+                this.handleSubmitSuccess(event.data.get("subtract"));
+                break;
+            }
             // Default: Throw an error! No unhandled events allowed.
             default: {
                 throw new Error(`Unhandled event caught in scene with type ${event.type}`)
@@ -525,6 +529,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(NPCEvents.ACCEPT_QUEST);
         this.receiver.subscribe(NPCEvents.DECLINE_QUEST);
         this.receiver.subscribe(NPCEvents.SUBMIT_QUEST);
+        this.receiver.subscribe(NPCEvents.SUBMIT_SUCCESS);
         this.receiver.subscribe(NPCEvents.SMALL_TALK);
         
     }
@@ -929,5 +934,22 @@ export default abstract class HW3Level extends Scene {
     }
     protected handleSmallTalkNPC(position: Vec2, text: string): void {
         throw new Error("handleSmallTalkNPC wasn't implemented");
+    }
+    protected handleSubmitSuccess(subtract:Array<string>): void {
+        this.goblinsKilled -= parseInt(subtract[0]);
+        this.goblinCount.destroy;
+        this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.goblinsKilled});
+        this.goblinCount.visible = false;
+
+        this.swordsKilled -= parseInt(subtract[1]);
+        this.swordCount.destroy;
+        this.swordCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(343, 167), text: "" + this.swordsKilled});
+        this.swordCount.visible = false;
+
+        this.jelliesKilled -= parseInt(subtract[2]);
+        this.jellyCount.destroy;
+        this.jellyCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(282, 167), text: "" + this.jelliesKilled});
+        this.jellyCount.visible = false;
+        
     }
 }

@@ -101,7 +101,7 @@ export default class PlayerController extends StateMachineAI {
         this.health = 10
         this.maxHealth = 10;
 
-        this.damage = 15;
+        this.damage = 1;
 
         this._enemyDamage = 0;
 

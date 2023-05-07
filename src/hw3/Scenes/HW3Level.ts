@@ -259,40 +259,12 @@ export default abstract class HW3Level extends Scene {
             }
             // When player presses escape button, pause game layer and display pause screen
             case HW3Events.GAME_PAUSE: {
-                console.log(this.isRunning());
-                if (this.isRunning() == true) {
-                    this.setRunning(false);
-                }
-                else {
-                    this.setRunning(true);
-                }
-                console.log(this.isRunning());
+                this.handleGamePause();
                 break;
             }
             case HW3Events.ENEMY_KILLED: {
-                console.log(event.data.get("enemyType"));
-                if (event.data.get("enemyType") == "goblin") {
-                    this.goblinsKilled += 1;
-                    this.goblinCount.destroy;
-                    this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.goblinsKilled});
-                    this.goblinCount.visible = false;
-
-                    break;
-                }
-                if (event.data.get("enemyType") == "Ocher Jelly") {
-                    this.jelliesKilled += 1;
-                    this.jellyCount.destroy;
-                    this.jellyCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(282, 167), text: "" + this.jelliesKilled});
-                    this.jellyCount.visible = false;
-                    break;
-                }
-                if (event.data.get("enemyType") == "Flying Sword") {
-                    this.swordsKilled += 1;
-                    this.swordCount.destroy;
-                    this.swordCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(343, 167), text: "" + this.swordsKilled});
-                    this.swordCount.visible = false;
-                    break;
-                }
+                this.handleEnemyKilled(event);
+                break;
             }
             case HW3Events.BOSS_SPAWN:{
                 this.bossHPSprite.visible = true;
@@ -951,5 +923,43 @@ export default abstract class HW3Level extends Scene {
         this.jellyCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(282, 167), text: "" + this.jelliesKilled});
         this.jellyCount.visible = false;
         
+    }
+
+    protected handleEnemyKilled(event: GameEvent): void {
+        console.log(event.data.get("enemyType"));
+        if (event.data.get("enemyType") == "goblin") {
+            this.goblinsKilled += 1;
+            this.goblinCount.destroy;
+            this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.goblinsKilled});
+            this.goblinCount.visible = false;
+        }
+        if (event.data.get("enemyType") == "Ocher Jelly") {
+            this.jelliesKilled += 1;
+            this.jellyCount.destroy;
+            this.jellyCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(282, 167), text: "" + this.jelliesKilled});
+            this.jellyCount.visible = false;
+        }
+        if (event.data.get("enemyType") == "Flying Sword") {
+            this.swordsKilled += 1;
+            this.swordCount.destroy;
+            this.swordCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(343, 167), text: "" + this.swordsKilled});
+            this.swordCount.visible = false;
+        }
+    }
+
+    protected handleGamePause(): void {
+        console.log(this.isRunning());
+        if (this.isRunning() === true) {
+            this.setRunning(false);
+        }
+        else {
+            this.setRunning(true);
+        }
+        console.log(this.isRunning());
+
+        // let nodes = this.getLayer(HW3Layers.PRIMARY).getItems();
+        // for (let node of nodes) {
+        //     node.freeze();
+        // }
     }
 }

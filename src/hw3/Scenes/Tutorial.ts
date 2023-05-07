@@ -233,6 +233,7 @@ export default class Tutorial extends HW3Level {
         let x1 = 450;
         let x2 = 750;
         let x3 = 1050;
+        let x4 = 1350;
 
         if (!this.isActiveText[0]) {
             let prompt:string = "AD to move left and right."
@@ -247,8 +248,12 @@ export default class Tutorial extends HW3Level {
             this.addPrompt(x2, promptY, prompt);
         }
         else if (!this.isActiveText[3] && this.playerNearX(x3)) {
-            let prompt:string = "E to interact."
+            let prompt:string = "K to open inventory."
             this.addPrompt(x3, promptY, prompt);
+        }
+        else if (!this.isActiveText[4] && this.playerNearX(x4)) {
+            let prompt:string = "E to interact."
+            this.addPrompt(x4, promptY, prompt);
         }
     }
     private addPrompt(x:number, y:number, prompt:string):void {

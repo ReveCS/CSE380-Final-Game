@@ -176,35 +176,34 @@ export default class PlayerController extends StateMachineAI {
         // if (Input.isPressed(HW3Controls.ATTACK)) this.changeState(PlayerStates.COMBAT);
         
         if (Input.isJustPressed(HW3Controls.INVENTORY)) {
-            console.log("visible");
             this.emitter.fireEvent(HW3Events.INVENTORY);
         }
 
-        if (Input.isPressed(HW3Controls.ESC)) {
+        if (Input.isJustPressed(HW3Controls.ESC)) {
             this.emitter.fireEvent(HW3Events.GAME_PAUSE);
         }
 
-        if (Input.isPressed(HW3Controls.CHEAT1)) {
+        if (Input.isJustPressed(HW3Controls.CHEAT1)) {
             this.emitter.fireEvent(HW3Events.CHEAT1);
         }
 
-        if (Input.isPressed(HW3Controls.CHEAT2)) {
+        if (Input.isJustPressed(HW3Controls.CHEAT2)) {
             this.emitter.fireEvent(HW3Events.CHEAT2);
         }
 
-        if (Input.isPressed(HW3Controls.CHEAT3)) {
+        if (Input.isJustPressed(HW3Controls.CHEAT3)) {
             this.emitter.fireEvent(HW3Events.CHEAT3);
         }
 
-        if (Input.isPressed(HW3Controls.CHEAT4)) {
+        if (Input.isJustPressed(HW3Controls.CHEAT4)) {
             this.emitter.fireEvent(HW3Events.CHEAT4);
         }
 
-        if (Input.isPressed(HW3Controls.CHEAT5)) {
+        if (Input.isJustPressed(HW3Controls.CHEAT5)) {
             this.emitter.fireEvent(HW3Events.CHEAT5);
         }
 
-        if (Input.isPressed(HW3Controls.INVINCIBLE)) {
+        if (Input.isJustPressed(HW3Controls.INVINCIBLE)) {
             this.emitter.fireEvent(HW3Events.INVINCIBLE);
         }
         if(this.invincible){

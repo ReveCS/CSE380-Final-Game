@@ -456,7 +456,7 @@ export default class Hub extends HW3Level {
     // Quests should be in order from last -> first
     // ex: ["1", "2", "3"] will give out quests in order 3 -> 2 -> 1
     protected initializeNPCs() {
-        let oneQuests:Array<string> = ["2"];
+        let oneQuests:Array<string> = ["0"];
         this.NPC_1 = this.initializeNPC(this.NPC_1,this.NPC_1_SpriteKey, this.NPC_1_Spawn, oneQuests, 1);
         
         let twoQuests:Array<string> = [];

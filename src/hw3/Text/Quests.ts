@@ -3,8 +3,8 @@
  * Make sure to add punctuation at the end so it displays on quest UI.
  */
 export const Quests: { [id: string]: string } = {
+    0: `Did you kill that goblin that kept harassing me? Show me its skull and I'll reward you handsomely.`,
     1: `The lands of Atnis have been plagued with theiving Goblins. Bring me back 10 Goblin skulls.`,
-    2: `testing quest. give me 1 goblin skull.`
 } as const;
 
 /**
@@ -13,8 +13,8 @@ export const Quests: { [id: string]: string } = {
  * corresponding to: goblinsKilled swordsKilled jelliesKilled
  */
 export const QuestRequirements: { [id: string]: string } = {
+    0: `1 0 0`,
     1: `10 0 0`,
-    2: `1 0 0`
 } as const;
 
 /**
@@ -22,6 +22,6 @@ export const QuestRequirements: { [id: string]: string } = {
  * In the format: [number]
  */
 export const QuestRewards: { [id: string]: string } = {
+    0: `1`,
     1: `20`,
-    2: `100`
 } as const;

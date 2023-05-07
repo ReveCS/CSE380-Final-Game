@@ -21,7 +21,7 @@ export default class Attack_2 extends BossState {
 	public update(deltaT: number): void {
         
 		super.update(deltaT);
-        if(!this.parent.lessthan50){
+        if(!this.parent.secondP){
             if(!this.goToPlayer){
                     let dir = this.owner.position.dirTo(new Vec2(this.parent.playerPosition.x, this.parent.playerPosition.y-175))
                     this.parent.velocity.y = 0
@@ -65,9 +65,7 @@ export default class Attack_2 extends BossState {
                     this.laserTimer += 1;
                 }
             
-                if(this.playerInLaserRange() && this.bossLaser.visible && this.bossLaser.animation.isPlaying(LaserAnimation.FIRE)){
-                    this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: this.parent.damage });
-                }
+                
                 if(this.done){
                     this.timer = 0;
                     this.laserTimer = 0;
@@ -122,9 +120,7 @@ export default class Attack_2 extends BossState {
                     this.laserTimer += 1;
                 }
             
-                if(this.playerInLaserRange() && this.bossLaser.visible && this.bossLaser.animation.isPlaying(LaserAnimation.FIRE)){
-                    this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: this.parent.damage });
-                }
+               
                 if(this.done){
                     this.timer = 0;
                     this.laserTimer = 0;
@@ -136,6 +132,13 @@ export default class Attack_2 extends BossState {
             }else{
                 this.times = 0;
                 this.finished(BossStates.IDLE);
+            }
+        }
+        if(this.playerInLaserRange() && this.bossLaser.visible && this.bossLaser.animation.isPlaying(LaserAnimation.FIRE)){
+            if(!this.parent.secondP){
+                this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: this.parent.damage });
+            }else{
+                this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: 2 });
             }
         }
         

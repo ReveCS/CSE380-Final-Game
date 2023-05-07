@@ -35,27 +35,27 @@
 			"frames": [
 				{
 					"index": 3,
-					"duration": 10
+					"duration": 25
 				},
 				{
 					"index": 4,
-					"duration": 10
+					"duration": 25
 				},
 				{
 					"index": 5,
-					"duration": 10
+					"duration": 25
 				},
 				{
 					"index": 6,
-					"duration": 10
+					"duration": 25
 				},
 				{
 					"index": 7,
-					"duration": 10
+					"duration": 25
 				},
 				{
 					"index": 8,
-					"duration": 10
+					"duration": 25
 				}
 			]
 		},
@@ -65,7 +65,7 @@
 			"frames": [
 				{
 					"index": 9,
-					"duration": 8
+					"duration": 5
 				},
 				{
 					"index": 10,
@@ -73,7 +73,7 @@
 				},
 				{
 					"index": 11,
-					"duration": 8
+					"duration": 5
 				}
 				
 			]
@@ -84,15 +84,15 @@
 			"frames": [
 				{
 					"index": 12,
-					"duration": 10
+					"duration": 15
 				},
 				{
 					"index": 13,
-					"duration": 10
+					"duration": 15
 				},
 				{
 					"index": 14,
-					"duration": 10
+					"duration": 15
 				}
 			]
 		},

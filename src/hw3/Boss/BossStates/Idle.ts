@@ -6,6 +6,7 @@ export default class Idle extends BossState {
     protected index: number = 0;
     protected spawn: boolean = true;
     protected invinciblityTimer:number = 0;
+    protected phase2Timer: number = 0;
     	public onEnter(options: Record<string, any>): void {        
         this.owner.animation.queue(BossAnimations.IDLE);        
 		this.parent.speed = this.parent.MIN_SPEED;
@@ -52,50 +53,56 @@ export default class Idle extends BossState {
         }
 
         this.timer += 1;
-        if(this.timer == 200){
-            let attackArray = [1,1,2,1,3];
-            // let nextAttack = attackArray[this.index];
-            let nextAttack = 2;
-            if(nextAttack == 1){
-                this.finished(BossStates.ATTACK_1);
-                this.index = (this.index + 1) % attackArray.length;
-                this.timer = 0;
-            }else if(nextAttack == 2){
-                this.finished(BossStates.ATTACK_2);
-                this.index = (this.index + 1) % attackArray.length;
-                this.timer = 0;
-            }else if(nextAttack == 3){
-                this.finished(BossStates.ATTACK_3);
-                this.index = (this.index + 1) % attackArray.length;
-                this.timer = 0;
+        if(!this.parent.secondP){
+            if(this.timer == 200){
+                let attackArray = [1,1,2,1,3];
+                let nextAttack = attackArray[this.index];
+                if(nextAttack == 1){
+                    this.finished(BossStates.ATTACK_1);
+                    this.index = (this.index + 1) % attackArray.length;
+                    this.timer = 0;
+                }else if(nextAttack == 2){
+                    this.finished(BossStates.ATTACK_2);
+                    this.index = (this.index + 1) % attackArray.length;
+                    this.timer = 0;
+                }else if(nextAttack == 3){
+                    this.finished(BossStates.ATTACK_3);
+                    this.index = (this.index + 1) % attackArray.length;
+                    this.timer = 0;
+                }
             }
-        
-        //    } else if(randomNum == 3){
-        //         //this.finished(BossStates.ATTACK_3);
-        //    }
+        }else{
+            if(this.phase2Timer >= 200){
+                if(this.timer >= 150){
+                    let attackArray = [2,1,3,2,1];
+                    let nextAttack = attackArray[this.index];
+                    if(nextAttack == 1){
+                        this.finished(BossStates.ATTACK_1);
+                        this.index = (this.index + 1) % attackArray.length;
+                        this.timer = 0;
+                    }else if(nextAttack == 2){
+                        this.finished(BossStates.ATTACK_2);
+                        this.index = (this.index + 1) % attackArray.length;
+                        this.timer = 0;
+                    }else if(nextAttack == 3){
+                        this.finished(BossStates.ATTACK_3);
+                        this.index = (this.index + 1) % attackArray.length;
+                        this.timer = 0;
+                    }
+                }
+                
+            }else{
+                this.parent.isInvincible = true;
+            }
+            if(this.phase2Timer >= 100){
+                if(this.parent.health <= this.parent.maxHealth*0.8){
+                    this.parent.health += 0.1;
+                }
+            }
+            this.phase2Timer+=1;
         }
 
-        // // Attack the player if they are near
-        // if (this.playerInCombatRange()) {
-        //     this.finished(BossStates.COMBAT);
-        // }
-        // If not, path to the player if they are in our aggro range
-        // else if (this.playerInRange()) {
-        //     this.finished(EnemyStates.PATHING);
-        // }
-        // we already checked so player must be out of aggro range
-        // return to our spawn if we aren't there
-        // else if (!this.atSpawn()) {
-        //     this.finished(EnemyStates.RETURNING);
-        // }
-        // We handle hit state in superclass
-        // // Otherwise, do nothing (keep idling)
-        // else {
-        //     // Update the vertical velocity of the Enemy
-        //     this.parent.velocity.y += this.gravity*deltaT;
-        //     // Move the Enemy
-        //     this.owner.move(this.parent.velocity.scaled(deltaT));
-        // }	
+        
 	}
 
 	public onExit(): Record<string, any> {

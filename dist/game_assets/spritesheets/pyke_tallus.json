@@ -166,31 +166,31 @@
 			"frames": [
 				{
 					"index": 25,
-					"duration": 15
+					"duration": 40
 				},
 				{
 					"index": 26,
-					"duration": 10
+					"duration": 35
 				},
 				{
 					"index": 27,
-					"duration": 15
+					"duration": 35
 				},
 				{
 					"index": 28,
-					"duration": 10
+					"duration": 35
 				},
 				{
 					"index": 29,
-					"duration": 15
+					"duration": 30
 				},
 				{
 					"index": 30,
-					"duration": 10
+					"duration": 30
 				},
 				{
 					"index": 31,
-					"duration": 15
+					"duration": 30
 				}
 			]
 		},

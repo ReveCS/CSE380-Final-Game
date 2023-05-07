@@ -78,7 +78,7 @@ export default class Tutorial extends HW3Level {
     protected NPCSpawn: Vec2;
 
     //Portal
-    public static readonly PORTAL_SPAWN = new Vec2(2300, 1177);
+    public static readonly PORTAL_SPAWN = new Vec2(2300, 1210);
     public static readonly PORTAL_KEY = "PORTAL_KEY";
     public static readonly PORTAL_PATH = "game_assets/spritesheets/portal.json";
     protected portal: HW3AnimatedSprite;

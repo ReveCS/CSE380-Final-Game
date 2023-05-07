@@ -78,7 +78,7 @@ export default class BossController extends StateMachineAI {
     protected indicator: Sprite;
     protected indicator1: Sprite;
     protected indicator2: Sprite;
-    protected lessThan50percent = false;
+    protected secondPhase: boolean;
     protected _velocity: Vec2;
 	protected _speed: number;
 
@@ -103,6 +103,7 @@ export default class BossController extends StateMachineAI {
         this.indicator2 = options.indicator2;
         this.spikes = options.attack3;
         this.spikes2 = options.attack3_2;
+        this.secondPhase = false;
         
 
         // this.weapon = options.weaponSystem;
@@ -111,8 +112,8 @@ export default class BossController extends StateMachineAI {
         this.speed = 200;
         this.velocity = Vec2.ZERO;
 
-        this.health = 10
-        this.maxHealth = 10;
+        this.health = 20
+        this.maxHealth = 20;
 
         this._damage = 1;
 
@@ -157,6 +158,10 @@ export default class BossController extends StateMachineAI {
 
     public update(deltaT: number): void {
 		super.update(deltaT);
+        if(this.health <= this.maxHealth/4){
+            this.secondP = true;
+            
+        }
        
 	}
 
@@ -174,8 +179,8 @@ export default class BossController extends StateMachineAI {
     public get indicatorAttack1(): Sprite { return this.indicator}
     public get indicatorAttack3_1(): Sprite { return this.indicator1}
     public get indicatorAttack3_2(): Sprite { return this.indicator2}
-    public get lessthan50(): boolean {return this.lessThan50percent}
-    public set lessthan50(less: boolean){this.lessThan50percent = less}
+    public get secondP(): boolean {return this.secondPhase}
+    public set secondP(less: boolean){this.secondPhase = less}
     public get velocity(): Vec2 { return this._velocity; }
     public set velocity(velocity: Vec2) { this._velocity = velocity; }
     public get isInvincible():boolean{return this.invincible}

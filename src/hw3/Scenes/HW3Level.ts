@@ -245,7 +245,7 @@ export default abstract class HW3Level extends Scene {
                 break;
             }
             case HW3Events.BOSS_HEALTH_CHANGE: {
-                this.handleBossHleathChange(event.data.get("curhp"), event.data.get("maxhp"));
+                this.handleBossHealthChange(event.data.get("curhp"), event.data.get("maxhp"));
                 break;
             }
             case HW3Events.PLAYER_DEAD: {
@@ -276,6 +276,7 @@ export default abstract class HW3Level extends Scene {
                     this.goblinCount.destroy;
                     this.goblinCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 167), text: "" + this.goblinsKilled});
                     this.goblinCount.visible = false;
+
                     break;
                 }
                 if (event.data.get("enemyType") == "Ocher Jelly") {
@@ -425,14 +426,13 @@ export default abstract class HW3Level extends Scene {
 		this.healthBar.size.set(this.healthBarBg.size.x - unit * (maxHealth - currentHealth), this.healthBarBg.size.y);
 		this.healthBar.position.set(this.healthBarBg.position.x - (unit / 2 / this.getViewScale()) * (maxHealth - currentHealth), this.healthBarBg.position.y);
 
-		this.healthBar.backgroundColor = currentHealth < maxHealth * 1/4 ? Color.RED: currentHealth < maxHealth * 3/4 ? Color.RED : Color.RED;
 	}
 
-    protected handleBossHleathChange(currentHealth: number, maxHealth: number):void{
+    protected handleBossHealthChange(currentHealth: number, maxHealth: number):void{
         let unit = this.bossHealthBarBg.size.x/maxHealth;
         this.bossHealthBar.size.set(this.bossHealthBarBg.size.x - unit * (maxHealth - currentHealth), this.bossHealthBarBg.size.y);
         this.bossHealthBar.position.set(this.bossHealthBarBg.position.x - (unit/2/this.getViewScale())* (maxHealth-currentHealth), this.bossHealthBarBg.position.y);
-        this.bossHealthBar.backgroundColor = Color.YELLOW;
+        this.bossHealthBar.backgroundColor = currentHealth <= maxHealth * 1/4 ? Color.RED: currentHealth <= maxHealth * 1/2 ? Color.YELLOW: Color.GREEN;
     }
     protected handleInventory(): void {
         if (this.INVSprite.visible == false) {
@@ -552,7 +552,7 @@ export default abstract class HW3Level extends Scene {
         // BossHealthBar
         this.bossHealthBar = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(300,348), text: ""});
         this.bossHealthBar.size.set(645,32);
-        this.bossHealthBar.backgroundColor = Color.YELLOW;
+        this.bossHealthBar.backgroundColor = Color.GREEN;
         this.bossHealthBar.visible = false;
 
         // BossHealthBar Border
@@ -708,7 +708,7 @@ export default abstract class HW3Level extends Scene {
         // Give the player a death animation
         this.player.tweens.add(PlayerTweens.DEATH, {
             startDelay: 0,
-            duration: 1900,
+            duration: 2400,
             effects: [],
             onEnd: HW3Events.PLAYER_DEAD
         });

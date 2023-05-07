@@ -5,7 +5,9 @@ export default class Hurt extends PlayerState {
 
 	public onEnter(options: Record<string, any>): void {
         this.parent.health = this.parent.health - this.parent.enemyDamage;
-        this.owner.animation.playIfNotAlready(PlayerAnimations.TAKE_DAMAGE);
+        if(!this.owner.animation.isPlaying(PlayerAnimations.DYING)){
+			this.owner.animation.play(PlayerAnimations.TAKE_DAMAGE);
+		}
 	}
 
 	public update(deltaT: number): void {

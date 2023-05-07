@@ -209,8 +209,6 @@ export default class Tutorial extends HW3Level {
         super.unloadScene();
         // // TODO decide which resources to keep/cull 
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: this.levelMusicKey});
-        // set tutorial flag to true
-        sessionStorage.setItem("tutorialPlayed", "true");
     }
 
     public startScene(): void {
@@ -238,26 +236,31 @@ export default class Tutorial extends HW3Level {
         let x2 = 750;
         let x3 = 1050;
         let x4 = 1350;
+        let x5 = 1650;
 
         if (!this.isActiveText[0]) {
             let prompt:string = "AD to move left and right."
             this.addPrompt(150, promptY, prompt);
         }
-        else if (!this.isActiveText[1] && this.playerNearX(x1)) {
+        else if (!this.isActiveText[1] && this.player.position.x > x1) {
             let prompt:string = "W or space to jump"
             this.addPrompt(x1, promptY, prompt);
         }
-        else if (!this.isActiveText[2] && this.playerNearX(x2)) {
+        else if (!this.isActiveText[2] && this.player.position.x > x2) {
             let prompt:string = "J to attack."
             this.addPrompt(x2, promptY, prompt);
         }
-        else if (!this.isActiveText[3] && this.playerNearX(x3)) {
+        else if (!this.isActiveText[3] && this.player.position.x > x3) {
             let prompt:string = "K to open inventory."
             this.addPrompt(x3, promptY, prompt);
         }
-        else if (!this.isActiveText[4] && this.playerNearX(x4)) {
+        else if (!this.isActiveText[4] && this.player.position.x > x4) {
             let prompt:string = "E to interact."
             this.addPrompt(x4, promptY, prompt);
+        }
+        else if (!this.isActiveText[5] && this.player.position.x > x5) {
+            let prompt:string = "ESC to pause."
+            this.addPrompt(x5, promptY, prompt);
         }
     }
     private addPrompt(x:number, y:number, prompt:string):void {
@@ -317,11 +320,6 @@ export default class Tutorial extends HW3Level {
     protected portalInitialize(){
         this.portal = this.initializePortal(this.portalSpriteKey,this.portalSpawn)
         this.portal.animation.play(PortalAnimation.IDLE);
-    }
-
-    private playerNearX(x: number):boolean {
-        let pos = this.player.position;
-        return pos.distanceSqTo(new Vec2(x, pos.y)) < 4;
     }
 
     /**

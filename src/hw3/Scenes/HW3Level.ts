@@ -628,7 +628,9 @@ export default abstract class HW3Level extends Scene {
         this.menuButtonDummy.borderColor = Color.TRANSPARENT;
         this.menuButtonDummy.backgroundColor = Color.TRANSPARENT;
         this.menuButtonDummy.visible = false;
-        this.menuButtonDummy.onClickEventId = HW3Events.GAME_PAUSE;
+        this.menuButtonDummy.onClick = () => {
+            this.sceneManager.changeToScene(MainMenu);
+        }
 
         this.resumeButton = <Button> this.add.uiElement(UIElementType.BUTTON, HW3Layers.UI, {
             position: new Vec2(300, 220),

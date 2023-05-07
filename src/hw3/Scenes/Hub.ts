@@ -240,6 +240,9 @@ export default class Hub extends HW3Level {
         this.load.spritesheet(this.NPC_4_SpriteKey, Hub.NPC_4_SPRITE_PATH);
         //this.load.spritesheet(this.NPC_Shop_SpriteKey, Hub.NPC_Shop_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey,Hub.PORTAL_PATH);
+
+        // set tutorial flag to true if we successfully entered hub
+        sessionStorage.setItem("tutorialPlayed", "true");
     }
 
     public unloadScene(): void {

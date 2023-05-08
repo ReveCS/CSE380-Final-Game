@@ -267,7 +267,7 @@ export default class MainMenu extends Scene {
         }
 
         this.hubLevelSprite = this.add.sprite(MainMenu.HUB_LEVEL_KEY, MenuLayers.SELECTION);
-        this.hubLevelSprite.position.copy(new Vec2(center.x - 12, center.y - 75));   
+        this.hubLevelSprite.position.copy(new Vec2(center.x - 12, center.y - 67));      
 
         const level1 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 200, center.y - 185), text: "Level 1"});
         this.level1Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
@@ -319,7 +319,7 @@ export default class MainMenu extends Scene {
         this.level4Sprite.position.copy(level4.position);
 
         this.level4LevelSprite = this.add.sprite(MainMenu.LEVEL4_LEVEL_KEY, MenuLayers.SELECTION);
-        this.level4LevelSprite.position.copy(new Vec2(center.x, center.y + 180));
+        this.level4LevelSprite.position.copy(new Vec2(center.x, center.y + 185));
         
         level4.size.set(200, 50);
         level4.borderColor = Color.TRANSPARENT;
@@ -358,21 +358,24 @@ export default class MainMenu extends Scene {
         controlsHeader.textColor = Color.WHITE;
         controlsHeader.font = "Hjet-Regular";
 
-        const a = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 125), text: "A - Move Left"});
+        const a = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 175), text: "A - Move Left"});
         a.textColor = Color.WHITE;
         a.font = "Hjet-Regular";
-        const d = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 75), text: "D - Move Right"});
+        const d = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 125), text: "D - Move Right"});
         d.textColor = Color.WHITE;
         d.font = "Hjet-Regular";
-        const w = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 25), text: "W - Jump"});
+        const w = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 75), text: "W - Jump"});
         w.textColor = Color.WHITE;
         w.font = "Hjet-Regular";
-        const j = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 25), text: "J - Attack"});
+        const j = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y - 25), text: "J - Attack"});
         j.textColor = Color.WHITE
         j.font = "Hjet-Regular";
-        const k = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 75), text: "K - Inventory"});
+        const k = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 25), text: "K - Potion"});
         k.textColor = Color.WHITE;
-        k.font = "Hjet-Regular";  
+        k.font = "Hjet-Regular"; 
+        const l = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 75), text: "L - Inventory"});
+        l.textColor = Color.WHITE;
+        l.font = "Hjet-Regular";  
         const e = <Label>this.add.uiElement(UIElementType.LABEL, MenuLayers.CONTROLS, {position: new Vec2(center.x, center.y + 125), text: "E - Interact"});
         e.textColor = Color.WHITE;
         e.font = "Hjet-Regular"; 

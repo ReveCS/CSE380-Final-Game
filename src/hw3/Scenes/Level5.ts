@@ -167,10 +167,6 @@ export default class Level5 extends HW3Level {
         this.laserSpriteKey = Level5.LASER_SPRITE_KEY;
         this.attack3SpriteKey = Level5.BOSS_ATTACK3_KEY;
         this.indicatorSpriteKey = Level5.INDICATOR_KEY;
-
-        
-        
-  
     }
 
     /**

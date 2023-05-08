@@ -253,8 +253,9 @@ export default class Tutorial extends HW3Level {
         let x1 = 450;
         let x2 = 750;
         let x3 = 1050;
-        let x4 = 1350;
-        let x5 = 1650;
+        let x4 = 1250;
+        let x5 = 1500;
+        let x6 = 1850;
 
         if (!this.isActiveText[0]) {
             let prompt:string = "A and D to move left and right."
@@ -269,16 +270,20 @@ export default class Tutorial extends HW3Level {
             this.addPrompt(x2, promptY, prompt);
         }
         else if (!this.isActiveText[3] && this.player.position.x > x3) {
-            let prompt:string = "K to open inventory."
+            let prompt:string = "K to use a healing potion."
             this.addPrompt(x3, promptY, prompt);
         }
         else if (!this.isActiveText[4] && this.player.position.x > x4) {
-            let prompt:string = "E to interact."
+            let prompt:string = "L to check Inventory."
             this.addPrompt(x4, promptY, prompt);
         }
         else if (!this.isActiveText[5] && this.player.position.x > x5) {
-            let prompt:string = "ESC to pause."
+            let prompt:string = "E to interact with NPCs."
             this.addPrompt(x5, promptY, prompt);
+        }
+        else if (!this.isActiveText[6] && this.player.position.x > x6) {
+            let prompt:string = "ESC to pause."
+            this.addPrompt(x6, promptY, prompt);
         }
     }
     private addPrompt(x:number, y:number, prompt:string):void {

@@ -261,6 +261,10 @@ export default abstract class HW3Level extends Scene {
                 this.sceneManager.changeToScene(MainMenu);
                 break;
             }
+            case HW3Events.POTION: {
+                this.handlePotion();
+                break;
+            }
             case HW3Events.INVENTORY: {
                 this.handleInventory();
                 break;
@@ -422,6 +426,11 @@ export default abstract class HW3Level extends Scene {
         this.bossHealthBar.position.set(this.bossHealthBarBg.position.x - (unit/2/this.getViewScale())* (maxHealth-currentHealth), this.bossHealthBarBg.position.y);
         this.bossHealthBar.backgroundColor = currentHealth <= maxHealth * 1/4 ? Color.RED: currentHealth <= maxHealth * 1/2 ? Color.YELLOW: Color.GREEN;
     }
+
+    protected handlePotion(): void {
+        
+    }
+
     protected handleInventory(): void {
         if (this.INVSprite.visible == false) {
             this.INVSprite.visible = true;

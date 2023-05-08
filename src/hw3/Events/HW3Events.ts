@@ -20,7 +20,10 @@ export const HW3Events = {
     // The event sent when the player dies. Gets sent after the player's death animation
     PLAYER_DEAD: "PLAYER_DEAD", 
 
-    // The event sent when the player presses "e". Displays inventory UI
+    // The event sent when the player presses "k".
+    POTION: "POTION",
+
+    // The event sent when the player presses "l". Displays inventory UI
     INVENTORY: "INVENTORY",
 
     // The event sent when the player presses the escape button. Pauses th game and displays pause screen

@@ -107,7 +107,7 @@ export default class MainMenu extends Scene {
     public static LEVEL3_LEVEL_KEY = "LEVEL3";
     public static LEVEL3_LEVEL_PATH = "game_assets/sprites/Level3.png";
     public static LEVEL4_LEVEL_KEY = "LEVEL4";
-    public static LEVEL4_LEVEL_PATH = "game_assets/sprites/Level1.png";
+    public static LEVEL4_LEVEL_PATH = "game_assets/sprites/Level4.png";
     public static LEVEL5_LEVEL_KEY = "LEVEL5";
     public static LEVEL5_LEVEL_PATH = "game_assets/sprites/Level5.png";
 
@@ -251,7 +251,7 @@ export default class MainMenu extends Scene {
         credit.font = "Hjet-Regular";
 
         // Selection screen
-        const hub = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 23), text: "Hub"});
+        const hub = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 50), text: "Hub"});
         this.hubSprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
         this.hubSprite.position.copy(hub.position)
 
@@ -264,7 +264,7 @@ export default class MainMenu extends Scene {
         }
 
         this.hubLevelSprite = this.add.sprite(MainMenu.HUB_LEVEL_KEY, MenuLayers.SELECTION);
-        this.hubLevelSprite.position.copy(new Vec2(center.x - 12, center.y - 95));
+        this.hubLevelSprite.position.copy(new Vec2(center.x - 12, center.y - 75));   
 
         const level1 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x - 200, center.y - 185), text: "Level 1"});
         this.level1Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
@@ -311,9 +311,12 @@ export default class MainMenu extends Scene {
             this.sceneManager.changeToScene(Level3);
         }
 
-        const level4 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 250), text: "Level 4"});
+        const level4 = <Button> this.add.uiElement(UIElementType.BUTTON, MenuLayers.SELECTION, {position: new Vec2(center.x, center.y + 300), text: "Level 4"});
         this.level4Sprite = this.add.sprite(MainMenu.BUTTON_KEY, MenuLayers.SELECTION);
         this.level4Sprite.position.copy(level4.position);
+
+        this.level4LevelSprite = this.add.sprite(MainMenu.LEVEL4_LEVEL_KEY, MenuLayers.SELECTION);
+        this.level4LevelSprite.position.copy(new Vec2(center.x, center.y + 180));
         
         level4.size.set(200, 50);
         level4.borderColor = Color.TRANSPARENT;

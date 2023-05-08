@@ -100,7 +100,6 @@ export default class EnemyController extends StateMachineAI {
         this._playerDamage = 1;
 
         this.aggroRadius = options.radius;
-        // this.aggroRadius = 0;
 
         this.spawn = options.spawn;
         this._player = options.player;

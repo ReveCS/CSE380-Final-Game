@@ -179,6 +179,7 @@ export default class Level2 extends HW3Level {
     protected initializeEnemies() {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(400, 1408), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(500, 1408), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(600, 1408), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(700, 1408), 10);
@@ -186,6 +187,18 @@ export default class Level2 extends HW3Level {
         this.initializeEnemy(this.swordSpriteKey, new Vec2(800, 1408), 10);
         this.initializeEnemy(this.swordSpriteKey, new Vec2(900, 1408), 10);
         this.initializeEnemy(this.swordSpriteKey, new Vec2(1000, 1408), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(1100, 1408), 10);
+
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(1400, 1408), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(1500, 1408), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(1600, 1408), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(1700, 1408), 10);
+
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(1800, 1408), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(1900, 1408), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(2000, 1408), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(2100, 1408), 10);
+
     }
 
     protected handleCheat1(): void {

@@ -70,6 +70,13 @@ export default class Level3 extends HW3Level {
     public static readonly JELLY_SPRITE_KEY = "JELLY_SPRITE_KEY";
     public static readonly JELLY_SPRITE_PATH = "game_assets/spritesheets/ocher_jelly.json";
     protected jellySpriteKey: string;
+    public static readonly GOBLIN_SPRITE_KEY = "GOBLIN_SPRITE_KEY";
+    public static readonly GOBLIN_SPRITE_PATH = "game_assets/spritesheets/goblin.json";
+    protected goblinSpriteKey: string;
+    public static readonly SWORD_SPRITE_KEY = "DEMON_SPRITE_KEY";
+    public static readonly SWORD_SPRITE_PATH = "game_assets/spritesheets/flying_sword.json";
+    protected swordSpriteKey: string;
+
 
     //Portal
     public static readonly PORTAL_SPAWN = new Vec2(2300, 1210);
@@ -116,6 +123,8 @@ export default class Level3 extends HW3Level {
 
         // Set Enemy sprites and spawns
         this.jellySpriteKey = Level3.JELLY_SPRITE_KEY;
+        this.goblinSpriteKey = Level3.GOBLIN_SPRITE_KEY;
+        this.swordSpriteKey = Level3.SWORD_SPRITE_KEY;
         this.defaultSpawn = Level3.ENEMY_DEFAULT_SPAWN;
 
         // Set Portal sprite and spawn
@@ -156,6 +165,8 @@ export default class Level3 extends HW3Level {
 
         // Load in Enemy sprites
         this.load.spritesheet(this.jellySpriteKey, Level3.JELLY_SPRITE_PATH);
+        this.load.spritesheet(this.goblinSpriteKey, Level4.GOBLIN_SPRITE_PATH);
+        this.load.spritesheet(this.swordSpriteKey, Level4.SWORD_SPRITE_PATH);
         this.load.spritesheet(this.portalSpriteKey, Level3.PORTAL_PATH);
     }
 

@@ -25,7 +25,7 @@ export default class Level4 extends HW3Level {
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
     public static readonly TILEMAP_KEY = "Level4";
-    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Level3&4.json";
+    public static readonly TILEMAP_PATH = "game_assets/tilemaps/Level3&4_2.json";
     public static readonly TILEMAP_SCALE = new Vec2(2, 2);
     public static readonly PLATFORM_LAYER_KEY = "Platform";
     public static readonly WALLS_LAYER_KEY = "Ground";
@@ -193,18 +193,20 @@ export default class Level4 extends HW3Level {
     protected initializeEnemies() {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
-        this.initializeEnemy(this.jellySpriteKey, new Vec2(500, 1200), 10);
-        this.initializeEnemy(this.jellySpriteKey, new Vec2(1050, 1200), 10);
-        this.initializeEnemy(this.jellySpriteKey, new Vec2(1500, 1200), 10);
-        this.initializeEnemy(this.jellySpriteKey, new Vec2(2050, 1200), 10);
-
-        this.initializeEnemy(this.goblinSpriteKey, new Vec2(750, 1216), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(375, 1150), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(425, 1150), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(750, 1150), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(800, 1150), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1000, 1150), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1050, 1150), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(1200, 1216), 10);
         this.initializeEnemy(this.swordSpriteKey, new Vec2(1250, 1216), 10);
-        this.initializeEnemy(this.goblinSpriteKey, new Vec2(1700, 1216), 10);
-        this.initializeEnemy(this.swordSpriteKey, new Vec2(1800, 1216), 10);
-
-
-
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1550, 1216), 10);
+        this.initializeEnemy(this.jellySpriteKey, new Vec2(1600, 1216), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(1900, 1216), 10);
+        this.initializeEnemy(this.goblinSpriteKey, new Vec2(2000, 1216), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(2100, 1216), 10);
+        this.initializeEnemy(this.swordSpriteKey, new Vec2(2200, 1216), 10);
     }
 
     protected handleCheat1(): void {

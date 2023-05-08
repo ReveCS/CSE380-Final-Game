@@ -123,7 +123,10 @@ export default class EnemyController extends StateMachineAI {
         if(this.active){
             if (event.type === CombatEvents.PLAYER_ATTACK_PHYSICAL) {
                 // make sure we are in the range of player's attack
-                if (this._player.boundary.containsPoint(this.owner.position)) {
+                let inRange = this._player.boundary.containsPoint(this.owner.position);
+                let notDead = this.health > 0;
+                
+                if (notDead && inRange) {
                     this._playerDamage = event.data.get("dmg");
                     this.changeState(EnemyStates.HURT);
                 }

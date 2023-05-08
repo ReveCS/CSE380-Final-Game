@@ -4,8 +4,8 @@ import EnemyState from "./EnemyState";
 export default class Hurt extends EnemyState {
 
 	public onEnter(options: Record<string, any>): void {
+		this.owner.animation.playIfNotAlready(EnemyAnimations.TAKE_DAMAGE);
         this.parent.health = this.parent.health - this.parent.playerDamage;
-        this.owner.animation.playIfNotAlready(EnemyAnimations.TAKE_DAMAGE);
 	}
 
 	public update(deltaT: number): void {

@@ -84,15 +84,15 @@
 			"frames": [
 				{
 					"index": 12,
-					"duration": 25
+					"duration": 10
 				},
 				{
 					"index": 13,
-					"duration": 25
+					"duration": 10
 				},
 				{
 					"index": 14,
-					"duration": 25
+					"duration": 10
 				}
 			]
 		},
@@ -102,7 +102,7 @@
 			"frames": [
 				{
 					"index": 15,
-					"duration": 15
+					"duration": 10
 				},
 				{
 					"index": 16,
@@ -110,7 +110,7 @@
 				},
 				{
 					"index": 17,
-					"duration": 15
+					"duration": 10
 				},
 				{
 					"index": 18,

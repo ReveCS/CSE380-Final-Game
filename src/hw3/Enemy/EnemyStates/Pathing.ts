@@ -23,8 +23,17 @@ export default class Pathing extends EnemyState {
         // Otherwise, keep pathing
         else {
             let dir = this.dirToPlayer;
-            this.parent.velocity.y += this.gravity*deltaT; 
-            this.parent.velocity.x = dir.x * this.parent.speed
+
+            // if player is on top of enemy shake them off
+            if (this.playerOnTop()) {
+                this.parent.velocity.x = -1 * dir.x * this.parent.speed * 1.5
+            }
+            else {
+                if (dir.y < -0.9) this.parent.velocity.y = -150; // allow jump
+                this.parent.velocity.x = dir.x * this.parent.speed
+            }
+
+            this.parent.velocity.y += this.gravity*deltaT;
             this.owner.move(this.parent.velocity.scaled(deltaT));
         }
 		

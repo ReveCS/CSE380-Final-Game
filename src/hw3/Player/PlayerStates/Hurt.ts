@@ -1,3 +1,4 @@
+import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 import { PlayerStates, PlayerAnimations } from "../PlayerController";
 import PlayerState from "./PlayerState";
 
@@ -5,6 +6,10 @@ export default class Hurt extends PlayerState {
 
 	public onEnter(options: Record<string, any>): void {
         this.parent.health = this.parent.health - this.parent.enemyDamage;
+		let hurtSound = this.owner.getScene().getplayerHurtSoundKey();
+		if(this.parent.health != 0){
+			this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: hurtSound, loop: false, holdReference: false});
+		}
         if(!this.owner.animation.isPlaying(PlayerAnimations.DYING)){
 			this.owner.animation.play(PlayerAnimations.TAKE_DAMAGE);
 		}

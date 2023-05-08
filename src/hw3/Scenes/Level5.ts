@@ -62,6 +62,12 @@ export default class Level5 extends HW3Level {
     public static readonly BOSS_ATTACK3_KEY = "BOSS_ATTACK3_KEY";
     public static readonly BOSS_ATTACK3_PATH = "game_assets/spritesheets/Attack3.json";
 
+    public static readonly PLAYER_DEATH_KEY = "PLAYER_DEATH";
+    public static readonly PLAYER_DEATH_PATH = "game_assets/sounds/playerdeath.wav";
+
+    public static readonly PLAYER_HURT_KEY = "PLAYER_HURT";
+    public static readonly PLAYER_HURT_PATH = "game_assets/sounds/hurtPlayer.wav";
+
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
@@ -135,6 +141,8 @@ export default class Level5 extends HW3Level {
         this.deathSoundKey = Level5.DEATH_KEY;
         this.hitKey = Level5.HIT_KEY;
         this.swingKey = Level5.SWING_KEY;
+        this.playerDeathSoundKey = Level5.PLAYER_DEATH_KEY;
+        this.playerHurtSoundKey = Level5.PLAYER_HURT_KEY;
 
         // Sprites
         this.HP_KEY = Level5.HP_KEY;
@@ -184,6 +192,8 @@ export default class Level5 extends HW3Level {
         this.load.audio(this.deathSoundKey,Level5.DEATH_PATH);
         this.load.audio(this.hitKey,Level5.HIT_PATH);
         this.load.audio(this.swingKey,Level5.SWING_PATH);
+        this.load.audio(this.playerHurtSoundKey, Level5.PLAYER_HURT_PATH);
+        this.load.audio(this.playerDeathSoundKey, Level5.PLAYER_DEATH_PATH);
         // Game UI sprites
         this.load.image(this.HP_KEY, Level5.HP_PATH);
         this.load.image(this.INV_KEY, Level5.INV_PATH);

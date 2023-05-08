@@ -44,6 +44,14 @@ export default class Level1 extends HW3Level {
     public static readonly HIT_KEY = "HIT";
     public static readonly HIT_PATH = "game_assets/sounds/gettinghit.wav";
 
+    public static readonly SWING_KEY = "SWING";
+    public static readonly SWING_PATH = "game_assets/sounds/swing.wav";
+
+    public static readonly PLAYER_DEATH_KEY = "PLAYER_DEATH";
+    public static readonly PLAYER_DEATH_PATH = "game_assets/sounds/playerdeath.wav";
+
+    public static readonly PLAYER_HURT_KEY = "PLAYER_HURT";
+    public static readonly PLAYER_HURT_PATH = "game_assets/sounds/hurtPlayer.wav";
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
@@ -107,6 +115,9 @@ export default class Level1 extends HW3Level {
         this.tileDestroyedAudioKey = Level1.TILE_DESTROYED_KEY;
         this.deathSoundKey = Level1.DEATH_KEY;
         this.hitKey = Level1.HIT_KEY;
+        this.swingKey = Level1.SWING_KEY;
+        this.playerDeathSoundKey = Level1.PLAYER_DEATH_KEY;
+        this.playerHurtSoundKey = Level1.PLAYER_HURT_KEY;
 
         // Sprites
         this.HP_KEY = Level1.HP_KEY;
@@ -149,6 +160,9 @@ export default class Level1 extends HW3Level {
         this.load.audio(this.tileDestroyedAudioKey, Level1.TILE_DESTROYED_PATH);
         this.load.audio(this.deathSoundKey,Level1.DEATH_PATH);
         this.load.audio(this.hitKey,Level1.HIT_PATH);
+        this.load.audio(this.swingKey, Level1.SWING_PATH);
+        this.load.audio(this.playerHurtSoundKey, Level1.PLAYER_HURT_PATH);
+        this.load.audio(this.playerDeathSoundKey, Level1.PLAYER_DEATH_PATH);
         // Game UI sprites
         this.load.image(this.HP_KEY, Level1.HP_PATH);
         this.load.image(this.BOSS_HP_KEY,Level1.BOSS_HP_PATH);

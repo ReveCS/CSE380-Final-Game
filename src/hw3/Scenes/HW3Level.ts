@@ -81,6 +81,8 @@ export default abstract class HW3Level extends Scene {
     private jellyCount: Label;
     private swordRubySprite: Sprite;
     private swordCount: Label;
+    private potionSprite: Sprite;
+    private potionCount: Label;
     protected QuestSprite: Sprite;
     protected bossHPSprite: Sprite;
     protected pauseSprite: Sprite;
@@ -100,6 +102,8 @@ export default abstract class HW3Level extends Scene {
     protected JELLYHEART_PATH: string;
     protected SWORDRUBY_KEY: string;
     protected SWORDRUBY_PATH: string;
+    protected POTION_KEY: string;
+    protected POTION_PATH: string;
     protected QUEST_KEY: string;
     protected QUEST_PATH: string;
     protected BOSS_HP_KEY:string;
@@ -113,6 +117,9 @@ export default abstract class HW3Level extends Scene {
 
     // Pause Menu things
     protected isPaused: boolean;
+
+    // Potions
+    protected potions: number;
 
     // Keep track of how many of each enemy
     protected goblinsKilled: number;
@@ -262,7 +269,13 @@ export default abstract class HW3Level extends Scene {
                 break;
             }
             case HW3Events.POTION: {
-                this.handlePotion();
+                if (this.potions > 0) {
+                    this.handleHealthChange(event.data.get("curhp"), event.data.get("maxhp"));
+                    this.potions -= 1;
+                    this.potionCount.destroy;
+                    this.potionCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 220), text: "" + this.potions});
+                    this.potionCount.visible = false;
+                }
                 break;
             }
             case HW3Events.INVENTORY: {
@@ -441,6 +454,8 @@ export default abstract class HW3Level extends Scene {
             this.jellyCount.visible = true;
             this.swordRubySprite.visible = true;
             this.swordCount.visible = true;
+            this.potionSprite.visible = true;
+            this.potionCount.visible = true;
         }
         else {
             this.INVSprite.visible = false;
@@ -451,6 +466,8 @@ export default abstract class HW3Level extends Scene {
             this.jellyCount.visible = false;
             this.swordRubySprite.visible = false;
             this.swordCount.visible = false;
+            this.potionSprite.visible = false;
+            this.potionCount.visible = false;
         }
     }
 
@@ -504,6 +521,7 @@ export default abstract class HW3Level extends Scene {
         this.receiver.subscribe(HW3Events.HEALTH_CHANGE);
         this.receiver.subscribe(HW3Events.BOSS_HEALTH_CHANGE);
         this.receiver.subscribe(HW3Events.PLAYER_DEAD);
+        this.receiver.subscribe(HW3Events.POTION);
         this.receiver.subscribe(HW3Events.INVENTORY);
         this.receiver.subscribe(HW3Events.GAME_PAUSE);
         this.receiver.subscribe(HW3Events.ENEMY_KILLED);
@@ -603,6 +621,17 @@ export default abstract class HW3Level extends Scene {
         this.swordCount.font = "Hjet-Regular";
         this.swordCount.scale.set(3/4, 3/4);
         this.swordCount.visible = false;
+
+        this.potionSprite = this.add.sprite(this.POTION_KEY, HW3Layers.UI);
+        this.potionSprite.position.copy(new Vec2(240, 235));
+        this.potionSprite.scale.set(11/24, 11/24);
+        this.potionSprite.visible = false;
+
+        this.potionCount = <Label>this.add.uiElement(UIElementType.LABEL, HW3Layers.UI, {position: new Vec2(225, 220), text: "" + this.potions});
+        this.potionCount.textColor = Color.BLACK;
+        this.potionCount.font = "Hjet-Regular";
+        this.potionCount.scale.set(3/4, 3/4);
+        this.potionCount.visible = false;
 
         // Quest UI
         this.QuestSprite = this.add.sprite(this.QUEST_KEY, HW3Layers.UI);
@@ -929,6 +958,8 @@ export default abstract class HW3Level extends Scene {
 
         let swordKillcount = parseInt(sessionStorage.getItem("swordsKilled"));
         this.swordsKilled = isNaN(swordKillcount) ? 0 : swordKillcount;
+
+        this.potions = 5;
     }
     public unloadScene(): void {
         // save kill counts into storage

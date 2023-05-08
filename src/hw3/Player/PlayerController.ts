@@ -176,7 +176,8 @@ export default class PlayerController extends StateMachineAI {
         // if (Input.isPressed(HW3Controls.ATTACK)) this.changeState(PlayerStates.COMBAT);
 
         if (Input.isJustPressed(HW3Controls.POTION)) {
-            this.emitter.fireEvent(HW3Events.INVENTORY);
+            this.health += 3;
+            this.emitter.fireEvent(HW3Events.POTION, {curhp: this.health, maxhp: this.maxHealth});
         }
 
         if (Input.isJustPressed(HW3Controls.INVENTORY)) {
@@ -248,7 +249,6 @@ export default class PlayerController extends StateMachineAI {
         // When the health changes, fire an event up to the scene.
         this.emitter.fireEvent(HW3Events.HEALTH_CHANGE, {curhp: this.health, maxhp: this.maxHealth});
             
-        
         // If the health hit 0, change the state of the player
         if (this.health === 0) { 
             this.changeState(PlayerStates.DEAD);

@@ -66,6 +66,8 @@ export default class Tutorial extends HW3Level {
     public static readonly JELLYHEART_PATH = "game_assets/sprites/Jelly_Heart.png";
     public static readonly SWORDRUBY_KEY = "SWORDRUBY_SPRITE_KEY";
     public static readonly SWORDRUBY_PATH = "game_assets/sprites/Sword_Ruby.png";
+    public static readonly POTION_KEY = "POTION_SPRITE_KEY";
+    public static readonly POTION_PATH = "game_assets/sprites/Potion.png";
     public static readonly QUEST_KEY = "QUEST_KEY";
     public static readonly QUEST_PATH = "game_assets/sprites/Questbox.png";
     public static readonly PAUSE_KEY = "PAUSE_KEY";
@@ -138,6 +140,7 @@ export default class Tutorial extends HW3Level {
         this.GOBLINSKULL_KEY = Tutorial.GOBLINSKULL_KEY;
         this.JELLYHEART_KEY = Tutorial.JELLYHEART_KEY;
         this.SWORDRUBY_KEY = Tutorial.SWORDRUBY_KEY;
+        this.POTION_KEY = Tutorial.POTION_KEY;
         this.QUEST_KEY = Tutorial.QUEST_KEY;
         this.PAUSE_KEY = Hub.PAUSE_KEY;
 
@@ -190,6 +193,7 @@ export default class Tutorial extends HW3Level {
         this.load.image(this.GOBLINSKULL_KEY, Tutorial.GOBLINSKULL_PATH);
         this.load.image(this.JELLYHEART_KEY, Tutorial.JELLYHEART_PATH);
         this.load.image(this.SWORDRUBY_KEY, Tutorial.SWORDRUBY_PATH);
+        this.load.image(this.POTION_KEY, Level1.POTION_PATH);
         this.load.image(this.QUEST_KEY, Tutorial.QUEST_PATH);
         this.load.image(this.PAUSE_KEY, Hub.PAUSE_PATH);
         

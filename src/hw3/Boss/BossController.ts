@@ -21,6 +21,7 @@ import { CombatEvents } from "../Events/CombatEvents";
 import { HW3Events } from "../Events/HW3Events";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import Attack_3 from "./BossStates/Attack_3";
+import Phase_2 from "./BossStates/Phase_2";
 // import { CombatEvents } from "../Events/CombatEvents";
 
 /**
@@ -35,8 +36,13 @@ export const BossAnimations = {
     DEATH: "DEATH",
     STATUE: "STATUE",
     SPAWN: "SPAWN",
-    ATTACK_3: "ATTACK_3"
-
+    ATTACK_3: "ATTACK_3",
+    PHASE_2: "PHASE_2",
+    PHASE_2_IDLE: "PHASE_2_IDLE",
+    PHASE_2_ATTACK_1: "PHASE_2_ATTACK_1",
+    PHASE_2_ATTACK_2: "PHASE_2_ATTACK_2",
+    PHASE_2_HURT: "PHASE_2_HURT",
+    PHASE_2_ATTACK_3: "PHASE_2_ATTACK_3",
     
 } as const
 
@@ -55,6 +61,7 @@ export const BossStates = {
     STATUE:"STATUE",
     DEATH: "DEATH",
     SPAWN: "SPAWN",
+    PHASE_2:"PHASE_2"
 } as const
 
 /**
@@ -81,7 +88,7 @@ export default class BossController extends StateMachineAI {
     protected secondPhase: boolean;
     protected _velocity: Vec2;
 	protected _speed: number;
-
+    protected phase2flag: boolean = false;
     protected _aggroRadius: number;
     protected _spawn: Vec2;
     protected _player: HW3AnimatedSprite;
@@ -128,6 +135,7 @@ export default class BossController extends StateMachineAI {
         this.addState(BossStates.ATTACK_2, new Attack_2(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
         this.addState(BossStates.ATTACK_3, new Attack_3(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
         this.addState(BossStates.HURT, new Hurt(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
+        this.addState(BossStates.PHASE_2, new Phase_2(this, this.owner, this.bossLaser, this.spikes, this.spikes2));
         // this.addState(BossStates.DEATH, new Dead(this, this.owner));
         this.addState(BossStates.SPAWN, new Spawn(this,this.owner,this.bossLaser, this.spikes, this.spikes2));
         this.addState(BossStates.STATUE, new Statue(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
@@ -158,9 +166,10 @@ export default class BossController extends StateMachineAI {
 
     public update(deltaT: number): void {
 		super.update(deltaT);
-        if(this.health <= this.maxHealth/4){
+        if(this.health <= this.maxHealth/4 && !this.phase2flag){
             this.secondP = true;
-            
+            this.changeState(BossStates.PHASE_2);
+            this.phase2flag = true;
         }
        
 	}

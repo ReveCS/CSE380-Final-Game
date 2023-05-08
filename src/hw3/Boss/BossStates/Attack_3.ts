@@ -34,7 +34,11 @@ export default class Attack_3 extends BossState {
             if(Math.abs(this.parent.playerPosition.x-this.owner.position.x) <= 5){
                 this.parent.velocity.y = 0;
                 this.parent.velocity.x = 0;
-                this.owner.animation.play(BossAnimations.ATTACK_3);
+                if(!this.parent.secondP){
+                    this.owner.animation.play(BossAnimations.ATTACK_3);
+                }else{
+                    this.owner.animation.play(BossAnimations.PHASE_2_ATTACK_3);
+                }
                 this.spikes.position = new Vec2(this.parent.playerPosition.clone().x-200, 1328);
                 this.spikes2.position = new Vec2(this.parent.playerPosition.clone().x+200, 1328);
                 this.parent.indicatorAttack3_1.position = this.spikes.position;
@@ -105,7 +109,7 @@ export default class Attack_3 extends BossState {
                         this.spikes2.visible = true;
                         this.parent.indicatorAttack3_1.visible = false;
                         this.parent.indicatorAttack3_2.visible = false;
-                        if(!this.spikes.animation.isPlaying(SpikeAnimation.ATTACK) || !this.spikes.animation.isPlaying(SpikeAnimation.ATTACK)){
+                        if(!this.spikes.animation.isPlaying(SpikeAnimation.ATTACK) || !this.spikes2.animation.isPlaying(SpikeAnimation.ATTACK)){
                             this.spikes.animation.play(SpikeAnimation.ATTACK);
                             this.spikes2.animation.play(SpikeAnimation.ATTACK);
                         }
@@ -123,7 +127,7 @@ export default class Attack_3 extends BossState {
             if(!this.parent.secondP){
                 this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: this.parent.damage });
             }else{
-                this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: 4 });
+                this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: 2 });
             }
         }
         	

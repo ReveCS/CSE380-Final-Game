@@ -11,7 +11,7 @@ import { HW3Events } from "../../Events/HW3Events";
 export default class Dead extends PlayerState {
     // Trigger the player's death animation when we enter the dead state
     public onEnter(options: Record<string, any>): void {
-        let deathSound = this.owner.getScene().getDeathSoundKey();
+        let deathSound = this.owner.getScene().getplayerDeathSoundKey();
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: deathSound, loop: false, holdReference: false});
         this.owner.animation.play(PlayerAnimations.DYING);
         this.owner.animation.queue(PlayerAnimations.DEATH,true);

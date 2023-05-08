@@ -58,6 +58,15 @@ export default class Hub extends HW3Level {
     public static readonly HIT_KEY = "HIT";
     public static readonly HIT_PATH = "game_assets/sounds/gettinghit.wav";
 
+    public static readonly SWING_KEY = "SWING";
+    public static readonly SWING_PATH = "game_assets/sounds/swing.wav";
+
+    public static readonly PLAYER_DEATH_KEY = "PLAYER_DEATH";
+    public static readonly PLAYER_DEATH_PATH = "game_assets/sounds/playerdeath.wav";
+
+    public static readonly PLAYER_HURT_KEY = "PLAYER_HURT";
+    public static readonly PLAYER_HURT_PATH = "game_assets/sounds/hurtPlayer.wav";
+
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
     public static readonly HP_PATH = "game_assets/sprites/HP_Bar.png";
@@ -163,6 +172,9 @@ export default class Hub extends HW3Level {
         this.tileDestroyedAudioKey = Hub.TILE_DESTROYED_KEY;
         this.deathSoundKey = Hub.DEATH_KEY;
         this.hitKey = Hub.HIT_KEY;
+        this.swingKey = Hub.SWING_KEY;
+        this.playerDeathSoundKey = Hub.PLAYER_DEATH_KEY;
+        this.playerHurtSoundKey = Hub.PLAYER_HURT_KEY;
 
         // Sprites
         this.HP_KEY = Hub.HP_KEY;
@@ -223,6 +235,10 @@ export default class Hub extends HW3Level {
         this.load.audio(this.tileDestroyedAudioKey, Hub.TILE_DESTROYED_PATH);
         this.load.audio(this.deathSoundKey,Hub.DEATH_PATH);
         this.load.audio(this.hitKey,Hub.HIT_PATH);
+        this.load.audio(this.swingKey, Hub.SWING_PATH);
+        this.load.audio(this.playerHurtSoundKey, Hub.PLAYER_HURT_PATH);
+        this.load.audio(this.playerDeathSoundKey, Hub.PLAYER_DEATH_PATH);
+
         // Game UI sprites
         this.load.image(this.HP_KEY, Hub.HP_PATH);
         this.load.image(this.BOSS_HP_KEY,Hub.BOSS_HP_PATH);

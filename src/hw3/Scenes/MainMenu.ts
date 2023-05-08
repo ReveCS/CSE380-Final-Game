@@ -16,6 +16,7 @@ import Level3 from "./Level3";
 import Level4 from "./Level4";
 import Level5 from "./Level5";
 import Tutorial from "./Tutorial";
+import Backstory from "./Backstory";
 
 // Layers for the main menu scene
 export const MenuLayers = {
@@ -235,7 +236,9 @@ export default class MainMenu extends Scene {
         about.borderWidth = 2;
         about.borderColor = Color.WHITE;
         about.backgroundColor = Color.TRANSPARENT;
-        about.onClickEventId = MainMenuEvent.ABOUT;
+        about.onClick =()=>{
+            this.sceneManager.changeToScene(Backstory);
+        }
         about.font = "Hjet-Regular";
 
         // Add credit button

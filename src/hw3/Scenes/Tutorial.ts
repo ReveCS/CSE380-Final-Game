@@ -52,6 +52,14 @@ export default class Tutorial extends HW3Level {
     public static readonly HIT_KEY = "HIT";
     public static readonly HIT_PATH = "game_assets/sounds/gettinghit.wav";
     
+    public static readonly SWING_KEY = "SWING";
+    public static readonly SWING_PATH = "game_assets/sounds/swing.wav";
+
+    public static readonly PLAYER_DEATH_KEY = "PLAYER_DEATH";
+    public static readonly PLAYER_DEATH_PATH = "game_assets/sounds/playerdeath.wav";
+
+    public static readonly PLAYER_HURT_KEY = "PLAYER_HURT";
+    public static readonly PLAYER_HURT_PATH = "game_assets/sounds/hurtPlayer.wav";
 
     // Game UI Sprites
     public static readonly HP_KEY = "HEALTH";
@@ -130,6 +138,9 @@ export default class Tutorial extends HW3Level {
         this.tileDestroyedAudioKey = Tutorial.TILE_DESTROYED_KEY;
         this.deathSoundKey = Tutorial.DEATH_KEY;
         this.hitKey = Tutorial.HIT_KEY;
+        this.swingKey = Tutorial.SWING_KEY;
+        this.playerDeathSoundKey = Tutorial.PLAYER_DEATH_KEY;
+        this.playerHurtSoundKey = Tutorial.PLAYER_HURT_KEY;
 
         // Sprites
         this.HP_KEY = Tutorial.HP_KEY;
@@ -183,6 +194,9 @@ export default class Tutorial extends HW3Level {
         this.load.audio(this.tileDestroyedAudioKey, Tutorial.TILE_DESTROYED_PATH);
         this.load.audio(this.deathSoundKey,Tutorial.DEATH_PATH);
         this.load.audio(this.hitKey,Tutorial.HIT_PATH);
+        this.load.audio(this.swingKey, Tutorial.SWING_PATH);
+        this.load.audio(this.playerHurtSoundKey, Tutorial.PLAYER_HURT_PATH);
+        this.load.audio(this.playerDeathSoundKey, Tutorial.PLAYER_DEATH_PATH);
         // Game UI sprites
         this.load.image(this.HP_KEY, Tutorial.HP_PATH);
         this.load.image(this.BOSS_HP_KEY, Tutorial.BOSS_HP_PATH);
@@ -239,7 +253,7 @@ export default class Tutorial extends HW3Level {
         let x5 = 1650;
 
         if (!this.isActiveText[0]) {
-            let prompt:string = "AD to move left and right."
+            let prompt:string = "A and D to move left and right."
             this.addPrompt(150, promptY, prompt);
         }
         else if (!this.isActiveText[1] && this.player.position.x > x1) {

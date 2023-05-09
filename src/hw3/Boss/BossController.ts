@@ -8,11 +8,7 @@ import Statue from "./BossStates/Statue";
 import Spawn from "./BossStates/Spawn";
 // import Returning from "./EnemyStates/Returning";
 import Hurt from "./BossStates/Hurt";
-// import Dead from "./EnemyStates/Dead";
-// import Combat from "./EnemyStates/Combat";
-
-// import Input from "../../Wolfie2D/Input/Input";
-
+import Dead from "./BossStates/Dead";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import MathUtils from "../../Wolfie2D/Utils/MathUtils";
 import Attack_1 from "./BossStates/Attack_1";
@@ -64,6 +60,12 @@ export const BossStates = {
     PHASE_2:"PHASE_2"
 } as const
 
+/**
+ * Tween animations the boss can be in.
+ */
+export const BossTweens = {
+    DEATH: "DEATH"
+} as const
 /**
  * The controller that controls the enemy.
  */
@@ -136,7 +138,7 @@ export default class BossController extends StateMachineAI {
         this.addState(BossStates.ATTACK_3, new Attack_3(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
         this.addState(BossStates.HURT, new Hurt(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
         this.addState(BossStates.PHASE_2, new Phase_2(this, this.owner, this.bossLaser, this.spikes, this.spikes2));
-        // this.addState(BossStates.DEATH, new Dead(this, this.owner));
+        this.addState(BossStates.DEATH, new Dead(this, this.owner, this.bossLaser, this.spikes, this.spikes2));
         this.addState(BossStates.SPAWN, new Spawn(this,this.owner,this.bossLaser, this.spikes, this.spikes2));
         this.addState(BossStates.STATUE, new Statue(this, this.owner,this.bossLaser, this.spikes, this.spikes2));
         
@@ -180,6 +182,7 @@ export default class BossController extends StateMachineAI {
     public get spawn(): Vec2 { return this._spawn; }
     public set spawn(spawn: Vec2) {this._spawn = spawn; } 
 
+    public get player(): HW3AnimatedSprite{return this._player}
     public get playerPosition(): Vec2 { return this._player.position; }
     public get playerDamage(): number { return this._playerDamage }
 
@@ -220,7 +223,7 @@ export default class BossController extends StateMachineAI {
         this.emitter.fireEvent(HW3Events.BOSS_HEALTH_CHANGE, {curhp: this.health, maxhp: this.maxHealth});
         // If the health hit 0, change the state of the player
         if (this.health === 0) { 
-            this.changeState(BossAnimations.DYING);
+            this.changeState(BossStates.DEATH);
             //this.emitter.fireEvent();
          }
     }

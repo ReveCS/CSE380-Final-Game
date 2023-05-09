@@ -46,7 +46,8 @@ export const PlayerAnimations = {
  */
 export const PlayerTweens = {
     FLIP: "FLIP",
-    DEATH: "DEATH"
+    DEATH: "DEATH",
+    BOSS_DEATH: "BOSS_DEATH"
 } as const
 
 /**
@@ -104,7 +105,7 @@ export default class PlayerController extends StateMachineAI {
         this.health = 10
         this.maxHealth = 10;
 
-        this.damage = 5;
+        this.damage = 2;
 
         this._enemyDamage = 0;
 

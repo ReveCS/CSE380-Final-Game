@@ -170,7 +170,6 @@ export default class Attack_1 extends BossState {
                             this.direct = this.owner.position.dirTo(this.leftToRight);
                             this.flag2 = false;
                          }
-                        console.log(this.leftToRight.x, this.owner.position.x);
                         if(Math.abs(this.leftToRight.x-this.owner.position.x) <= 10){
                             this.parent.indicatorAttack1.visible = false;
                             this.done = true;

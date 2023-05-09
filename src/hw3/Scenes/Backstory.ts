@@ -115,7 +115,6 @@ export default class Backstory extends Scene {
     
 
         // clear the session after every refresh
-        sessionStorage.clear();
     }
 
     public startScene(): void {

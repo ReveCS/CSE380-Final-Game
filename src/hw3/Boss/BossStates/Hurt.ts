@@ -8,10 +8,16 @@ export default class Hurt extends BossState {
 		
         this.parent.health = this.parent.health - this.parent.playerDamage;
 		if(!this.parent.secondP){
-			this.owner.animation.playIfNotAlready(BossAnimations.HURT);
+			if(this.parent.health > 0 && !this.owner.animation.isPlaying(BossAnimations.DYING)){
+            	this.owner.animation.play(BossAnimations.HURT);
+			}
 		}else{
-			this.owner.animation.playIfNotAlready(BossAnimations.PHASE_2_HURT);
+			if(this.parent.health > 0 && !this.owner.animation.isPlaying(BossAnimations.DYING)){
+            	this.owner.animation.play(BossAnimations.PHASE_2_HURT);
+			}
+			
 		}
+
         
 	}
 

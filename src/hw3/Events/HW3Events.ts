@@ -32,15 +32,17 @@ export const HW3Events = {
     // The event sent when an enemy is killed
     ENEMY_KILLED: "ENEMY_KILLED",
 
+    BOSS_HEALTH_CHANGE: "BOSS_HEALTH_CHANGE",
+    BOSS_SPAWN: "BOSS_SPAWN",
+    BOSS_DEAD: "BOSS_DEAD",
     // CHEATS
     CHEAT1: "CHEAT1",
     CHEAT2: "CHEAT2",
     CHEAT3: "CHEAT3",
     CHEAT4: "CHEAT4",
     CHEAT5: "CHEAT5",
-    INVINCIBLE: "INVINCIBLE",
-    BOSS_HEALTH_CHANGE: "BOSS_HEALTH_CHANGE",
-    BOSS_SPAWN: "BOSS_SPAWN",
+    INVINCIBLE: "INVINCIBLE"
+    
     
     
 } as const;

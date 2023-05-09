@@ -31,7 +31,7 @@ import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import { NPCEvents } from "../Events/NPCEvents";
 import EnemyController from "../Enemy/EnemyController";
-import BossController from "../Boss/BossController";
+import BossController, {BossTweens} from "../Boss/BossController";
 
 /**
  * A const object for the layer names
@@ -173,12 +173,11 @@ export default abstract class HW3Level extends Scene {
         super(viewport, sceneManager, renderingManager, {...options, physics: {
             
             // TODO configure the collision groups and collision map
-           groupNames:[HW3PhysicsGroups.GROUND,HW3PhysicsGroups.PLAYER,HW3PhysicsGroups.PLATFORM,HW3PhysicsGroups.BOSS,HW3PhysicsGroups.ENEMY],
-           collisions: [[0,1,0,0,1],
-                        [1,0,1,0,0],
-                        [0,1,0,0,1],
-                        [0,0,0,0,0],
-                        [1,0,1,0,0]]
+           groupNames:[HW3PhysicsGroups.GROUND,HW3PhysicsGroups.PLAYER,HW3PhysicsGroups.PLATFORM,HW3PhysicsGroups.BOSS],
+           collisions: [[0,1,0,0],
+                        [1,0,1,0],
+                        [0,1,0,0],
+                        [0,0,0,0]]
 
          }});
         this.add = new HW3FactoryManager(this, this.tilemaps);
@@ -300,6 +299,7 @@ export default abstract class HW3Level extends Scene {
                 this.bossHealthBarBg.visible = true;
                 break;
             }
+            
             case HW3Events.CHEAT1: {
                 this.handleCheat1();
                 break;
@@ -782,10 +782,9 @@ export default abstract class HW3Level extends Scene {
         
         
         // Give the player physics
-        console.log(this.player.position.clone().x,this.player.position.clone().y)
         this.player.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
         this.player.collisionShape.halfSize.set(20,this.player.collisionShape.halfSize.y-7);
-        console.log(this.player.collisionShape.halfSize.x,this.player.collisionShape.halfSize.y);
+    
         this.player.setGroup(HW3PhysicsGroups.PLAYER);
         
        
@@ -797,6 +796,12 @@ export default abstract class HW3Level extends Scene {
             effects: [],
             onEnd: HW3Events.PLAYER_DEAD
         });
+        this.player.tweens.add(PlayerTweens.BOSS_DEATH,{
+            startDelay: 0,
+            duration: 1000,
+            effects: [],
+            onEnd:HW3Events.PLAYER_ENTERED_LEVEL_END
+        })
 
        
 
@@ -822,21 +827,11 @@ export default abstract class HW3Level extends Scene {
         
         return boss;
         
-        // Give the player a death animation
-        // this.player.tweens.add(PlayerTweens.DEATH, {
-        //     startDelay: 0,
-        //     duration: 1900,
-        //     effects: [],
-        //     onEnd: HW3Events.PLAYER_DEAD
-        // });
+       ;
 
        
 
-        // Give the player it's AI
-        // this.player.addAI(PlayerController, { 
-        //     weaponSystem: this.playerWeaponSystem, 
-        //     tilemap: "Destructable" 
-        // });
+ 
     }
 
     protected initializeNPC(npc:HW3AnimatedSprite, key:string, spawn:Vec2, quests:Array<string>, order: number): HW3AnimatedSprite {
@@ -870,7 +865,7 @@ export default abstract class HW3Level extends Scene {
         // Give the enemy physics
         enemy.addPhysics(new AABB(enemy.position.clone(), enemy.boundary.getHalfSize().clone()));
         enemy.collisionShape.halfSize.set(20,enemy.collisionShape.halfSize.y);
-        enemy.setGroup(HW3PhysicsGroups.ENEMY);
+        // this.player.setGroup("PLAYER");
 
         // Give the Enemy it's AI
         enemy.addAI(EnemyController, { player: this.player, radius: AggroRadius, spawn: spawn });
@@ -880,7 +875,7 @@ export default abstract class HW3Level extends Scene {
     }
     protected initializeLaser(key:string, spawn:Vec2): HW3AnimatedSprite{
         if(spawn == undefined){
-            throw new Error("Portal must be set before initialiing!");
+            throw new Error("Laser must be set before initialiing!");
         }
         let laser = this.add.animatedSprite(key,HW3Layers.PRIMARY);
         laser.scale.set(1,1);
@@ -889,7 +884,7 @@ export default abstract class HW3Level extends Scene {
     }
     protected initializeSpikes(key:string, spawn: Vec2): HW3AnimatedSprite{
         if(spawn == undefined){
-            throw new Error("Portal must be set before initialiing!");
+            throw new Error("Spikes must be set before initialiing!");
         }
         let spike = this.add.animatedSprite(key,HW3Layers.PRIMARY);
         spike.scale.set(3,2);

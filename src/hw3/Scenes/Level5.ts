@@ -16,6 +16,7 @@ import Level4 from "./Level4";
 import BossController from "../Boss/BossController";
 import { HW3PhysicsGroups } from "../HW3PhysicsGroups";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
+import Winscreen from "./Winscreen";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
@@ -158,7 +159,7 @@ export default class Level5 extends HW3Level {
         // Quest
         this.QUEST_KEY = Level5.QUEST_KEY;
         // Pause
-        this.PAUSE_KEY = Hub.PAUSE_KEY;
+        this.PAUSE_KEY = Level5.PAUSE_KEY;
 
         // Level end size and position
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
@@ -232,7 +233,7 @@ export default class Level5 extends HW3Level {
         this.indicatorInitialize();
         this.spikeInitialize();
         this.initializeFinalBoss();
-        this.nextLevel = Hub;
+        this.nextLevel = Winscreen;
 
     }
     protected initializeFinalBoss(){

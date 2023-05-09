@@ -173,11 +173,12 @@ export default abstract class HW3Level extends Scene {
         super(viewport, sceneManager, renderingManager, {...options, physics: {
             
             // TODO configure the collision groups and collision map
-           groupNames:[HW3PhysicsGroups.GROUND,HW3PhysicsGroups.PLAYER,HW3PhysicsGroups.PLATFORM,HW3PhysicsGroups.BOSS],
-           collisions: [[0,1,0,0],
-                        [1,0,1,0],
-                        [0,1,0,0],
-                        [0,0,0,0]]
+           groupNames:[HW3PhysicsGroups.GROUND,HW3PhysicsGroups.PLAYER,HW3PhysicsGroups.PLATFORM,HW3PhysicsGroups.BOSS,HW3PhysicsGroups.ENEMY],
+           collisions: [[0,1,0,0,1],
+                        [1,0,1,0,0],
+                        [0,1,0,0,1],
+                        [0,0,0,0,0],
+                        [1,0,1,0,0]]
 
          }});
         this.add = new HW3FactoryManager(this, this.tilemaps);
@@ -869,7 +870,7 @@ export default abstract class HW3Level extends Scene {
         // Give the enemy physics
         enemy.addPhysics(new AABB(enemy.position.clone(), enemy.boundary.getHalfSize().clone()));
         enemy.collisionShape.halfSize.set(20,enemy.collisionShape.halfSize.y);
-        // this.player.setGroup("PLAYER");
+        enemy.setGroup(HW3PhysicsGroups.ENEMY);
 
         // Give the Enemy it's AI
         enemy.addAI(EnemyController, { player: this.player, radius: AggroRadius, spawn: spawn });

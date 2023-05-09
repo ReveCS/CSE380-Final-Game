@@ -92,8 +92,8 @@ export default class EnemyController extends StateMachineAI {
         this.speed = 200;
         this.velocity = Vec2.ZERO;
 
-        this.health = 5
-        this.maxHealth = 5;
+        this.health = 15;
+        this.maxHealth = 15;
 
         this._damage = 1;
 

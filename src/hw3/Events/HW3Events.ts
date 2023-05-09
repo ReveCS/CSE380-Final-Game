@@ -35,6 +35,7 @@ export const HW3Events = {
     BOSS_HEALTH_CHANGE: "BOSS_HEALTH_CHANGE",
     BOSS_SPAWN: "BOSS_SPAWN",
     BOSS_DEAD: "BOSS_DEAD",
+    LAVA: "LAVA",
     // CHEATS
     CHEAT1: "CHEAT1",
     CHEAT2: "CHEAT2",

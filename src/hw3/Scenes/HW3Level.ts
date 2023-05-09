@@ -865,7 +865,7 @@ export default abstract class HW3Level extends Scene {
         // Give the enemy physics
         enemy.addPhysics(new AABB(enemy.position.clone(), enemy.boundary.getHalfSize().clone()));
         enemy.collisionShape.halfSize.set(20,enemy.collisionShape.halfSize.y);
-        enemy.setGroup(HW3PhysicsGroups.ENEMY);
+        // enemy.setGroup(HW3PhysicsGroups.ENEMY);
 
         // Give the Enemy it's AI
         enemy.addAI(EnemyController, { player: this.player, radius: AggroRadius, spawn: spawn });

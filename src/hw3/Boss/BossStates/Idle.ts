@@ -85,7 +85,7 @@ export default class Idle extends BossState {
                 }
             }
         }else{
-            if(this.phase2Timer >= 150){
+            if(this.phase2Timer >= 200){
                 if(this.timer >= 150){
                     let attackArray = [2,1,3,2,1];
                     let nextAttack = attackArray[this.index];

@@ -15,6 +15,9 @@ import Level1 from "./HW3Level1";
 import Level2 from "./HW3Level2";
 import Level4 from "./Level4";
 import Level5 from "./Level5";
+import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
+import { HW3PhysicsGroups } from "../HW3PhysicsGroups";
+import { HW3Events } from "../Events/HW3Events";
 
 /**
  * The first level for HW4 - should be the one with the grass and the clouds.
@@ -96,6 +99,10 @@ export default class Level3 extends HW3Level {
     protected portal: HW3AnimatedSprite;
     protected portalSpriteKey:string;
     protected portalSpawn: Vec2;
+    public static readonly LAVA_KEY = "Lava";
+    
+    protected lavaLayerKey: string;
+    protected lava: OrthogonalTilemap;
 
     public static readonly LEVEL_END = new AABB(new Vec2(224, 232), new Vec2(24, 16));
 
@@ -150,7 +157,7 @@ export default class Level3 extends HW3Level {
         this.levelEndPosition = new Vec2(128, 232).mult(this.tilemapScale);
         this.levelEndHalfSize = new Vec2(32, 32).mult(this.tilemapScale);
 
-        
+        this.lavaLayerKey = Level3.LAVA_KEY;
     }
 
     /**
@@ -210,6 +217,7 @@ export default class Level3 extends HW3Level {
 
         this.initializeEnemies();
         this.portalInitialize();
+        this.initializeLava()
     }
 
     protected initializeEnemies() {
@@ -247,7 +255,14 @@ export default class Level3 extends HW3Level {
         this.portal = this.initializePortal(this.portalSpriteKey,this.portalSpawn)
         this.portal.animation.play(PortalAnimation.IDLE);
     }
-
+    protected initializeLava(): void{
+        if(this.lavaLayerKey == undefined){
+            throw new Error("Make sure the keys for lava layer is set.")
+        }
+        this.lava = this.getTilemap(this.lavaLayerKey) as OrthogonalTilemap;
+        this.lava.addPhysics();
+        
+    }
     /**
      * I had to override this method to adjust the viewport for the first level. I screwed up 
      * when I was making the tilemap for the first level is what it boils down to.

@@ -169,7 +169,7 @@ export default class Tutorial extends HW3Level {
 
         // NPC text
         this.isDisplayingText = false;
-        this.talkTimer = new Timer(1000);
+        this.talkTimer = new Timer(2000);
         this.talkBuffer = [];
 
         // Set Portal sprite and spawn
@@ -312,6 +312,7 @@ export default class Tutorial extends HW3Level {
         });
         label.font = "Hjet-Regular";
         label.fontSize = 28;
+        label.textColor = Color.WHITE;
         this.talkBuffer.push(label);
 
         this.talkTimer.start();

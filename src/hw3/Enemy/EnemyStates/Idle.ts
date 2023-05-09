@@ -4,7 +4,9 @@ import EnemyState from "./EnemyState";
 export default class Idle extends EnemyState {
 
 	public onEnter(options: Record<string, any>): void {
-        this.owner.animation.playIfNotAlready(EnemyAnimations.IDLE,true);
+        if (!this.owner.animation.isPlaying(EnemyAnimations.ATTACK_1)) {
+            this.owner.animation.playIfNotAlready(EnemyAnimations.IDLE,true);
+        }
         
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
@@ -14,15 +16,10 @@ export default class Idle extends EnemyState {
 	public update(deltaT: number): void {
 		super.update(deltaT);
 
-        // Attack the player if they are near
-        if (this.playerInCombatRange()) {
-            this.finished(EnemyStates.COMBAT);
-        }
-        // If not, path to the player if they are in our aggro range
-        else if (this.playerInRange()) {
+        // Path to the player if they are in our aggro range
+        if (this.playerInRange()) {
             this.finished(EnemyStates.PATHING);
         }
-        // we already checked so player must be out of aggro range
         // return to our spawn if we aren't there
         else if (!this.atSpawn()) {
             this.finished(EnemyStates.RETURNING);
@@ -38,7 +35,9 @@ export default class Idle extends EnemyState {
 	}
 
 	public onExit(): Record<string, any> {
-		this.owner.animation.stop();
+        if (!this.owner.animation.isPlaying(EnemyAnimations.ATTACK_1)) {
+            this.owner.animation.stop();
+        }
 		return {};
 	}
 }

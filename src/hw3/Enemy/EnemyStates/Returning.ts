@@ -6,7 +6,9 @@ export default class Pathing extends EnemyState {
 
 	public onEnter(options: Record<string, any>): void {
         this.parent.speed = this.parent.MIN_SPEED;
-        this.owner.animation.playIfNotAlready(EnemyAnimations.WALK, true);
+        if (!this.owner.animation.isPlaying(EnemyAnimations.ATTACK_1)) {
+            this.owner.animation.playIfNotAlready(EnemyAnimations.WALK, true);
+        }
 	}
 
 	public update(deltaT: number): void {
@@ -36,7 +38,9 @@ export default class Pathing extends EnemyState {
 	}
 
 	public onExit(): Record<string, any> {
-		this.owner.animation.stop();
+		if (!this.owner.animation.isPlaying(EnemyAnimations.ATTACK_1)) {
+            this.owner.animation.stop();
+        }
 		return {};
 	}
 }

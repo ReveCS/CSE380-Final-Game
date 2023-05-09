@@ -2,17 +2,13 @@ import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
-// import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 
 import Idle from "./EnemyStates/Idle";
 import Pathing from "./EnemyStates/Pathing";
 import Returning from "./EnemyStates/Returning";
 import Hurt from "./EnemyStates/Hurt";
 import Dead from "./EnemyStates/Dead";
-import Combat from "./EnemyStates/Combat";
-
-// // import PlayerWeapon from "./EnemyWeapon";
-// import Input from "../../Wolfie2D/Input/Input";
+// import Combat from "./EnemyStates/Combat";
 
 import HW3AnimatedSprite from "../Nodes/HW3AnimatedSprite";
 import MathUtils from "../../Wolfie2D/Utils/MathUtils";
@@ -28,10 +24,6 @@ export const EnemyAnimations = {
     TAKE_DAMAGE: "TAKE_DAMAGE",
     DYING: "DYING",
     DEATH: "DEATH",
-    // ATTACK_2: "ATTACK_2",
-    // JUMP: "JUMP",
-    // FALL: "FALL",
-    // LAND: "LAND"
 } as const
 
 /**
@@ -51,7 +43,7 @@ export const EnemyStates = {
     RETURNING: "RETURNING",
     HURT: "HURT",
     DEAD: "DEAD",
-    COMBAT: "COMBAT",
+    // COMBAT: "COMBAT",
 } as const
 
 /**
@@ -82,6 +74,7 @@ export default class EnemyController extends StateMachineAI {
     // protected cannon: Sprite;
     // protected weapon: EnemyWeapon;
 
+    private isAttacking: boolean;
     
     public initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>){
         this.owner = owner;
@@ -92,8 +85,8 @@ export default class EnemyController extends StateMachineAI {
         this.speed = 200;
         this.velocity = Vec2.ZERO;
 
-        this.health = 15;
-        this.maxHealth = 15;
+        this.health = 10;
+        this.maxHealth = 10;
 
         this._damage = 1;
 
@@ -104,13 +97,15 @@ export default class EnemyController extends StateMachineAI {
         this.spawn = options.spawn;
         this._player = options.player;
 
+        this.isAttacking = false;
+
         // Add the different states the enemy can be in to the EnemyController 
 		this.addState(EnemyStates.IDLE, new Idle(this, this.owner));
         this.addState(EnemyStates.PATHING, new Pathing(this, this.owner));
         this.addState(EnemyStates.RETURNING, new Returning(this, this.owner));
         this.addState(EnemyStates.HURT, new Hurt(this, this.owner));
         this.addState(EnemyStates.DEAD, new Dead(this, this.owner));
-        this.addState(EnemyStates.COMBAT, new Combat(this, this.owner));
+        // this.addState(EnemyStates.COMBAT, new Combat(this, this.owner));
         
         // Start the enemy in the Idle state
         this.initialize(EnemyStates.IDLE);
@@ -137,6 +132,18 @@ export default class EnemyController extends StateMachineAI {
 
     public update(deltaT: number): void {
 		super.update(deltaT);
+        // make sure we aren't dead and we can actually attack
+        if (this.owner && !this.owner.animation.isPlaying(EnemyAnimations.TAKE_DAMAGE) && !this.owner.animation.isPlaying(EnemyAnimations.DYING)) {
+            // if were not already attacking and player is in combat range
+            if (!this.isAttacking && this.playerBoundary.containsPoint(this.owner.position)) {
+                this.owner.animation.play(EnemyAnimations.ATTACK_1);
+                this.isAttacking = true;
+            }
+            if (this.isAttacking && !this.owner.animation.isPlaying(EnemyAnimations.ATTACK_1)) {
+                this.isAttacking = false;
+                this.emitter.fireEvent(CombatEvents.ENEMY_ATTACK_PHYSICAL, { dmg: this.damage });
+            }
+        }
 	}
 
     public get aggroRadius(): number { return this._aggroRadius; }

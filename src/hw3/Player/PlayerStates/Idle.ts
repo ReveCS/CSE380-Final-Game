@@ -19,7 +19,9 @@ export default class Idle extends PlayerState {
 	}
 
 	public onEnter(options: Record<string, any>): void {
-        this.owner.animation.queue(PlayerAnimations.IDLE,true);
+        if (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
+            this.owner.animation.queue(PlayerAnimations.IDLE,true);
+        }
         
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
@@ -78,7 +80,9 @@ export default class Idle extends PlayerState {
 	}
 
 	public onExit(): Record<string, any> {
-		this.owner.animation.stop();
+        if (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
+            this.owner.animation.stop();
+        }
 		return {};
 	}
 }

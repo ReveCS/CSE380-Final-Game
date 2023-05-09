@@ -104,7 +104,7 @@ export default class PlayerController extends StateMachineAI {
         this.health = 10
         this.maxHealth = 10;
 
-        this.damage = 1;
+        this.damage = 5;
 
         this._enemyDamage = 0;
 
@@ -161,9 +161,8 @@ export default class PlayerController extends StateMachineAI {
     public update(deltaT: number): void {
         // console.log(this.owner.animation.currentAnimation);
 		super.update(deltaT);
-        // If the player hits the attack button and the weapon system isn't running, restart the system and fire!
         // wait for animation to reset before we can attack again
-        if (Input.isPressed(HW3Controls.ATTACK) && !this.isAttacking) {
+        if (Input.isJustPressed(HW3Controls.ATTACK) && !this.isAttacking) {
             let swingAudio = this.owner.getScene().getSwingSoundKey();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: swingAudio, loop: false, holdReference: false});
             this.owner.animation.play(PlayerAnimations.ATTACK_1);

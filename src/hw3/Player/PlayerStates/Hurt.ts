@@ -10,9 +10,12 @@ export default class Hurt extends PlayerState {
 		if(this.parent.health != 0){
 			this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: hurtSound, loop: false, holdReference: false});
 		}
-        if(!this.owner.animation.isPlaying(PlayerAnimations.DYING)){
-			this.owner.animation.play(PlayerAnimations.TAKE_DAMAGE);
-		}
+
+		let dying = this.owner.animation.isPlaying(PlayerAnimations.DYING);
+        let attacking = this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1);
+        if(this.parent.health > 0 && !dying && !attacking){
+            this.owner.animation.play(PlayerAnimations.TAKE_DAMAGE);
+        }    
 	}
 
 	public update(deltaT: number): void {
@@ -22,11 +25,16 @@ export default class Hurt extends PlayerState {
         if (!this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE)) {
             this.finished(PlayerStates.IDLE);
         }
-		
+		// Update the vertical velocity of the Player
+		this.parent.velocity.y += this.gravity*deltaT;
+		// Move the Player
+		this.owner.move(this.parent.velocity.scaled(deltaT));
 	}
 
 	public onExit(): Record<string, any> {
-		this.owner.animation.stop();
+		if (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
+            this.owner.animation.stop();
+        }
 		return {};
 	}
 }

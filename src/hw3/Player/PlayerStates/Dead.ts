@@ -22,8 +22,13 @@ export default class Dead extends PlayerState {
     // Ignore all events from the rest of the game
     public handleInput(event: GameEvent): void { }
 
-    // Empty update method - if the player is dead, don't update anything
-    public update(deltaT: number): void {}
+    // fix mid-air deaths
+    public update(deltaT: number): void {
+        // Update the vertical velocity of the Player
+        this.parent.velocity.y += this.gravity*deltaT;
+        // Move the Player
+        this.owner.move(this.parent.velocity.scaled(deltaT));
+    }
 
     public onExit(): Record<string, any> { return {}; }
     

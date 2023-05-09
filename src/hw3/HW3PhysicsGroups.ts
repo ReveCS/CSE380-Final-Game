@@ -11,6 +11,7 @@ export const HW3PhysicsGroups = {
         set the physics group for a particular tilemap layer.
     */
     GROUND: "GROUND",
-    BOSS: "BOSS"
+    BOSS: "BOSS",
+    ENEMY: "ENEMY"
     
 } as const;

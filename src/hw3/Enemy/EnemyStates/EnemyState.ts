@@ -68,15 +68,4 @@ export default abstract class EnemyState extends State {
         let threshold = 2.6; // 2.5 but do 2.6 for rounding errors
         return this.owner.position.distanceSqTo(this.parent.spawn) < threshold * threshold;
     }
-
-    // returns if player is on top of enemy
-    protected playerOnTop(): boolean {
-        // if player is on top, its AABB will be inside enemy's AABB
-        let check1 = this.owner.boundary.overlaps(this.parent.playerBoundary);
-        // player is above if bottom of their AABB is above top of enemy AABB
-        // add some error correction cause player AABB isnt perfect
-        let check2 = this.parent.playerBoundary.bottom < this.owner.boundary.top + 10;
-
-        return check1 && check2;
-    }
 }

@@ -217,7 +217,7 @@ export default class Hub extends HW3Level {
         this.isDisplayingQuestText = false;
         this.isDisplayingTalkText = false;
         this.displayTimer = new Timer(500);
-        this.talkTimer = new Timer(1000);
+        this.talkTimer = new Timer(2000);
         this.textBuffer = [];
         this.questUI = [];
         this.talkBuffer = [];
@@ -458,6 +458,7 @@ export default class Hub extends HW3Level {
         });
         label.font = "Hjet-Regular";
         label.fontSize = 28;
+        label.textColor = Color.WHITE;
         this.talkBuffer.push(label);
 
         this.talkTimer.start();

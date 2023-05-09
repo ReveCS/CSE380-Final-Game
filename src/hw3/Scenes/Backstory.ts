@@ -19,7 +19,12 @@ export const BackstoryLayers = {
     PAGE2: "PAGE2",
     PAGE3: "PAGE3",
     PAGE4: "PAGE4",
-    PAGE5: "PAGE5"
+    PAGE5: "PAGE5",
+    PAGE6: "PAGE6",
+    PAGE7: "PAGE7",
+    PAGE8: "PAGE8",
+    PAGE9: "PAGE9",
+    PAGE10: "PAGE10"
 } as const;
 
 // Events triggered in the splash screen
@@ -28,7 +33,12 @@ const BackstoryScreenEvent = {
     PAGE2: "PAGE2",
     PAGE3: "PAGE3",
     PAGE4: "PAGE4",
-    PAGE5: "PAGE5"
+    PAGE5: "PAGE5",
+    PAGE6: "PAGE6",
+    PAGE7: "PAGE7",
+    PAGE8: "PAGE8",
+    PAGE9: "PAGE9",
+    PAGE10: "PAGE10"
 } as const;
 
 export default class Backstory extends Scene {
@@ -38,6 +48,11 @@ export default class Backstory extends Scene {
     private page3: Layer;
     private page4: Layer;
     private page5: Layer;
+    private page6: Layer;
+    private page7: Layer;
+    private page8: Layer;
+    private page9: Layer;
+    private page10: Layer;
     // Sprites for background and buttons
     // Sprites for the background images
 	private bg: AnimatedSprite;
@@ -46,6 +61,11 @@ export default class Backstory extends Scene {
     private backstory3: Sprite;
     private backstory4: Sprite;
     private backstory5: Sprite;
+    private backstory6: Sprite;
+    private backstory7: Sprite;
+    private backstory8: Sprite;
+    private backstory9: Sprite;
+    private backstory10: Sprite;
 
 
     
@@ -60,11 +80,21 @@ export default class Backstory extends Scene {
     public static BACKSTORY4_PATH = "game_assets/backgrounds/backstory4.png";
     public static BACKSTORY5_KEY = "BACKSTORY5";
     public static BACKSTORY5_PATH = "game_assets/backgrounds/backstory5.png";
+    public static BACKSTORY6_KEY = "BACKSTORY6";
+    public static BACKSTORY6_PATH = "game_assets/backgrounds/backstory6.png";
+    public static BACKSTORY7_KEY = "BACKSTORY7";
+    public static BACKSTORY7_PATH = "game_assets/backgrounds/backstory7.png";
+    public static BACKSTORY8_KEY = "BACKSTORY8";
+    public static BACKSTORY8_PATH = "game_assets/backgrounds/backstory8.png";
+    public static BACKSTORY9_KEY = "BACKSTORY9";
+    public static BACKSTORY9_PATH = "game_assets/backgrounds/backstory9.png";
+    public static BACKSTORY10_KEY = "BACKSTORY10";
+    public static BACKSTORY10_PATH = "game_assets/backgrounds/backstory10.png";
+
 
 
     // The key and path to the sprites
-    public static LOGO_KEY = "LOGO";
-    public static LOGO_PATH = "game_assets/sprites/Logo.png";
+
 	
     public loadScene(): void {
         super.loadScene();
@@ -77,7 +107,12 @@ export default class Backstory extends Scene {
         this.load.image(Backstory.BACKSTORY3_KEY, Backstory.BACKSTORY3_PATH);
         this.load.image(Backstory.BACKSTORY4_KEY, Backstory.BACKSTORY4_PATH);
         this.load.image(Backstory.BACKSTORY5_KEY, Backstory.BACKSTORY5_PATH);
-        this.load.image(Backstory.LOGO_KEY, Backstory.LOGO_PATH);
+        this.load.image(Backstory.BACKSTORY6_KEY, Backstory.BACKSTORY6_PATH);
+        this.load.image(Backstory.BACKSTORY7_KEY, Backstory.BACKSTORY7_PATH);
+        this.load.image(Backstory.BACKSTORY8_KEY, Backstory.BACKSTORY8_PATH);
+        this.load.image(Backstory.BACKSTORY9_KEY, Backstory.BACKSTORY9_PATH);
+        this.load.image(Backstory.BACKSTORY10_KEY, Backstory.BACKSTORY10_PATH);
+    
 
         // clear the session after every refresh
         sessionStorage.clear();
@@ -97,6 +132,16 @@ export default class Backstory extends Scene {
         this.page4.setHidden(true);
         this.page5 = this.addUILayer(BackstoryLayers.PAGE5);
         this.page5.setHidden(true);
+        this.page6 = this.addUILayer(BackstoryLayers.PAGE6);
+        this.page6.setHidden(true);
+        this.page7 = this.addUILayer(BackstoryLayers.PAGE7);
+        this.page7.setHidden(true);
+        this.page8 = this.addUILayer(BackstoryLayers.PAGE8);
+        this.page8.setHidden(true);
+        this.page9 = this.addUILayer(BackstoryLayers.PAGE9);
+        this.page9.setHidden(true);
+        this.page10 = this.addUILayer(BackstoryLayers.PAGE10);
+        this.page10.setHidden(true);
         // Add logo sprite
         this.backstory1 = this.add.sprite(Backstory.BACKSTORY1_KEY, BackstoryLayers.PAGE1);
         this.backstory1.position.copy(center);
@@ -117,6 +162,26 @@ export default class Backstory extends Scene {
         this.backstory5 = this.add.sprite(Backstory.BACKSTORY5_KEY, BackstoryLayers.PAGE5);
         this.backstory5.position.copy(center);
         this.backstory5.scale.scale(1, 1);
+
+        this.backstory6 = this.add.sprite(Backstory.BACKSTORY6_KEY, BackstoryLayers.PAGE6);
+        this.backstory6.position.copy(center);
+        this.backstory6.scale.scale(1, 1);
+
+        this.backstory7 = this.add.sprite(Backstory.BACKSTORY7_KEY, BackstoryLayers.PAGE7);
+        this.backstory7.position.copy(center);
+        this.backstory7.scale.scale(1, 1);
+
+        this.backstory8 = this.add.sprite(Backstory.BACKSTORY8_KEY, BackstoryLayers.PAGE8);
+        this.backstory8.position.copy(center);
+        this.backstory8.scale.scale(1, 1);
+
+        this.backstory9 = this.add.sprite(Backstory.BACKSTORY9_KEY, BackstoryLayers.PAGE9);
+        this.backstory9.position.copy(center);
+        this.backstory9.scale.scale(1, 1);
+
+        this.backstory10 = this.add.sprite(Backstory.BACKSTORY10_KEY, BackstoryLayers.PAGE10);
+        this.backstory10.position.copy(center);
+        this.backstory10.scale.scale(1, 1);
 
         // Add levels button, and give it an event to emit on press
         const page1Button = <Button> this.add.uiElement(UIElementType.BUTTON, BackstoryLayers.PAGE1, {position: new Vec2(center.x+400, center.y + 300), text: "Next"});
@@ -159,45 +224,94 @@ export default class Backstory extends Scene {
         page5Button.borderColor = Color.TRANSPARENT;
         page5Button.backgroundColor = Color.TRANSPARENT;
         page5Button.font = "Hjet-Regular";
-        page5Button.onClick = () => {
+        page5Button.onClickEventId = BackstoryScreenEvent.PAGE6;
+
+        const page6Button = <Button> this.add.uiElement(UIElementType.BUTTON, BackstoryLayers.PAGE6, {position: new Vec2(center.x+400, center.y + 300), text: "Next"});
+        page6Button.size.set(300, 100);
+        //levels.borderColor = Color.WHITE;
+        page6Button.borderColor = Color.TRANSPARENT;
+        page6Button.backgroundColor = Color.TRANSPARENT;
+        page6Button.font = "Hjet-Regular";
+        page6Button.onClickEventId = BackstoryScreenEvent.PAGE7;
+
+        const page7Button = <Button> this.add.uiElement(UIElementType.BUTTON, BackstoryLayers.PAGE7, {position: new Vec2(center.x+400, center.y + 300), text: "Next"});
+        page7Button.size.set(300, 100);
+        //levels.borderColor = Color.WHITE;
+        page7Button.borderColor = Color.TRANSPARENT;
+        page7Button.backgroundColor = Color.TRANSPARENT;
+        page7Button.font = "Hjet-Regular";
+        page7Button.onClickEventId = BackstoryScreenEvent.PAGE8;
+
+        const page8Button = <Button> this.add.uiElement(UIElementType.BUTTON, BackstoryLayers.PAGE8, {position: new Vec2(center.x+400, center.y + 300), text: "Next"});
+        page8Button.size.set(300, 100);
+        //levels.borderColor = Color.WHITE;
+        page8Button.borderColor = Color.TRANSPARENT;
+        page8Button.backgroundColor = Color.TRANSPARENT;
+        page8Button.font = "Hjet-Regular";
+        page8Button.onClickEventId = BackstoryScreenEvent.PAGE9;
+
+        const page9Button = <Button> this.add.uiElement(UIElementType.BUTTON, BackstoryLayers.PAGE9, {position: new Vec2(center.x+400, center.y + 300), text: "Next"});
+        page9Button.size.set(300, 100);
+        //levels.borderColor = Color.WHITE;
+        page9Button.borderColor = Color.TRANSPARENT;
+        page9Button.backgroundColor = Color.TRANSPARENT;
+        page9Button.font = "Hjet-Regular";
+        page9Button.onClickEventId = BackstoryScreenEvent.PAGE10;
+
+        const page10Button = <Button> this.add.uiElement(UIElementType.BUTTON, BackstoryLayers.PAGE10, {position: new Vec2(center.x+400, center.y + 300), text: "Next"});
+        page10Button.size.set(300, 100);
+        //levels.borderColor = Color.WHITE;
+        page10Button.borderColor = Color.TRANSPARENT;
+        page10Button.backgroundColor = Color.TRANSPARENT;
+        page10Button.font = "Hjet-Regular";
+        page10Button.onClick = () => {
 
             this.sceneManager.changeToScene(MainMenu);
         }
 
-        // const aboutText1 = "Pyke Kallus used to be an ordinary mailman, delivering letters and";
-        // const aboutText2 = "packages across the country. But when delivering his 1000th package,";
-        // const aboutText3 = "he accidentally opens it, and is suddenly transported into the fantasy";
-        // const aboutText4 = "world of Atnis. And now, in order to make a living, he works for UBS";
-        // const aboutText5 = "(United Bounty Service) and delivers heads instead of mail every day."; 
-        // const aboutText6 = "As the top Bounty Hunter, Pyke, with his trusty Mailhammer, travels";
-        // const aboutText7 = "around the plagued lands of Atnis to rid them of invading monsters";
-        // const aboutText8 = "that threaten the common people.";
+        const aboutText1 = "Pyke Kallus was an ordinary mailman, delivering letters and";
+        const aboutText2 = "packages across the city.";
+        
+        const aboutText3 = "But when on his way to deliver his 1000th package...";
+        const aboutText4 = "He is magically transported into the world of Atnis.";
+        const aboutText5 = "And now, in order to make a living, he works for the ";
+        const aboutText6 = "UBS (United Bounty Service) and delivers bounties instead of mail."; 
+        const aboutText7 = "And now as the top Bounty Hunter, Pyke, with his trusty Mailhammer,";
+        const aboutText8 = "travels around the plagued lands of Atnis to rid them of"
+        const aboutText9 = "the invading monsters that threaten the common people";
+        const aboutText10 = " and hopefully one day find his way home in...";
 
-        // const aboutLine1 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE1, {position: new Vec2(center.x, center.y - 150), text: aboutText1});
-        // aboutLine1.font = "Hjet-Regular"
-        // const aboutLine2 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.ABOUT, {position: new Vec2(center.x, center.y - 100), text: aboutText2});
-        // aboutLine2.font = "Hjet-Regular"
-        // const aboutLine3 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.ABOUT, {position: new Vec2(center.x, center.y - 50), text: aboutText3});
-        // aboutLine3.font = "Hjet-Regular"
-        // const aboutLine4 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.ABOUT, {position: new Vec2(center.x, center.y), text: aboutText4});
-        // aboutLine4.font = "Hjet-Regular"
-        // const aboutLine5 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.ABOUT, {position: new Vec2(center.x, center.y + 50), text: aboutText5});
-        // aboutLine5.font = "Hjet-Regular"
-        // const aboutLine6 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.ABOUT, {position: new Vec2(center.x, center.y + 100), text: aboutText6});
-        // aboutLine6.font = "Hjet-Regular"
-        // const aboutLine7 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.ABOUT, {position: new Vec2(center.x, center.y + 150), text: aboutText7});
-        // aboutLine7.font = "Hjet-Regular"
-        // const aboutLine8 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.ABOUT, {position: new Vec2(center.x, center.y + 200), text: aboutText8});
-        // aboutLine8.font = "Hjet-Regular"
+        const aboutLine1 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE1, {position: new Vec2(center.x, center.y - 200), text: aboutText1});
+        aboutLine1.font = "Hjet-Regular"
+        const aboutLine2 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE1, {position: new Vec2(center.x, center.y - 150), text: aboutText2});
+        aboutLine2.font = "Hjet-Regular"
+        const aboutLine3 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE2, {position: new Vec2(center.x, center.y - 50), text: aboutText3});
+        aboutLine3.font = "Hjet-Regular"
+        const aboutLine4 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE7, {position: new Vec2(center.x, center.y), text: aboutText4});
+        aboutLine4.font = "Hjet-Regular"
+        const aboutLine5 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE8, {position: new Vec2(center.x, center.y - 250), text: aboutText5});
+        aboutLine5.font = "Hjet-Regular"
+        const aboutLine6 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE8, {position: new Vec2(center.x, center.y - 200), text: aboutText6});
+        aboutLine6.font = "Hjet-Regular"
+        const aboutLine7 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE9, {position: new Vec2(center.x, center.y + 150), text: aboutText7});
+        aboutLine7.font = "Hjet-Regular"
+        const aboutLine8 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE9, {position: new Vec2(center.x, center.y + 200), text: aboutText8});
+        aboutLine8.font = "Hjet-Regular"
+        const aboutLine9 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE9, {position: new Vec2(center.x, center.y + 250), text: aboutText9});
+        aboutLine9.font = "Hjet-Regular"
+        const aboutLine10 = <Label>this.add.uiElement(UIElementType.LABEL, BackstoryLayers.PAGE10, {position: new Vec2(center.x, center.y - 200), text: aboutText10});
+        aboutLine10.font = "Hjet-Regular"
 
-        // aboutLine1.textColor = Color.WHITE;
-        // aboutLine2.textColor = Color.WHITE;
-        // aboutLine3.textColor = Color.WHITE;
-        // aboutLine4.textColor = Color.WHITE;
-        // aboutLine5.textColor = Color.WHITE;
-        // aboutLine6.textColor = Color.WHITE;
-        // aboutLine7.textColor = Color.WHITE;
-        // aboutLine8.textColor = Color.WHITE;
+        aboutLine1.textColor = Color.WHITE;
+        aboutLine2.textColor = Color.WHITE;
+        aboutLine3.textColor = Color.WHITE;
+        aboutLine4.textColor = Color.WHITE;
+        aboutLine5.textColor = Color.WHITE;
+        aboutLine6.textColor = Color.WHITE;
+        aboutLine7.textColor = Color.WHITE;
+        aboutLine8.textColor = Color.WHITE;
+        aboutLine9.textColor = Color.WHITE;
+        aboutLine10.textColor = Color.WHITE;
 
         // Subscribe to the button events
         this.receiver.subscribe(BackstoryScreenEvent.PAGE1);
@@ -205,6 +319,11 @@ export default class Backstory extends Scene {
         this.receiver.subscribe(BackstoryScreenEvent.PAGE3);
         this.receiver.subscribe(BackstoryScreenEvent.PAGE4);
         this.receiver.subscribe(BackstoryScreenEvent.PAGE5);
+        this.receiver.subscribe(BackstoryScreenEvent.PAGE6);
+        this.receiver.subscribe(BackstoryScreenEvent.PAGE7);
+        this.receiver.subscribe(BackstoryScreenEvent.PAGE8);
+        this.receiver.subscribe(BackstoryScreenEvent.PAGE9);
+        this.receiver.subscribe(BackstoryScreenEvent.PAGE10);
 
         // Scene has started, so start playing music
     }
@@ -229,7 +348,11 @@ export default class Backstory extends Scene {
                 this.page3.setHidden(true);
                 this.page4.setHidden(true);
                 this.page5.setHidden(true);
-
+                this.page6.setHidden(true);
+                this.page7.setHidden(true);
+                this.page8.setHidden(true);
+                this.page9.setHidden(true);
+                this.page10.setHidden(true);
                 break;
             }
             case BackstoryScreenEvent.PAGE2: {
@@ -238,7 +361,11 @@ export default class Backstory extends Scene {
                 this.page3.setHidden(true);
                 this.page4.setHidden(true);
                 this.page5.setHidden(true);
-
+                this.page6.setHidden(true);
+                this.page7.setHidden(true);
+                this.page8.setHidden(true);
+                this.page9.setHidden(true);
+                this.page10.setHidden(true);
                 break;
             }
             case BackstoryScreenEvent.PAGE3: {
@@ -247,7 +374,11 @@ export default class Backstory extends Scene {
                 this.page3.setHidden(false);
                 this.page4.setHidden(true);
                 this.page5.setHidden(true);
-
+                this.page6.setHidden(true);
+                this.page7.setHidden(true);
+                this.page8.setHidden(true);
+                this.page9.setHidden(true);
+                this.page10.setHidden(true);
                 break;
             }
             case BackstoryScreenEvent.PAGE4: {
@@ -256,7 +387,11 @@ export default class Backstory extends Scene {
                 this.page3.setHidden(true);
                 this.page4.setHidden(false);
                 this.page5.setHidden(true);
-
+                this.page6.setHidden(true);
+                this.page7.setHidden(true);
+                this.page8.setHidden(true);
+                this.page9.setHidden(true);
+                this.page10.setHidden(true);
                 break;
             }
             case BackstoryScreenEvent.PAGE5: {
@@ -265,7 +400,76 @@ export default class Backstory extends Scene {
                 this.page3.setHidden(true);
                 this.page4.setHidden(true);
                 this.page5.setHidden(false);
-
+                this.page6.setHidden(true);
+                this.page7.setHidden(true);
+                this.page8.setHidden(true);
+                this.page9.setHidden(true);
+                this.page10.setHidden(true);
+                break;
+            }
+            case BackstoryScreenEvent.PAGE6: {
+                this.page1.setHidden(true);
+                this.page2.setHidden(true);
+                this.page3.setHidden(true);
+                this.page4.setHidden(true);
+                this.page5.setHidden(true);
+                this.page6.setHidden(false);
+                this.page7.setHidden(true);
+                this.page8.setHidden(true);
+                this.page9.setHidden(true);
+                this.page10.setHidden(true);
+                break;
+            }
+            case BackstoryScreenEvent.PAGE7: {
+                this.page1.setHidden(true);
+                this.page2.setHidden(true);
+                this.page3.setHidden(true);
+                this.page4.setHidden(true);
+                this.page5.setHidden(true);
+                this.page6.setHidden(true);
+                this.page7.setHidden(false);
+                this.page8.setHidden(true);
+                this.page9.setHidden(true);
+                this.page10.setHidden(true);
+                break;
+            }
+            case BackstoryScreenEvent.PAGE8: {
+                this.page1.setHidden(true);
+                this.page2.setHidden(true);
+                this.page3.setHidden(true);
+                this.page4.setHidden(true);
+                this.page5.setHidden(true);
+                this.page6.setHidden(true);
+                this.page7.setHidden(true);
+                this.page8.setHidden(false);
+                this.page9.setHidden(true);
+                this.page10.setHidden(true);
+                break;
+            }
+            case BackstoryScreenEvent.PAGE9: {
+                this.page1.setHidden(true);
+                this.page2.setHidden(true);
+                this.page3.setHidden(true);
+                this.page4.setHidden(true);
+                this.page5.setHidden(true);
+                this.page6.setHidden(true);
+                this.page7.setHidden(true);
+                this.page8.setHidden(true);
+                this.page9.setHidden(false);
+                this.page10.setHidden(true);
+                break;
+            }
+            case BackstoryScreenEvent.PAGE10: {
+                this.page1.setHidden(true);
+                this.page2.setHidden(true);
+                this.page3.setHidden(true);
+                this.page4.setHidden(true);
+                this.page5.setHidden(true);
+                this.page6.setHidden(true);
+                this.page7.setHidden(true);
+                this.page8.setHidden(true);
+                this.page9.setHidden(true);
+                this.page10.setHidden(false);
                 break;
             }
             default: {

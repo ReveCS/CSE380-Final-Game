@@ -20,7 +20,7 @@ import Level5 from "./Level5";
  */
 export default class Level2 extends HW3Level {
 
-    public static readonly PLAYER_SPAWN = new Vec2(32, 1350);
+    public static readonly PLAYER_SPAWN = new Vec2(60, 1350);
     public static readonly PLAYER_SPRITE_KEY = "PLAYER_SPRITE_KEY";
     public static readonly PLAYER_SPRITE_PATH = "game_assets/spritesheets/pyke_tallus.json";
 

@@ -15,7 +15,10 @@ export default class Hurt extends EnemyState {
         if (!this.owner.animation.isPlaying(EnemyAnimations.TAKE_DAMAGE)) {
             this.finished(EnemyStates.IDLE);
         }
-		
+		// Update the vertical velocity of the Enemy
+		this.parent.velocity.y += this.gravity*deltaT;
+		// Move the Enemy
+		this.owner.move(this.parent.velocity.scaled(deltaT));
 	}
 
 	public onExit(): Record<string, any> {

@@ -25,7 +25,10 @@ export default class Hurt extends PlayerState {
         if (!this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE)) {
             this.finished(PlayerStates.IDLE);
         }
-		
+		// Update the vertical velocity of the Player
+		this.parent.velocity.y += this.gravity*deltaT;
+		// Move the Player
+		this.owner.move(this.parent.velocity.scaled(deltaT));
 	}
 
 	public onExit(): Record<string, any> {

@@ -8,13 +8,17 @@ export default class Fall extends PlayerState {
     private curHealth: number;
     private fallTimer: Timer;
     private hitSound:string;
+
     onEnter(options: Record<string, any>): void {
         this.hitSound = this.owner.getScene().getHitSoundKey();
         // If we're falling, the vertical velocity should be >= 0
         this.parent.velocity.y = 0;
         this.fallTimer = new Timer(200)
         this.curHealth = this.parent.health;
-        this.owner.animation.play(PlayerAnimations.LAND);
+        
+        if (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
+            this.owner.animation.play(PlayerAnimations.LAND);
+        }
         
     }
 

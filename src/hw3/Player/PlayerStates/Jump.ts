@@ -12,7 +12,10 @@ export default class Jump extends PlayerState {
         this.parent.velocity.y = -350;
         // Play the jump sound for the player
 		this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: jumpAudio, loop: false, holdReference: false});
-        this.owner.animation.play(PlayerAnimations.JUMP);
+
+        if (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
+            this.owner.animation.play(PlayerAnimations.JUMP);
+        }
 	}
 
 	public update(deltaT: number): void {
@@ -41,7 +44,9 @@ export default class Jump extends PlayerState {
 	}
 
 	public onExit(): Record<string, any> {
-		this.owner.animation.stop();
+		if (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
+            this.owner.animation.stop();
+        }
 		return {};
 	}
 }

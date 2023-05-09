@@ -7,9 +7,11 @@ export default class Walk extends PlayerState {
 
 	onEnter(options: Record<string, any>): void {
 		this.parent.speed = this.parent.MIN_SPEED;
-        if(this.parent.health > 0 && !this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE)){
+        let takingDamage = this.owner.animation.isPlaying(PlayerAnimations.TAKE_DAMAGE);
+        let attacking = this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1);
+        if(this.parent.health > 0 && !takingDamage && !attacking){
             this.owner.animation.play(PlayerAnimations.WALK);
-        }
+        }    
 	}
 
 	update(deltaT: number): void {
@@ -47,7 +49,9 @@ export default class Walk extends PlayerState {
 	}
 
 	onExit(): Record<string, any> {
-		this.owner.animation.stop();
+		if (!this.owner.animation.isPlaying(PlayerAnimations.ATTACK_1)) {
+            this.owner.animation.stop();
+        }
 		return {};
 	}
 }

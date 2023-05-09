@@ -207,13 +207,9 @@ export default class Level1 extends HW3Level {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(500, 1216), 10);
-        this.initializeEnemy(this.goblinSpriteKey, new Vec2(600, 1216), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(700, 1216), 10);
-        this.initializeEnemy(this.goblinSpriteKey, new Vec2(800, 1216), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(900, 1216), 10);
-        this.initializeEnemy(this.goblinSpriteKey, new Vec2(1000, 1216), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(1100, 1216), 10);
-        this.initializeEnemy(this.goblinSpriteKey, new Vec2(1200, 1216), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(1300, 1216), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(1400, 1216), 10);
     }

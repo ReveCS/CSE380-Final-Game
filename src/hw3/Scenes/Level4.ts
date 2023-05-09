@@ -215,11 +215,9 @@ export default class Level4 extends HW3Level {
         this.initializeEnemy(this.jellySpriteKey, new Vec2(375, 1150), 10);
         this.initializeEnemy(this.jellySpriteKey, new Vec2(425, 1150), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(750, 1150), 10);
-        this.initializeEnemy(this.goblinSpriteKey, new Vec2(800, 1150), 10);
         this.initializeEnemy(this.jellySpriteKey, new Vec2(1000, 1150), 10);
         this.initializeEnemy(this.jellySpriteKey, new Vec2(1050, 1150), 10);
         this.initializeEnemy(this.swordSpriteKey, new Vec2(1200, 1216), 10);
-        this.initializeEnemy(this.swordSpriteKey, new Vec2(1250, 1216), 10);
         this.initializeEnemy(this.jellySpriteKey, new Vec2(1550, 1216), 10);
         this.initializeEnemy(this.jellySpriteKey, new Vec2(1600, 1216), 10);
         this.initializeEnemy(this.goblinSpriteKey, new Vec2(1900, 1216), 10);

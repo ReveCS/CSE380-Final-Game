@@ -224,10 +224,8 @@ export default class Level3 extends HW3Level {
         // initialize placeholder
         // can use this.defaultSpawn or define your own spawn
         this.initializeEnemy(this.jellySpriteKey, new Vec2(500, 1150), 10);
-        this.initializeEnemy(this.jellySpriteKey, new Vec2(550, 1150), 10);
         this.initializeEnemy(this.jellySpriteKey, new Vec2(600, 1150), 10);
         this.initializeEnemy(this.jellySpriteKey, new Vec2(1000, 1150), 10);
-        this.initializeEnemy(this.jellySpriteKey, new Vec2(1050, 1216), 10);
         this.initializeEnemy(this.jellySpriteKey, new Vec2(1100, 1216), 10);
         this.initializeEnemy(this.jellySpriteKey, new Vec2(1500, 1216), 10);
         this.initializeEnemy(this.jellySpriteKey, new Vec2(1600, 1216), 10);
